@@ -32,7 +32,7 @@ import suite.annotation.PluginDescriptor;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import store.plugin.extension.FXController;
-import org.displee.progress.AbstractProgressListener;
+import store.progress.AbstractProgressListener;
 import suite.Constants;
 import suite.Main;
 import suite.dialogue.Dialogues;

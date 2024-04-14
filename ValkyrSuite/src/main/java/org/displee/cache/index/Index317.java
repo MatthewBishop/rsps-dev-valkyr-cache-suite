@@ -12,7 +12,7 @@ import org.displee.cache.index.archive.Archive317;
 import org.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
-import org.displee.progress.ProgressListener;
+import com.displee.cache.ProgressListener;
 import org.displee.utilities.Compression.CompressionType;
 import org.displee.utilities.Constants;
 import org.displee.utilities.HashGenerator;

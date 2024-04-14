@@ -6,7 +6,7 @@ import org.displee.cache.index.Index;
 import store.cache.index.OSRSIndices;
 import org.displee.cache.index.archive.Archive;
 import store.codec.util.Utils;
-import org.displee.progress.AbstractProgressListener;
+import store.progress.AbstractProgressListener;
 
 import java.io.DataOutputStream;
 import java.io.File;

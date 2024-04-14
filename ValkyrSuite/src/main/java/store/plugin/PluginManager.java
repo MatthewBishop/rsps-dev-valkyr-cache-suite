@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import store.plugin.extension.ConfigExtensionBase;
 import store.plugin.extension.FXController;
 import store.plugin.extension.LoaderExtensionBase;
-import org.displee.progress.AbstractProgressListener;
+import store.progress.AbstractProgressListener;
 import suite.Constants;
 import suite.annotation.PluginDescriptor;
 import suite.controller.Selection;

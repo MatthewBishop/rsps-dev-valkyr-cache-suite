@@ -65,6 +65,9 @@ subprojects {
 		// https://mvnrepository.com/artifact/com.displee/disio
 		implementation 'com.displee:disio:2.3'
 
+		// https://mvnrepository.com/artifact/com.displee/rs-cache-library
+		implementation 'com.displee:rs-cache-library:7.1.3'
+
 	}
 
 	apply plugin: 'org.openjfx.javafxplugin'

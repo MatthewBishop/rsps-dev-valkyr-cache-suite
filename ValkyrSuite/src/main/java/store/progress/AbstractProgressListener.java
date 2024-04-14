@@ -1,8 +1,8 @@
-package org.displee.progress;
+package store.progress;
 
 import java.text.DecimalFormat;
 
-public abstract class AbstractProgressListener implements ProgressListener {
+public abstract class AbstractProgressListener implements IAbstractProgressListener {
 
 	final DecimalFormat format = new DecimalFormat("#.##");
 	String message;
