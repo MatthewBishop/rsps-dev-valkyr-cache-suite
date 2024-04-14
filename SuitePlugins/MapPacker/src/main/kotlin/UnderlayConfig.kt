@@ -38,7 +38,7 @@ class UnderlayConfig  {
         buffer?.apply {
             buffer.writeByte(1)
             buffer.write24BitInt(color)
-            if (!ValkyrCacheLibrary.get().isOSRS) {
+            if (!ValkyrCacheLibrary.get().isOSRS()) {
                 buffer.writeByte(2)
                 buffer.writeShort(texture)
                 buffer.writeByte(3)

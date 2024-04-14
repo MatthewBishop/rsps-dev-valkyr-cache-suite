@@ -10,9 +10,8 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import misc.CustomTab
-import store.ValkyrCacheLibrary
-import org.displee.utilities.GZIPCompressor
 import org.slf4j.LoggerFactory
+import store.ValkyrCacheLibrary
 import store.cache.index.OSRSIndices
 import store.plugin.extension.FXController
 import suite.Constants
@@ -20,11 +19,14 @@ import suite.Main
 import suite.controller.Selection
 import suite.dialogue.Dialogues
 import utility.*
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
 import java.nio.file.Files
 import java.util.*
 import java.util.function.Consumer
 import java.util.stream.Collectors
+import java.util.zip.GZIPOutputStream
 
 //import com.google.gson.GsonBuilder;
 /**
@@ -288,17 +290,17 @@ class MapPacker : FXController() {
                     var tileData = Files.readAllBytes(File(lsText.text).toPath())
                     var objData = Files.readAllBytes(File(objText!!.text).toPath())
                     if (objText.text.endsWith(".gz")) {
-                        objData = GZIPCompressor.inflate317(objData)
+                        objData = inflate317(objData)
                     }
                     if (lsText.text.endsWith(".gz")) {
-                        tileData = GZIPCompressor.inflate317(tileData)
+                        tileData = inflate317(tileData)
                     }
                     xteaKeys.putAll(packMaps(regionX, regionY, tileData, objData, xteas))
                 } catch (ex: Exception) {
                     ex.printStackTrace()
                 }
             }
-            if (ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).update(Selection.progressListener, xteaKeys)) {
+            if (ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).update(Selection.progressListener)) {
                 val alert = Alert(Alert.AlertType.INFORMATION, "Maps packed successfully!", ButtonType.OK)
                 alert.show()
             }
@@ -331,8 +333,8 @@ class MapPacker : FXController() {
     fun packMaps(
         regionX: Int,
         regionY: Int,
-        tileData: ByteArray?,
-        objData: ByteArray?,
+        tileData: ByteArray,
+        objData: ByteArray,
         xteas: IntArray
     ): Map<Int, IntArray> {
         return try {
@@ -341,7 +343,7 @@ class MapPacker : FXController() {
             var mapArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).archive(mapArchiveName)
             var exists = Objects.nonNull(mapArchive)
             if (exists) {
-                mapArchive.reset()
+                mapArchive!!.clear()
             } else {
                 mapArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).add(mapArchiveName)
             }
@@ -350,7 +352,7 @@ class MapPacker : FXController() {
             var landArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).archive(landArchiveName)
             exists = Objects.nonNull(landArchive)
             if (exists) {
-                landArchive.reset()
+                landArchive!!.clear()
             } else {
                 landArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).add(landArchiveName)
             }
@@ -374,5 +376,18 @@ class MapPacker : FXController() {
 
     companion object {
         private val log = LoggerFactory.getLogger(MapPacker::class.java)
+
+        fun inflate317(uncompressed: ByteArray): ByteArray? {
+            try {
+                val bout = ByteArrayOutputStream()
+                GZIPOutputStream(bout).use { os ->
+                    os.write(uncompressed)
+                    os.finish()
+                    return bout.toByteArray()
+                }
+            } catch (e: IOException) {
+                return ByteArray(0)
+            }
+        }
     }
 }

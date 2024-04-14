@@ -161,13 +161,13 @@ class WorldMapRenderer(view: Canvas) : Runnable {
             val library: CacheLibrary = ValkyrCacheLibrary.get()
             val xteas: IntArray? = XTEASManager.lookup(regionId)
 
-            val mapData: ByteArray? = library.getIndex(5).getArchive("m" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8))?.files()!![0].data
+            val mapData: ByteArray? = library.index(5).archive("m" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8))?.files()!![0].data
             mapData?.let {
                 val mapBuffer = InputBuffer(it)
                 decodeTerrainLayer(mapBuffer)
             }
 
-            val landscapeData: ByteArray? = library.getIndex(5).getArchive("l" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8), xteas)?.files()!![0].data
+            val landscapeData: ByteArray? = library.index(5).archive("l" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8), xteas)?.files()!![0].data
             landscapeData?.let {
                 val landscapeBuffer = InputBuffer(it)
                 decodeObjectLayer(landscapeBuffer)

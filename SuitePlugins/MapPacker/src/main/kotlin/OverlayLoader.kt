@@ -19,12 +19,12 @@ class OverlayLoader {
     fun load(): OverlayLoader {
         try {
             val index = ValkyrCacheLibrary.get().index(index)
-            val files = index.archive(archive).fileIds()
-            for (id in files) {
-                val file = index.archive(archive).file(id)
+            val files = index.archive(archive)?.fileIds()
+            for (id in files!!) {
+                val file = index.archive(archive)!!.file(id)
                 file?.apply {
                     val definition = OverlayConfig()
-                    val buffer = InputBuffer(file.data)
+                    val buffer = InputBuffer(file.data!!)
                     buffer.raw().apply {
                         while (true) {
                             val opcode = buffer.readUnsignedByte()
