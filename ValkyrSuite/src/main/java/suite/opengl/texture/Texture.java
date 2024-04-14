@@ -32,7 +32,7 @@ public class Texture {
     private int[] pixels;
 
     public void decode(CacheLibrary library) {
-        data = CacheLibrary.get().getIndex(9).getFileData(0, this.id);
+        data = CacheLibrary.get().getIndex(9).getArchive(0).getFile(this.id).getData();
         InputBuffer buffer = new InputBuffer(data);
         this.averageRGB = buffer.readUnsignedShort();
         this.field1587 = buffer.readUnsignedByte() == 1;

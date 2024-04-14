@@ -1,7 +1,7 @@
+import com.displee.io.impl.InputBuffer
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.canvas.Canvas
 import org.displee.CacheLibrary
-import com.displee.io.impl.InputBuffer
 import util.HightCalcuation
 import util.JagexColorPalette
 import utility.XTEASManager
@@ -160,13 +160,13 @@ class WorldMapRenderer(view: Canvas) : Runnable {
             val library: CacheLibrary = CacheLibrary.get()
             val xteas: IntArray? = XTEASManager.lookup(regionId)
 
-            val mapData: ByteArray? = library.getIndex(5).getArchive("m" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8))?.data
+            val mapData: ByteArray? = library.getIndex(5).getArchive("m" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8))?.files!![0].data
             mapData?.let {
                 val mapBuffer = InputBuffer(it)
                 decodeTerrainLayer(mapBuffer)
             }
 
-            val landscapeData: ByteArray? = library.getIndex(5).getArchive("l" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8), xteas)?.data
+            val landscapeData: ByteArray? = library.getIndex(5).getArchive("l" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8), xteas)?.files!![0].data
             landscapeData?.let {
                 val landscapeBuffer = InputBuffer(it)
                 decodeObjectLayer(landscapeBuffer)

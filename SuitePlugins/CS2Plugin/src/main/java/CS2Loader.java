@@ -23,7 +23,7 @@ public class CS2Loader extends LoaderExtensionBase {
             Index index = CacheLibrary.get().getIndex(getIndex());
             int[] archiveIds = index.getArchiveIds();
             for (int archive : archiveIds) {
-                byte[] data = index.getArchive(archive).getData();
+                byte[] data = index.getArchive(archive).getFiles()[0].getData();
                 if (data == null) continue;
                 CS2Script script = new CS2Script();
                 script.id = archive;
