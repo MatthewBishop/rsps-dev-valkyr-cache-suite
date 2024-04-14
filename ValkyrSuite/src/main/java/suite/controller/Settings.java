@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import store.ValkyrCacheLibrary;
 import persistable.Persistable;
-import org.displee.CacheLibrary;
 import store.plugin.PluginManager;
 import suite.Constants;
 import suite.Main;
@@ -151,7 +151,7 @@ public class Settings {
 		boolean confirmed = Dialogues.confirmation("Confirmation", "Are you sure you want to de-fragment your cache? This will close open editors, and could take a few minutes!");
 		if (confirmed) {
 			Main.getSelection().createTask("De-fragmenting cache...", true, TaskUtil.create(() -> {
-				CacheLibrary.get().rebuild(file);
+				ValkyrCacheLibrary.get().rebuild(file);
 				return false;
 			}));
 		}

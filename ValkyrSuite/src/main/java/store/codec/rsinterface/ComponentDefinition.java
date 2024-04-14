@@ -6,9 +6,9 @@ package store.codec.rsinterface;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import org.displee.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
+import store.ValkyrCacheLibrary;
 
 public class ComponentDefinition {
 
@@ -239,7 +239,7 @@ public class ComponentDefinition {
 		if (icomponentsdefs[id] == null || reload) {
 			icomponentsdefs[id] = new ComponentDefinition[getInterfaceDefinitionsComponentsSize(id)];
 			for (int i = 0; i < icomponentsdefs[id].length; i++) {
-				byte[] data = CacheLibrary.get().getIndex(3).getArchive(id).file(i).getData();
+				byte[] data = ValkyrCacheLibrary.get().getIndex(3).getArchive(id).file(i).getData();
 				if (data != null) {
 					ComponentDefinition defs = icomponentsdefs[id][i] = new ComponentDefinition();
 					defs.ihash = i + (id << 16);
@@ -988,11 +988,11 @@ public class ComponentDefinition {
 	}
 
 	public static int getInterfaceDefinitionsSize() {
-		return CacheLibrary.get().getIndex(3).getLastArchive().getId() + 1;
+		return ValkyrCacheLibrary.get().getIndex(3).getLastArchive().getId() + 1;
 	}
 
 	public static int getInterfaceDefinitionsComponentsSize(int interfaceId) {
-		return CacheLibrary.get().getIndex(3).getArchive(interfaceId).last().getId() + 1;
+		return ValkyrCacheLibrary.get().getIndex(3).getArchive(interfaceId).last().getId() + 1;
 	}
 
 	/**

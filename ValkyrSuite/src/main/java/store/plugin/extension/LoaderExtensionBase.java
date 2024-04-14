@@ -10,6 +10,7 @@ import com.google.common.collect.Maps;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.Archive;
 import com.displee.io.impl.InputBuffer;
@@ -42,7 +43,7 @@ public abstract class LoaderExtensionBase {
 	}
 
 	protected byte[] getConfigFile317(String name) {
-		CacheLibrary cache = CacheLibrary.get();
+		CacheLibrary cache = ValkyrCacheLibrary.get();
 		Index index = cache.getIndex(0);
 		Archive archive = index.getArchive(2);
 		return archive.file(name).getData();

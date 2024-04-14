@@ -5,9 +5,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
 import org.apache.commons.lang3.ArrayUtils;
-import org.displee.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
+import store.ValkyrCacheLibrary;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import suite.annotation.MeshIdentifier;
@@ -31,7 +31,7 @@ public class ItemConfig extends ConfigExtensionBase {
 
 	@Override
 	public void decode(int opcode, InputBuffer buffer) {
-		if (CacheLibrary.get().is317()) {
+		if (ValkyrCacheLibrary.get().is317()) {
 			read317(opcode, buffer);
 			return;
 		}
@@ -366,7 +366,7 @@ public class ItemConfig extends ConfigExtensionBase {
 
 		if (!name.equals("null")) {
 			buffer.writeByte(2);
-			if (CacheLibrary.get().is317())
+			if (ValkyrCacheLibrary.get().is317())
 				buffer.writeStringRaw(name);
 			else
 				buffer.writeString(name);
@@ -444,7 +444,7 @@ public class ItemConfig extends ConfigExtensionBase {
 		for (int index = 0; index < 5; index++) {
 			if (options[index] != null && !options[index].isEmpty() && !options[index].equals("null")) {
 				buffer.writeByte(index + 30);
-				if (CacheLibrary.get().is317())
+				if (ValkyrCacheLibrary.get().is317())
 					buffer.writeStringRaw(options[index]);
 				else
 					buffer.writeString(options[index]);
@@ -454,7 +454,7 @@ public class ItemConfig extends ConfigExtensionBase {
 		for (int index = 0; index < 5; index++) {
 			if (interfaceOptions[index] != null && !interfaceOptions[index].isEmpty() && !interfaceOptions[index].equals("null")) {
 				buffer.writeByte(index + 35);
-				if (CacheLibrary.get().is317())
+				if (ValkyrCacheLibrary.get().is317())
 					buffer.writeStringRaw(interfaceOptions[index]);
 				else
 					buffer.writeString(interfaceOptions[index]);
@@ -627,7 +627,7 @@ public class ItemConfig extends ConfigExtensionBase {
 				buffer.writeByte(value instanceof String ? 1 : 0);
 				buffer.write24BitInt(key);
 				if (value instanceof String) {
-					if (CacheLibrary.get().is317())
+					if (ValkyrCacheLibrary.get().is317())
 						buffer.writeStringRaw((String) value);
 					else
 						buffer.writeString((String) value);

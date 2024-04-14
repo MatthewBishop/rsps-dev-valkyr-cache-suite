@@ -14,8 +14,8 @@ import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
 import misc.CustomTab;
 import org.apache.commons.lang3.ArrayUtils;
-import org.displee.CacheLibrary;
 import com.displee.io.impl.OutputBuffer;
+import store.ValkyrCacheLibrary;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import store.plugin.extension.FXController;
@@ -82,8 +82,8 @@ public class TextureController extends FXController {
                 TextureConfig config = (TextureConfig) PluginManager.get().getConfigForType(getInfo().getType()).getClass().newInstance();
                 config.id = id;
                 config.setSprites(new int[] { 0 });
-                CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(config.id, config.encode(new OutputBuffer(16)).array());
-                CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
+                ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(config.id, config.encode(new OutputBuffer(16)).array());
+                ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                 PluginManager.get().getLoaderForType(getInfo().getType()).reload();
                 Platform.runLater(() -> initialize(tab, true, config.id));
             } catch (Exception ex) {
@@ -142,8 +142,8 @@ public class TextureController extends FXController {
         try {
             if (Objects.nonNull(editing)) {
                 Task<Boolean> save = TaskUtil.create(() -> {
-                    CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(editing.id, editing.encode(new OutputBuffer(16)).array());
-                    CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
+                    ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(editing.id, editing.encode(new OutputBuffer(16)).array());
+                    ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                     PluginManager.get().getLoaderForType(getInfo().getType()).reload();
                     Platform.runLater(() -> initialize(tab, true, editing.id));
                     return true;

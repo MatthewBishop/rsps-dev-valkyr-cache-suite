@@ -24,7 +24,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import misc.CustomTab;
-import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import store.cache.index.OSRSIndices;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
@@ -73,12 +73,12 @@ public class ModelPacker extends FXController {
 		if (value.isPresent()) {
 			Main.getSelection().createTask("Injecting blanks...", true, TaskUtil.create(() -> {
 				int amount = Integer.parseInt(value.get());
-				int start = CacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
+				int start = ValkyrCacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
 				for (int index = start; index < (start + amount); index++) {
-					CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(index).add(new byte[1]);
+					ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(index).add(new byte[1]);
 				}
-				CacheLibrary.get().getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
-				console.appendText("Injected " + amount + " blanks, last model index: " + CacheLibrary.get().getIndex(OSRSIndices.MODELS).getLastArchive().getId() + ".\n");
+				ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
+				console.appendText("Injected " + amount + " blanks, last model index: " + ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).getLastArchive().getId() + ".\n");
 				return true;
 			}));
 		}
@@ -97,12 +97,12 @@ public class ModelPacker extends FXController {
 				File[] files = directory.listFiles();
 				String packed_models = "";
 				int[] model_ids = new int[files.length];
-				int archive = CacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
+				int archive = ValkyrCacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
 				for (int index = 0; index < files.length; index++) {
 					if (!files[index].getName().endsWith(".dat"))
 						continue;
 					byte[] data = Files.readAllBytes(files[index].toPath());
-					CacheLibrary.get().getIndex(7).addArchive(archive).add(0, data);
+					ValkyrCacheLibrary.get().getIndex(7).addArchive(archive).add(0, data);
 					String original_id = files[index].getName().substring(0,
 							files[index].getName().length() - ".dat".length());
 					model_ids[index] = archive;
@@ -111,7 +111,7 @@ public class ModelPacker extends FXController {
 					archive++;
 				}
 				console.appendText(packed_models);	
-				CacheLibrary.get().getIndex(7).update(Selection.progressListener);
+				ValkyrCacheLibrary.get().getIndex(7).update(Selection.progressListener);
 				return true;
 			}));
 
@@ -148,8 +148,8 @@ public class ModelPacker extends FXController {
 					Integer id = Integer.parseInt(FileUtilities.stripExtension(file.getName()));
 					byte[] data = Files.readAllBytes(file.toPath());
 					Main.getSelection().createTask("Packing model...", true, TaskUtil.create(() -> {
-						CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
-						CacheLibrary.get().getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
+						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
+						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
 						return true;
 					}));
 				} catch (Exception ex) {
@@ -171,12 +171,12 @@ public class ModelPacker extends FXController {
 							Integer id = Integer.parseInt(FileUtilities.stripExtension(file.getName()));
 							try {
 								byte[] data = Files.readAllBytes(file.toPath());
-								CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
+								ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						});
-						CacheLibrary.get().getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
+						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
 						return true;
 					}));
 				} catch (Exception ex) {

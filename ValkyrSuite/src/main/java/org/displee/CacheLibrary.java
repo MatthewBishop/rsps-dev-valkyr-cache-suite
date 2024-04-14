@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.displee.cache.index.ChecksumTable;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.Index317;
-import store.cache.index.OSRSIndices;
+import store.ValkyrCacheLibrary;
 import org.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.OutputBuffer;
 import com.displee.cache.ProgressListener;
@@ -23,11 +23,6 @@ import org.displee.utilities.Constants;
  * @author Displee
  */
 public class CacheLibrary {
-
-	/**
-	 * The singleton of this class.
-	 */
-	private static CacheLibrary singleton;
 
 	/**
 	 * An array of indices of this cache.
@@ -95,7 +90,7 @@ public class CacheLibrary {
 		if (!path.endsWith("/") && !path.endsWith("\\")) {
 			path += "/";
 		}
-		singleton = this;
+		ValkyrCacheLibrary.singleton = this;
 		this.path = path;
 		this.mode = mode;
 		final File file = new File(path + "main_file_cache.dat");
@@ -433,10 +428,6 @@ public class CacheLibrary {
 		}
 	}
 
-	public Index getIndex(OSRSIndices index) {
-		return getIndex(index.ordinal());
-	}
-
 	/**
 	 * Get a single index from the cache.
 	 * 
@@ -552,15 +543,6 @@ public class CacheLibrary {
 	 */
 	public boolean isClosed() {
 		return closed;
-	}
-
-	/**
-	 * Gets a singleton of this class.
-	 * 
-	 * @return
-	 */
-	public static CacheLibrary get() {
-		return singleton;
 	}
 
 }

@@ -25,6 +25,7 @@ import javafx.util.Duration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import misc.CustomTab;
+import store.ValkyrCacheLibrary;
 import persistable.Persistable;
 import org.displee.CacheLibrary;
 import org.displee.CacheLibraryMode;
@@ -155,7 +156,7 @@ public class Selection {
 	@FXML
 	public void openTool() {
 		PluginMenuItem selected = toolChoice.getSelectionModel().getSelectedItem();
-		if (Objects.isNull(CacheLibrary.get())) {
+		if (Objects.isNull(ValkyrCacheLibrary.get())) {
 			Dialogues.alert(AlertType.ERROR, "An error has occured.", null,
 					"Please load a cache before attempting to open an editor.", true);
 			return;

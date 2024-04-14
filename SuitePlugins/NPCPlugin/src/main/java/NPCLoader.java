@@ -1,5 +1,5 @@
 import lombok.extern.slf4j.Slf4j;
-import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.file.File;
 import com.displee.io.impl.InputBuffer;
@@ -20,7 +20,7 @@ public class NPCLoader extends LoaderExtensionBase {
 	@Override
 	public boolean load() {
 		try {
-			Index index = CacheLibrary.get().getIndex(getIndex());
+			Index index = ValkyrCacheLibrary.get().getIndex(getIndex());
 			int[] fileIds = index.getArchive(getArchive()).fileIds();
 			int size = fileIds.length;
 			for (int id : fileIds) {

@@ -1,7 +1,7 @@
 import lombok.extern.slf4j.Slf4j;
+import store.ValkyrCacheLibrary;
 import script.CS2Disassembler;
 import script.CS2Script;
-import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import com.displee.io.impl.InputBuffer;
 import store.plugin.extension.LoaderExtensionBase;
@@ -20,7 +20,7 @@ public class CS2Loader extends LoaderExtensionBase {
     @Override
     public boolean load() {
         try {
-            Index index = CacheLibrary.get().getIndex(getIndex());
+            Index index = ValkyrCacheLibrary.get().getIndex(getIndex());
             int[] archiveIds = index.getArchiveIds();
             for (int archive : archiveIds) {
                 byte[] data = index.getArchive(archive).files()[0].getData();

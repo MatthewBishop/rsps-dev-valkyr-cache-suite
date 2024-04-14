@@ -1,6 +1,6 @@
-import org.displee.CacheLibrary
 import com.displee.io.impl.InputBuffer
 import com.displee.io.impl.OutputBuffer
+import store.ValkyrCacheLibrary
 
 /**
  *
@@ -38,7 +38,7 @@ class UnderlayConfig  {
         buffer?.apply {
             buffer.writeByte(1)
             buffer.write24BitInt(color)
-            if (!CacheLibrary.get().isOSRS) {
+            if (!ValkyrCacheLibrary.get().isOSRS) {
                 buffer.writeByte(2)
                 buffer.writeShort(texture)
                 buffer.writeByte(3)

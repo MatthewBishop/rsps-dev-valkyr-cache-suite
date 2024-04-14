@@ -2,6 +2,7 @@ import com.displee.io.impl.InputBuffer
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.canvas.Canvas
 import org.displee.CacheLibrary
+import store.ValkyrCacheLibrary
 import util.HightCalcuation
 import util.JagexColorPalette
 import utility.XTEASManager
@@ -157,7 +158,7 @@ class WorldMapRenderer(view: Canvas) : Runnable {
 
             println("Region x $regionX y $regionY")
 
-            val library: CacheLibrary = CacheLibrary.get()
+            val library: CacheLibrary = ValkyrCacheLibrary.get()
             val xteas: IntArray? = XTEASManager.lookup(regionId)
 
             val mapData: ByteArray? = library.getIndex(5).getArchive("m" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8))?.files()!![0].data

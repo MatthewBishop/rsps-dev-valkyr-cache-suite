@@ -26,7 +26,7 @@ import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.IntegerStringConverter;
 import lombok.Getter;
-import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import org.displee.cache.index.archive.Archive;
 import suite.Main;
 import utility.RetentionFileChooser;
@@ -136,7 +136,7 @@ public class NamedValueObject {
 						comboBox.getItems().forEach((value) -> {
 							if (!value.isEmpty()) {
 								int id = Integer.parseInt(value);
-								Archive archive = CacheLibrary.get().getIndex(7).getArchive(id);
+								Archive archive = ValkyrCacheLibrary.get().getIndex(7).getArchive(id);
 								if (Objects.nonNull(archive)) {
 									byte[] data = archive.files()[0].getData();
 

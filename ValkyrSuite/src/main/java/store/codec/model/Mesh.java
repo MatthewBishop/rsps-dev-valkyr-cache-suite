@@ -10,6 +10,7 @@ import org.displee.CacheLibrary;
 import com.displee.io.Buffer;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
+import store.ValkyrCacheLibrary;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
 import suite.annotation.OrderType;
@@ -103,7 +104,7 @@ public class Mesh extends ConfigExtensionBase {
 	 */
 	public Mesh(int id) {
 		this.id = id;
-		decode(CacheLibrary.get());
+		decode(ValkyrCacheLibrary.get());
 	}
 
 	public Mesh(Mesh mesh) {
@@ -908,7 +909,7 @@ public class Mesh extends ConfigExtensionBase {
 			Texture texture = map.get(textureId);
 			if (texture == null) {
 				texture = new Texture(textureId);
-				texture.decode(CacheLibrary.get());
+				texture.decode(ValkyrCacheLibrary.get());
 				map.put(textureId, texture);
 			}
 			textures[i] = texture;
@@ -1336,7 +1337,7 @@ public class Mesh extends ConfigExtensionBase {
 			Texture texture = map.get(textureId);
 			if (texture == null) {
 				texture = new Texture(textureId);
-				texture.decode(CacheLibrary.get());
+				texture.decode(ValkyrCacheLibrary.get());
 				map.put(textureId, texture);
 			}
 			textures[i] = texture;
@@ -1992,7 +1993,7 @@ public class Mesh extends ConfigExtensionBase {
 
 	@Override
 	public void decode(int opcode, InputBuffer buffer) {
-		decode(CacheLibrary.get());
+		decode(ValkyrCacheLibrary.get());
 	}
 
 	@Override

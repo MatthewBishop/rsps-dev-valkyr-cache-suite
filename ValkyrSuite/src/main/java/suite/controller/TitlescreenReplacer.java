@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import store.cache.index.OSRSIndices;
 import suite.Main;
 import utility.FilterMode;
@@ -23,8 +23,8 @@ public class TitlescreenReplacer {
 		try {
 			File file = RetentionFileChooser.showOpenDialog("Choose an image...", Main.getPrimaryStage(), FilterMode.JPG);
 			byte[] bytes = Files.readAllBytes(file.toPath());
-			CacheLibrary.get().getIndex(OSRSIndices.HUFFMAN).addArchive(10).add(0, bytes, "title.jpg".hashCode());
-			CacheLibrary.get().getIndex(OSRSIndices.HUFFMAN).update(Main.getSelection().getProgressListener());
+			ValkyrCacheLibrary.getIndex(OSRSIndices.HUFFMAN).addArchive(10).add(0, bytes, "title.jpg".hashCode());
+			ValkyrCacheLibrary.getIndex(OSRSIndices.HUFFMAN).update(Main.getSelection().getProgressListener());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

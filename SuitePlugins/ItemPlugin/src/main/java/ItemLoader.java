@@ -1,5 +1,6 @@
 import javafx.scene.control.Alert;
 import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.Archive;
 import org.displee.cache.index.archive.file.File;
@@ -22,7 +23,7 @@ public class ItemLoader extends LoaderExtensionBase {
 	@Override
 	public boolean load() {
 		try {
-			CacheLibrary cache = CacheLibrary.get();
+			CacheLibrary cache = ValkyrCacheLibrary.get();
 
 			if (cache.is317()) {
 				InputBuffer stream = new InputBuffer(getConfigFile317("obj.dat"));
@@ -83,12 +84,12 @@ public class ItemLoader extends LoaderExtensionBase {
 
 	@Override
 	public int getArchive() {
-		return CacheLibrary.get().is317() ? 2 : 10;
+		return ValkyrCacheLibrary.get().is317() ? 2 : 10;
 	}
 
 	@Override
 	public int getIndex() {
-		return CacheLibrary.get().is317() ? 0 : 2;
+		return ValkyrCacheLibrary.get().is317() ? 0 : 2;
 	}
 
 	private ItemConfig toNote(ItemConfig config) {

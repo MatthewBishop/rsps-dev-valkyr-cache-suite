@@ -3,6 +3,7 @@ package utility;
 import org.displee.CacheLibrary;
 import org.displee.CacheLibraryMode;
 import org.displee.cache.index.Index;
+import store.ValkyrCacheLibrary;
 import store.cache.index.OSRSIndices;
 import org.displee.cache.index.archive.Archive;
 import store.codec.util.Utils;
@@ -190,8 +191,8 @@ public class OSRSPacker {
 	}
 
 	private static void pack_osrs_animations(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12).last().getId();
-		Archive archive = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12);
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(12).last().getId();
+		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(12);
 		for (int index = 0; index < size; index++) {
 			org.displee.cache.index.archive.file.File file = archive.file(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
@@ -209,9 +210,9 @@ public class OSRSPacker {
 	}
 
 	private static void pack_osrs_skins(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int archiveSize = osrs_cache.getIndex(OSRSIndices.SKINS).getLastArchive().getId();
+		int archiveSize = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).getLastArchive().getId();
 		for (int archive = 0; archive < archiveSize; archive++) {
-			Archive osrs_archive = osrs_cache.getIndex(OSRSIndices.SKINS).getArchive(archive);
+			Archive osrs_archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).getArchive(archive);
 			if (Objects.isNull(osrs_archive) || !osrs_archive.containsData())
 				continue;
 			cache.getIndex(1).addArchive(osrs_archive, true, true, archive + BASE_OFFSET);
@@ -220,9 +221,9 @@ public class OSRSPacker {
 	}
 
 	private static void pack_osrs_skeletons(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int archiveSize = osrs_cache.getIndex(OSRSIndices.SKELETONS).getLastArchive().getId();
+		int archiveSize = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).getLastArchive().getId();
 		for (int archive = 0; archive < archiveSize; archive++) {
-			Archive osrs_archive = osrs_cache.getIndex(OSRSIndices.SKELETONS).getArchive(archive);
+			Archive osrs_archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).getArchive(archive);
 			if (Objects.isNull(osrs_archive) || !osrs_archive.containsData())
 				continue;
 			cache.getIndex(0).addArchive(osrs_archive, true, true, archive + FRAMES_OFFSET);
@@ -231,8 +232,8 @@ public class OSRSPacker {
 	}
 
 	private static void pack_osrs_npcs(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9).last().getId();
-		Archive archive = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9);
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(9).last().getId();
+		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(9);
 		for (int index = 0; index < size; index++) {
 			org.displee.cache.index.archive.file.File file = archive.file(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
@@ -245,8 +246,8 @@ public class OSRSPacker {
 	}
 
 	private static void pack_osrs_items(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(10).last().getId();
-		Archive archive = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(10);
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(10).last().getId();
+		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(10);
 		for (int index = 0; index < size; index++) {
 			org.displee.cache.index.archive.file.File file = archive.file(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
@@ -274,9 +275,9 @@ public class OSRSPacker {
 
 		//Map data
 		String name = "m" + fromRegionX + "_" + fromRegionY;
-		archiveId = osrs_cache.getIndex(OSRSIndices.MAPS).getArchiveId(name);
+		archiveId = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchiveId(name);
 		if (archiveId != -1) {
-			data = osrs_cache.getIndex(OSRSIndices.MAPS).getArchive(archiveId).file(0).getData();
+			data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchive(archiveId).file(0).getData();
 			nameHash = Utils.getNameHash(name);
 			archiveId = cache.getIndex(5).getArchiveId(name);
 			lastArchive = cache.getIndex(5).getLastArchive().getId() + 1;
@@ -286,9 +287,9 @@ public class OSRSPacker {
 
 		//Location data
 		name = "l" + fromRegionX + "_" + fromRegionY;
-		archiveId = osrs_cache.getIndex(OSRSIndices.MAPS).getArchiveId(name);
+		archiveId = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchiveId(name);
 		if (archiveId != -1) {
-			data = osrs_cache.getIndex(OSRSIndices.MAPS).getArchive(archiveId, XTEASManager.lookup(region)).file(0).getData();
+			data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchive(archiveId, XTEASManager.lookup(region)).file(0).getData();
 			nameHash = Utils.getNameHash(name);
 			archiveId = cache.getIndex(5).getArchiveId(name);
 			lastArchive = cache.getIndex(5).getLastArchive().getId() + 1;
@@ -354,7 +355,7 @@ public class OSRSPacker {
 
 	public static void pack_osrs_spotanims(CacheLibrary cache, CacheLibrary osrs) {
 		int length = osrs.getIndex(2).getArchive(13).last().getId();
-		Archive archive = osrs.getIndex(OSRSIndices.CONFIG).getArchive(13);
+		Archive archive = ValkyrCacheLibrary.getIndex(osrs, OSRSIndices.CONFIG).getArchive(13);
 		for (int index = 0; index < length; index++) {
 			org.displee.cache.index.archive.file.File file = archive.file(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))

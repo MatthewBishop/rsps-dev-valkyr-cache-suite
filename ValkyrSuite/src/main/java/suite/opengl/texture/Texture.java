@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.displee.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
+import store.ValkyrCacheLibrary;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 
@@ -32,7 +33,7 @@ public class Texture {
     private int[] pixels;
 
     public void decode(CacheLibrary library) {
-        data = CacheLibrary.get().getIndex(9).getArchive(0).file(this.id).getData();
+        data = ValkyrCacheLibrary.get().getIndex(9).getArchive(0).file(this.id).getData();
         InputBuffer buffer = new InputBuffer(data);
         this.averageRGB = buffer.readUnsignedShort();
         this.field1587 = buffer.readUnsignedByte() == 1;

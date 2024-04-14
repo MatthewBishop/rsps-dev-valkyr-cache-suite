@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import lombok.extern.slf4j.Slf4j;
 import org.displee.CacheLibrary;
 import org.displee.CacheLibraryMode;
+import store.ValkyrCacheLibrary;
 import store.cache.index.OSRSIndices;
 import org.displee.cache.index.archive.Archive;
 import store.codec.util.Utils;
@@ -97,23 +98,23 @@ public class PureOSRSPacker {
 		byte[] data = Files.readAllBytes(map.toPath());
 		String name = "m" + regionX + "_" + regionY;
 		int hash = Utils.getNameHash(name);
-		int archive = cache.getIndex(OSRSIndices.MAPS).getArchiveId(name);
-		int lastArchive = cache.getIndex(OSRSIndices.MAPS).getLastArchive().getId() + 1;
+		int archive = ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).getArchiveId(name);
+		int lastArchive = ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).getLastArchive().getId() + 1;
 		if (data != null) { // map pack
-			cache.getIndex(OSRSIndices.MAPS).addArchive(archive == -1 ? lastArchive : archive, hash, true).add(0,
+			ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).addArchive(archive == -1 ? lastArchive : archive, hash, true).add(0,
 					data);
 		}
 		data = Files.readAllBytes(landscape.toPath());
 		name = "l" + regionX + "_" + regionY;
 		hash = Utils.getNameHash(name);
-		archive = cache.getIndex(OSRSIndices.MAPS).getArchiveId(name);
-		lastArchive = cache.getIndex(OSRSIndices.MAPS).getLastArchive().getId() + 1;
+		archive = ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).getArchiveId(name);
+		lastArchive = ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).getLastArchive().getId() + 1;
 		if (data != null) {
-			cache.getIndex(OSRSIndices.MAPS).addArchive(archive == -1 ? lastArchive : archive, hash, true).add(0,
+			ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).addArchive(archive == -1 ? lastArchive : archive, hash, true).add(0,
 					data);
 		}
-		if (cache.getIndex(OSRSIndices.MAPS).isUpdateRequired()) {
-			cache.getIndex(OSRSIndices.MAPS).update(progress);
+		if (ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).isUpdateRequired()) {
+			ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).update(progress);
 		}
 	}
 
@@ -127,10 +128,10 @@ public class PureOSRSPacker {
 				cache.getIndex(20).update(progress);
 			}
 		}
-		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12).last().getId() + 1;
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(12).last().getId() + 1;
 		for (int sequence = 0; sequence < size; sequence++) {
 			try {
-				Archive archive = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12);
+				Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(12);
 				byte[] data = archive.file(sequence).getData();
 				System.out.println("Packing sequence " + sequence + "/" + size + "...");
 				cache.getIndex(20).addArchive(Utils.getConfigArchive(sequence, 7))
@@ -154,10 +155,10 @@ public class PureOSRSPacker {
 				cache.getIndex(1).update(progress);
 			}
 		}
-		int size = osrs_cache.getIndex(OSRSIndices.SKINS).getLastArchive().getId() + 1;
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).getLastArchive().getId() + 1;
 		for (int skin = 0; skin < size; skin++) {
 			try {
-				Archive archive = osrs_cache.getIndex(OSRSIndices.SKINS).getArchive(skin);
+				Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).getArchive(skin);
 				System.out.println("Packing skin " + skin + "/" + size + "...");
 				cache.getIndex(1).addArchive(archive, true, true, skin);
 			} catch (Exception ex) {
@@ -179,10 +180,10 @@ public class PureOSRSPacker {
 				cache.getIndex(0).update(progress);
 			}
 		}
-		int size = osrs_cache.getIndex(OSRSIndices.SKELETONS).getLastArchive().getId() + 1;
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).getLastArchive().getId() + 1;
 		for (int frameset = 0; frameset < size; frameset++) {
 			try {
-				Archive archive = osrs_cache.getIndex(OSRSIndices.SKELETONS).getArchive(frameset);
+				Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).getArchive(frameset);
 				System.out.println("Packing Frameset " + frameset + "/" + size + "...");
 				cache.getIndex(0).addArchive(archive, true, true, frameset);
 			} catch (Exception ex) {
@@ -204,10 +205,10 @@ public class PureOSRSPacker {
 				cache.getIndex(18).update(progress);
 			}
 		}
-		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9).last().getId();
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(9).last().getId();
 		for (int npc = 0; npc < size; npc++) {
 			try {
-				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9).file(npc).getData();
+				byte[] data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(9).file(npc).getData();
 				System.out.println("Packing NPC " + npc + "/" + size + "...");
 				cache.getIndex(18).addArchive(getConfigArchive(npc, 7)).add(getConfigFile(npc, 7), data);
 			} catch (Exception ex) {
@@ -229,10 +230,10 @@ public class PureOSRSPacker {
 				cache.getIndex(2).update(progress);
 			}
 		}
-		int kits = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(3).last().getId();
+		int kits = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(3).last().getId();
 		for (int kit = 0; kit < kits; kit++) {
 			try {
-				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(3).file(kit).getData();
+				byte[] data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(3).file(kit).getData();
 				System.out.println("Packing IDK " + kit + "/" + kits + "...");
 				if (data != null) {
 					cache.getIndex(2).addArchive(3).add(kit, data);
@@ -268,7 +269,7 @@ public class PureOSRSPacker {
 				// String name = stripDat(file.getName());
 				data = Files.readAllBytes(file.toPath());
 				hash = Utils.getNameHash(file.getName());
-				archive = osrs_cache.getIndex(OSRSIndices.MAPS).getArchiveId(file.getName());
+				archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchiveId(file.getName());
 				cache.getIndex(5).addArchive(archive, hash, true).add(0, data);
 			}
 			file = new File("C:\\Users\\Andrew\\Desktop\\maps raw\\l" + regionX + "_" + regionY);
@@ -276,7 +277,7 @@ public class PureOSRSPacker {
 				// String name = stripDat(file.getName());
 				data = Files.readAllBytes(file.toPath());
 				hash = Utils.getNameHash(file.getName());
-				archive = osrs_cache.getIndex(OSRSIndices.MAPS).getArchiveId(file.getName());
+				archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchiveId(file.getName());
 				cache.getIndex(5).addArchive(archive, hash, true).add(0, data);
 			}
 		}
@@ -297,9 +298,9 @@ public class PureOSRSPacker {
 			int[] xteas = XTEASManager.lookup(region);
 
 			// Map
-			int map = cache.getIndex(OSRSIndices.MAPS).getArchiveId("m" + x + "_" + y);
+			int map = ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).getArchiveId("m" + x + "_" + y);
 			if (map != -1) {
-				data = cache.getIndex(OSRSIndices.MAPS).getArchive(map, xteas).file(0).getData();
+				data = ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).getArchive(map, xteas).file(0).getData();
 				if (data == null)
 					continue;
 				file = new File("./maps/", "m" + x + "_" + y + ".dat");
@@ -310,9 +311,9 @@ public class PureOSRSPacker {
 			}
 
 			// Locations
-			int location = cache.getIndex(OSRSIndices.MAPS).getArchiveId("l" + x + "_" + y);
+			int location = ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).getArchiveId("l" + x + "_" + y);
 			if (location != -1) {
-				data = cache.getIndex(OSRSIndices.MAPS).getArchive(location, xteas).file(0).getData();
+				data = ValkyrCacheLibrary.getIndex(cache, OSRSIndices.MAPS).getArchive(location, xteas).file(0).getData();
 				if (data == null)
 					continue;
 				file = new File("./maps/", "l" + x + "_" + y + ".dat");
@@ -336,10 +337,10 @@ public class PureOSRSPacker {
 			cache.getIndex(19).update(progress);
 		}
 
-		int size = osrs.getIndex(OSRSIndices.CONFIG).getArchive(10).last().getId();
+		int size = ValkyrCacheLibrary.getIndex(osrs, OSRSIndices.CONFIG).getArchive(10).last().getId();
 		int packed = 0;
 		for (int index = 0; index < size; index++) {
-			Archive archive = osrs.getIndex(OSRSIndices.CONFIG).getArchive(10);
+			Archive archive = ValkyrCacheLibrary.getIndex(osrs, OSRSIndices.CONFIG).getArchive(10);
 			if (archive == null)
 				continue;
 			byte[] data = archive.file(index).getData();
@@ -363,10 +364,10 @@ public class PureOSRSPacker {
 		}
 
 		double percentage;
-		int valid_objects = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(6).last().getId();
+		int valid_objects = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(6).last().getId();
 		for (int id = 0; id < valid_objects; id++) {
 			try {
-				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(6).file(id).getData();
+				byte[] data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(6).file(id).getData();
 				if (data == null)
 					continue;
 				percentage = (double) id / (double) valid_objects * 100D;
@@ -381,9 +382,9 @@ public class PureOSRSPacker {
 
 	public static void import_models(CacheLibrary osrs_cache, CacheLibrary cache, boolean reset) throws IOException {
 		double percentage;
-		int valid_models = osrs_cache.getIndex(OSRSIndices.MODELS).getLastArchive().getId();
+		int valid_models = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MODELS).getLastArchive().getId();
 		for (int id = 0; id < valid_models; id++) {
-			Archive archive = osrs_cache.getIndex(OSRSIndices.MODELS).getArchive(id);
+			Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MODELS).getArchive(id);
 			if (archive == null)
 				continue;
 			byte[] data = archive.file(0).getData();

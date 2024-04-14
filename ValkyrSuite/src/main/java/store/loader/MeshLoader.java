@@ -8,7 +8,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import lombok.Getter;
-import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import store.cache.index.OSRSIndices;
 import org.displee.cache.index.archive.Archive;
 import org.displee.cache.index.archive.file.File;
@@ -34,10 +34,10 @@ public class MeshLoader implements DefinitionLoader {
 	@Override
 	public boolean initialize() {
 		try {
-			int size = CacheLibrary.get().getIndex(OSRSIndices.MODELS).getLastArchive().getId();
+			int size = ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).getLastArchive().getId();
 			for (int id = 0; id < size; id++) {
 				Mesh mesh = new Mesh(id);
-				Archive archive = CacheLibrary.get().getIndex(OSRSIndices.MODELS).getArchive(id);
+				Archive archive = ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).getArchive(id);
 				if (archive == null)
 					continue;
 				File file = archive.file(0);

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import misc.CustomTab;
 import misc.MQOConverter;
 import org.apache.commons.io.FilenameUtils;
-import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import store.cache.index.OSRSIndices;
 import store.codec.model.Mesh;
 import store.plugin.PluginType;
@@ -89,12 +89,12 @@ public class MeshPacker extends FXController {
 		if (value.isPresent()) {
 			Main.getSelection().createTask("Injecting blanks...", true, TaskUtil.create(() -> {
 				int amount = Integer.parseInt(value.get());
-				int start = CacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
+				int start = ValkyrCacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
 				for (int index = start; index < (start + amount); index++) {
-					CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(index).add(new byte[1]);
+					ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(index).add(new byte[1]);
 				}
-				CacheLibrary.get().getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
-				console.appendText("Injected " + amount + " blanks, last model index: " + CacheLibrary.get().getIndex(OSRSIndices.MODELS).getLastArchive().getId() + ".\n");
+				ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
+				console.appendText("Injected " + amount + " blanks, last model index: " + ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).getLastArchive().getId() + ".\n");
 				return true;
 			}));
 		}
@@ -113,12 +113,12 @@ public class MeshPacker extends FXController {
 				File[] files = directory.listFiles();
 				String packed_models = "";
 				int[] model_ids = new int[files.length];
-				int archive = CacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
+				int archive = ValkyrCacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
 				for (int index = 0; index < files.length; index++) {
 					if (!files[index].getName().endsWith(".dat"))
 						continue;
 					byte[] data = Files.readAllBytes(files[index].toPath());
-					CacheLibrary.get().getIndex(7).addArchive(archive).add(0, data);
+					ValkyrCacheLibrary.get().getIndex(7).addArchive(archive).add(0, data);
 					String original_id = files[index].getName().substring(0,
 							files[index].getName().length() - ".dat".length());
 					model_ids[index] = archive;
@@ -127,7 +127,7 @@ public class MeshPacker extends FXController {
 					archive++;
 				}
 				console.appendText(packed_models);	
-				CacheLibrary.get().getIndex(7).update(Selection.progressListener);
+				ValkyrCacheLibrary.get().getIndex(7).update(Selection.progressListener);
 				return true;
 			}));
 
@@ -173,7 +173,7 @@ public class MeshPacker extends FXController {
 				MeshHolder holder = meshList.getSelectionModel().getSelectedItem();
 				if (holder != null) {
 					byte[] data = null;
-					int id = CacheLibrary.get().getIndex(OSRSIndices.MODELS).getArchiveIds().length + 1;
+					int id = ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).getArchiveIds().length + 1;
 					switch (holder.getFormat()) {
 						case DAT: {
 							data = Files.readAllBytes(holder.getFile().toPath());
@@ -190,8 +190,8 @@ public class MeshPacker extends FXController {
 					}
 					byte[] finalData = data;
 					Main.getSelection().createTask("Packing model...", true, TaskUtil.create(() -> {
-						CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(id).add(0, finalData);
-						CacheLibrary.get().getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
+						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(id).add(0, finalData);
+						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
 						console.appendText("Packed model " + FilenameUtils.getName(holder.toString()) + " as model " + id + ".\n");
 						return true;
 					}));
@@ -216,12 +216,12 @@ public class MeshPacker extends FXController {
 							Integer id = Integer.parseInt(FileUtilities.stripExtension(file.getName()));
 							try {
 								byte[] data = Files.readAllBytes(file.toPath());
-								CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
+								ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						});
-						CacheLibrary.get().getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
+						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
 						return true;
 					}));
 				} catch (Exception ex) {

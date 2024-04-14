@@ -1,5 +1,5 @@
-import org.displee.CacheLibrary
 import com.displee.io.impl.InputBuffer
+import store.ValkyrCacheLibrary
 import store.plugin.PluginType
 import suite.annotation.LoaderDescriptor
 import suite.controller.Selection
@@ -18,7 +18,7 @@ class OverlayLoader {
 
     fun load(): OverlayLoader {
         try {
-            val index = CacheLibrary.get().getIndex(index)
+            val index = ValkyrCacheLibrary.get().getIndex(index)
             val files = index.getArchive(archive).fileIds()
             for (id in files) {
                 val file = index.getArchive(archive).file(id)

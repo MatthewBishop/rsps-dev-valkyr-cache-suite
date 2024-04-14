@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import misc.CustomTab
-import org.displee.CacheLibrary
+import store.ValkyrCacheLibrary
 import org.displee.utilities.GZIPCompressor
 import org.slf4j.LoggerFactory
 import store.cache.index.OSRSIndices
@@ -298,7 +298,8 @@ class MapPacker : FXController() {
                     ex.printStackTrace()
                 }
             }
-            if (CacheLibrary.get().getIndex(OSRSIndices.MAPS).update(Selection.progressListener, xteaKeys)) {
+            if (ValkyrCacheLibrary.get()
+                    .getIndex(OSRSIndices.MAPS).update(Selection.progressListener, xteaKeys)) {
                 val alert = Alert(Alert.AlertType.INFORMATION, "Maps packed successfully!", ButtonType.OK)
                 alert.show()
             }
@@ -338,21 +339,21 @@ class MapPacker : FXController() {
         return try {
             val mapArchiveName = "m" + regionX + "_" + regionY
             val landArchiveName = "l" + regionX + "_" + regionY
-            var mapArchive = CacheLibrary.get().getIndex(OSRSIndices.MAPS).getArchive(mapArchiveName)
+            var mapArchive = ValkyrCacheLibrary.get().getIndex(OSRSIndices.MAPS).getArchive(mapArchiveName)
             var exists = Objects.nonNull(mapArchive)
             if (exists) {
                 mapArchive.reset()
             } else {
-                mapArchive = CacheLibrary.get().getIndex(OSRSIndices.MAPS).addArchive(mapArchiveName)
+                mapArchive = ValkyrCacheLibrary.get().getIndex(OSRSIndices.MAPS).addArchive(mapArchiveName)
             }
             mapArchive.add(0, tileData)
             mapArchive.flag()
-            var landArchive = CacheLibrary.get().getIndex(OSRSIndices.MAPS).getArchive(landArchiveName)
+            var landArchive = ValkyrCacheLibrary.get().getIndex(OSRSIndices.MAPS).getArchive(landArchiveName)
             exists = Objects.nonNull(landArchive)
             if (exists) {
                 landArchive.reset()
             } else {
-                landArchive = CacheLibrary.get().getIndex(OSRSIndices.MAPS).addArchive(landArchiveName)
+                landArchive = ValkyrCacheLibrary.get().getIndex(OSRSIndices.MAPS).addArchive(landArchiveName)
             }
             landArchive.add(0, objData)
             landArchive.flag()

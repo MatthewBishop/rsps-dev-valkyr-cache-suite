@@ -1,4 +1,4 @@
-import org.displee.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.file.File;
 import com.displee.io.impl.InputBuffer;
@@ -18,7 +18,7 @@ public class SequenceLoader extends LoaderExtensionBase {
 	@Override
 	public boolean load() {
 		try {
-			Index index = CacheLibrary.get().getIndex(getIndex());
+			Index index = ValkyrCacheLibrary.get().getIndex(getIndex());
 			int[] files = index.getArchive(getArchive()).fileIds();
 			for (int id : files) {
 				File file = index.getArchive(getArchive()).file(id);
