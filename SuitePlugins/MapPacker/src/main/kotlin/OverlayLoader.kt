@@ -1,5 +1,5 @@
-import store.CacheLibrary
-import store.io.impl.InputStream
+import org.displee.CacheLibrary
+import org.displee.io.impl.InputStream
 import store.plugin.PluginType
 import suite.annotation.LoaderDescriptor
 import suite.controller.Selection

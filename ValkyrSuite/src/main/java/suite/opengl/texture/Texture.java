@@ -1,12 +1,10 @@
 package suite.opengl.texture;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import store.CacheLibrary;
-import store.io.impl.InputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 

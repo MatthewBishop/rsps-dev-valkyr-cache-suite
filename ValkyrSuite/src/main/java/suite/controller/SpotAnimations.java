@@ -14,13 +14,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import misc.CustomTab;
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.SpotDefinition;
 import store.codec.util.Utils;
 import store.loader.LoaderManager;
 import store.loader.SpotLoader;
 import suite.Constants;
-import suite.dialogue.Dialogues;
 import suite.dialogue.InformationDialogue;
 import utility.StringUtilities;
 

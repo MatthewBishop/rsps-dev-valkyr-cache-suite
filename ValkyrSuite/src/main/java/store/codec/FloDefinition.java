@@ -3,8 +3,8 @@
  */
 package store.codec;
 
-import store.CacheLibrary;
-import store.io.impl.InputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Jan 14, 2019

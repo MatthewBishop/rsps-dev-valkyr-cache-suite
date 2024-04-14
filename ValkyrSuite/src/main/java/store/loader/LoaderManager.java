@@ -6,8 +6,8 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import lombok.Getter;
-import store.CacheLibrary;
-import store.CacheLibraryMode;
+import org.displee.CacheLibrary;
+import org.displee.CacheLibraryMode;
 
 @Deprecated
 public class LoaderManager {

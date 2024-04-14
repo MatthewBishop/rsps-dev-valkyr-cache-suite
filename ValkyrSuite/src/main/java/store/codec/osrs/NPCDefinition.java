@@ -5,9 +5,9 @@ package store.codec.osrs;
 
 import java.util.Map;
 
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.AbstractDefinition;
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Sep 18, 2018

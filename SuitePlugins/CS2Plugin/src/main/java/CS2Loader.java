@@ -1,9 +1,9 @@
 import lombok.extern.slf4j.Slf4j;
 import script.CS2Disassembler;
 import script.CS2Script;
-import store.CacheLibrary;
-import store.cache.index.Index;
-import store.io.impl.InputStream;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.Index;
+import org.displee.io.impl.InputStream;
 import store.plugin.extension.LoaderExtensionBase;
 
 import java.io.File;

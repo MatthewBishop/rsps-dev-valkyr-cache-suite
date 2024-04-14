@@ -3,9 +3,9 @@
  */
 package store.codec;
 
-import store.CacheLibrary;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 
 /**
  * @author ReverendDread Jan 14, 2019

@@ -5,19 +5,15 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
 import org.apache.commons.lang3.ArrayUtils;
-import store.CacheLibrary;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
-import suite.annotation.ColorIdentifier;
 import suite.annotation.MeshIdentifier;
 import suite.annotation.OrderType;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
-import suite.annotation.type.RecolorType;
-import suite.annotation.type.RetextureType;
-import suite.annotation.type.TextureIdentifier;
 
 /**
  * @author ReverendDread Sep 17, 2019

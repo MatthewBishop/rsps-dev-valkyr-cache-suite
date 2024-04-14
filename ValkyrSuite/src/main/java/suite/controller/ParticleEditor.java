@@ -15,12 +15,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import misc.CustomTab;
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.ParticleDefinition;
 import store.loader.LoaderManager;
 import store.loader.ParticleLoader;
 import suite.Constants;
-import suite.dialogue.Dialogues;
 import suite.dialogue.InformationDialogue;
 import utility.StringUtilities;
 

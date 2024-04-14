@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import store.CacheLibrary;
-import store.cache.index.archive.Archive;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.archive.Archive;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import store.plugin.extension.LoaderExtensionBase;

@@ -6,8 +6,8 @@ package store.codec.osrs;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-import store.CacheLibrary;
-import store.io.impl.InputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Oct 6, 2018

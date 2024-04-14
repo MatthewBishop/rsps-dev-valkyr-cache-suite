@@ -5,8 +5,8 @@ package store.codec.osrs;
 
 import java.util.LinkedList;
 
-import store.CacheLibrary;
-import store.io.impl.InputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Sep 8, 2018

@@ -3,8 +3,8 @@
  */
 package store.codec.osrs;
 
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 
 /**
  * @author ReverendDread Sep 6, 2018

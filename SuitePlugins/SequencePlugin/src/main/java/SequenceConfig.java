@@ -1,8 +1,8 @@
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
 import org.apache.commons.lang3.ArrayUtils;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 import suite.annotation.OrderType;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;

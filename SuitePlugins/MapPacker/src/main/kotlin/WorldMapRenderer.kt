@@ -1,7 +1,7 @@
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.canvas.Canvas
-import store.CacheLibrary
-import store.io.impl.InputStream
+import org.displee.CacheLibrary
+import org.displee.io.impl.InputStream
 import util.HightCalcuation
 import util.JagexColorPalette
 import utility.XTEASManager

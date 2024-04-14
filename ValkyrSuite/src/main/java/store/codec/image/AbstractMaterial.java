@@ -1,6 +1,6 @@
 package store.codec.image;
 
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 public abstract class AbstractMaterial {
 

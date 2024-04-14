@@ -5,10 +5,9 @@ package store.codec.image.texture;
 
 import lombok.Getter;
 import lombok.Setter;
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.AbstractDefinition;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Jan 10, 2019

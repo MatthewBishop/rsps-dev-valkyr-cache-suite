@@ -13,11 +13,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import misc.CustomTab;
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.BASDefinition;
 import store.loader.BASLoader;
 import store.loader.LoaderManager;
-import suite.dialogue.Dialogues;
 import suite.dialogue.InformationDialogue;
 import utility.StringUtilities;
 

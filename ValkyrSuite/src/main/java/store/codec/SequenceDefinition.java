@@ -3,10 +3,10 @@ package store.codec;
 import java.util.HashMap;
 import java.util.Map;
 
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.util.Utils;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 
 public class SequenceDefinition implements AbstractDefinition, Cloneable {
 

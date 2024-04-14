@@ -1,7 +1,7 @@
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
 import suite.annotation.MeshIdentifier;

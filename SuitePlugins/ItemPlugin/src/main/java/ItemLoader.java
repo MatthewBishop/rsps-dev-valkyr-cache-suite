@@ -1,9 +1,9 @@
 import javafx.scene.control.Alert;
-import store.CacheLibrary;
-import store.cache.index.Index;
-import store.cache.index.archive.Archive;
-import store.cache.index.archive.file.File;
-import store.io.impl.InputStream;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.Index;
+import org.displee.cache.index.archive.Archive;
+import org.displee.cache.index.archive.file.File;
+import org.displee.io.impl.InputStream;
 import store.plugin.extension.LoaderExtensionBase;
 import suite.controller.Selection;
 import suite.dialogue.Dialogues;

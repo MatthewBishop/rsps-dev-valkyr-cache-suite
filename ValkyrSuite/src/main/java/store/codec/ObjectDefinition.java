@@ -7,11 +7,9 @@ import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import store.CacheLibrary;
-import store.codec.util.Utils;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
-import suite.Main;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 
 @Getter @Setter @Slf4j
 public class ObjectDefinition implements AbstractDefinition, Cloneable {

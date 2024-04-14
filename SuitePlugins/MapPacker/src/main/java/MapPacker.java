@@ -12,11 +12,11 @@ import javafx.scene.layout.VBox;
 
 import lombok.extern.slf4j.Slf4j;
 import misc.CustomTab;
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.cache.index.OSRSIndices;
-import store.cache.index.archive.Archive;
+import org.displee.cache.index.archive.Archive;
 import store.plugin.extension.FXController;
-import store.utilities.GZIPCompressor;
+import org.displee.utilities.GZIPCompressor;
 import suite.Constants;
 import suite.Main;
 import suite.controller.Selection;
@@ -26,7 +26,6 @@ import utility.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 /**

@@ -2,9 +2,9 @@ package store.codec.image;
 
 import java.util.ArrayList;
 
-import store.CacheLibrary;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 
 /**
  * @author ReverendDread Jun 22, 2018

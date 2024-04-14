@@ -4,7 +4,6 @@
 package store.plugin;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
@@ -15,7 +14,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
@@ -29,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import store.plugin.extension.ConfigExtensionBase;
 import store.plugin.extension.FXController;
 import store.plugin.extension.LoaderExtensionBase;
-import store.progress.AbstractProgressListener;
+import org.displee.progress.AbstractProgressListener;
 import suite.Constants;
 import suite.annotation.PluginDescriptor;
 import suite.controller.Selection;

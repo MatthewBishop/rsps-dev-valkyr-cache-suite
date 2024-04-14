@@ -3,7 +3,7 @@
  */
 package store.codec.osrs;
 
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Sep 8, 2018

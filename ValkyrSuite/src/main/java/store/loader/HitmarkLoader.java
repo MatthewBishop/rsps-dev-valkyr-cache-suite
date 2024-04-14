@@ -4,10 +4,10 @@
 package store.loader;
 
 import lombok.Getter;
-import store.CacheLibrary;
-import store.cache.index.Index;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.Index;
 import store.codec.HitmarkDefinition;
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Jan 14, 2019

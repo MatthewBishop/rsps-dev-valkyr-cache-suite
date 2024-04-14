@@ -9,10 +9,10 @@ import com.google.common.collect.Maps;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import store.CacheLibrary;
-import store.cache.index.Index;
-import store.cache.index.archive.Archive;
-import store.io.impl.InputStream;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.Index;
+import org.displee.cache.index.archive.Archive;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread

@@ -12,12 +12,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import misc.CustomTab;
 import misc.RsMesh;
-import store.CacheLibrary;
-import store.cache.index.Index;
-import store.cache.index.archive.Archive;
-import store.codec.model.Mesh;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.Index;
+import org.displee.cache.index.archive.Archive;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import store.plugin.extension.ConfigExtensionBase;
@@ -350,7 +349,7 @@ public class ConfigEditor extends FXController {
         CacheLibrary cache = CacheLibrary.get();
         Index index = cache.getIndex(0);
         Archive archive = index.getArchive(2);
-        store.cache.index.archive.file.File file = archive.getFile(name);
+        org.displee.cache.index.archive.file.File file = archive.getFile(name);
         return file.getData();
     }
 

@@ -2,7 +2,7 @@ package store.codec.widget;
 
 import java.io.IOException;
 
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.util.Utils;
 
 public class InterfaceName {

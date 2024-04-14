@@ -8,12 +8,12 @@ import java.nio.file.Files;
 import java.text.DecimalFormat;
 
 import lombok.extern.slf4j.Slf4j;
-import store.CacheLibrary;
-import store.CacheLibraryMode;
+import org.displee.CacheLibrary;
+import org.displee.CacheLibraryMode;
 import store.cache.index.OSRSIndices;
-import store.cache.index.archive.Archive;
+import org.displee.cache.index.archive.Archive;
 import store.codec.util.Utils;
-import store.progress.AbstractProgressListener;
+import org.displee.progress.AbstractProgressListener;
 import utility.XTEASManager;
 
 /**
@@ -415,7 +415,7 @@ public class PureOSRSPacker {
 		int size = osrs_cache.getIndex(2).getArchive(4).getLastFile().getId();
 		Archive archive = osrs_cache.getIndex(2).getArchive(4);
 		for (int id = 0; id < size; id++) {
-			store.cache.index.archive.file.File file = archive.getFile(id);
+			org.displee.cache.index.archive.file.File file = archive.getFile(id);
 			if (file == null)
 				continue;
 			byte[] data = file.getData();
@@ -431,7 +431,7 @@ public class PureOSRSPacker {
 		int size = osrs_cache.getIndex(2).getArchive(1).getLastFile().getId();
 		Archive archive = osrs_cache.getIndex(2).getArchive(1);
 		for (int id = 0; id < size; id++) {
-			store.cache.index.archive.file.File file = archive.getFile(id);
+			org.displee.cache.index.archive.file.File file = archive.getFile(id);
 			if (file == null)
 				continue;
 			byte[] data = file.getData();

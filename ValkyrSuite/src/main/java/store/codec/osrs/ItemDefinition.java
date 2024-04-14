@@ -3,9 +3,9 @@
  */
 package store.codec.osrs;
 
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.AbstractDefinition;
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Sep 30, 2018

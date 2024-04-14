@@ -1,10 +1,7 @@
-import store.CacheLibrary;
-import store.cache.index.Index;
-import store.cache.index.archive.file.File;
-import store.io.impl.InputStream;
-import store.plugin.PluginManager;
-import store.plugin.PluginType;
-import store.plugin.extension.ConfigExtensionBase;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.Index;
+import org.displee.cache.index.archive.file.File;
+import org.displee.io.impl.InputStream;
 import store.plugin.extension.LoaderExtensionBase;
 import suite.controller.Selection;
 

@@ -8,9 +8,9 @@ import java.io.IOException;
 
 import javax.swing.JComponent;
 
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.codec.util.Utils;
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 public class Interface {
 	public int id;

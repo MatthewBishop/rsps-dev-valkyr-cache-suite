@@ -26,8 +26,8 @@ import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.IntegerStringConverter;
 import lombok.Getter;
-import store.CacheLibrary;
-import store.cache.index.archive.Archive;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.archive.Archive;
 import suite.Main;
 import utility.RetentionFileChooser;
 

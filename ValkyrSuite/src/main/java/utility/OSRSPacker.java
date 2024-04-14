@@ -1,12 +1,12 @@
 package utility;
 
-import store.CacheLibrary;
-import store.CacheLibraryMode;
-import store.cache.index.Index;
+import org.displee.CacheLibrary;
+import org.displee.CacheLibraryMode;
+import org.displee.cache.index.Index;
 import store.cache.index.OSRSIndices;
-import store.cache.index.archive.Archive;
+import org.displee.cache.index.archive.Archive;
 import store.codec.util.Utils;
-import store.progress.AbstractProgressListener;
+import org.displee.progress.AbstractProgressListener;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -193,7 +193,7 @@ public class OSRSPacker {
 		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12).getLastFile().getId();
 		Archive archive = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12);
 		for (int index = 0; index < size; index++) {
-			store.cache.index.archive.file.File file = archive.getFile(index);
+			org.displee.cache.index.archive.file.File file = archive.getFile(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			double percentage = (double) index / (double) size * 100D;
@@ -234,7 +234,7 @@ public class OSRSPacker {
 		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9).getLastFile().getId();
 		Archive archive = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9);
 		for (int index = 0; index < size; index++) {
-			store.cache.index.archive.file.File file = archive.getFile(index);
+			org.displee.cache.index.archive.file.File file = archive.getFile(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			double percentage = (double) index / (double) size * 100D;
@@ -248,7 +248,7 @@ public class OSRSPacker {
 		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(10).getLastFile().getId();
 		Archive archive = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(10);
 		for (int index = 0; index < size; index++) {
-			store.cache.index.archive.file.File file = archive.getFile(index);
+			org.displee.cache.index.archive.file.File file = archive.getFile(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			double percentage = (double) index / (double) size * 100D;
@@ -356,7 +356,7 @@ public class OSRSPacker {
 		int length = osrs.getIndex(2).getArchive(13).getLastFile().getId();
 		Archive archive = osrs.getIndex(OSRSIndices.CONFIG).getArchive(13);
 		for (int index = 0; index < length; index++) {
-			store.cache.index.archive.file.File file = archive.getFile(index);
+			org.displee.cache.index.archive.file.File file = archive.getFile(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			try {
@@ -377,7 +377,7 @@ public class OSRSPacker {
 	    int size = osrs_cache.getIndex(2).getArchive(4).getLastFile().getId();
 	    Archive archive = osrs_cache.getIndex(2).getArchive(4);
 		for (int fileId = 0; fileId < size; fileId++) {
-			store.cache.index.archive.file.File file = archive.getFile(fileId);
+			org.displee.cache.index.archive.file.File file = archive.getFile(fileId);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			byte[] data = file.getData();
@@ -389,7 +389,7 @@ public class OSRSPacker {
 		int size = osrs_cache.getIndex(2).getArchive(1).getLastFile().getId();
 		Archive archive = osrs_cache.getIndex(2).getArchive(1);
 		for (int fileId = 0; fileId < size; fileId++) {
-			store.cache.index.archive.file.File file = archive.getFile(fileId);
+			org.displee.cache.index.archive.file.File file = archive.getFile(fileId);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			byte[] data = file.getData();
@@ -421,10 +421,10 @@ public class OSRSPacker {
 		double percentage;
 		int valid_models = osrs_cache.getIndex(7).getLastArchive().getId();
 		for (int index = 0; index < valid_models; index++) {
-			store.cache.index.archive.Archive archive = osrs_cache.getIndex(7).getArchive(index);
+			Archive archive = osrs_cache.getIndex(7).getArchive(index);
 			if (!archive.containsData())
 				continue;
-			store.cache.index.archive.file.File file = archive.getFile(0);
+			org.displee.cache.index.archive.file.File file = archive.getFile(0);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			byte[] data = file.getData();

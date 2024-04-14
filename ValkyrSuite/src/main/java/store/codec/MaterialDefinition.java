@@ -1,7 +1,7 @@
 package store.codec;
 
-import store.CacheLibrary;
-import store.io.impl.InputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
 
 public class MaterialDefinition implements AbstractDefinition, Cloneable {
 

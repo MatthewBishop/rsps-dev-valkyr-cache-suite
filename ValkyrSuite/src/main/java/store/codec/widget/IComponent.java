@@ -1,6 +1,6 @@
 package store.codec.widget;
 
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 public class IComponent {
 

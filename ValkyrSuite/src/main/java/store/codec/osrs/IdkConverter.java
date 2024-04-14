@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import store.CacheLibrary;
-import store.cache.index.Index;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.Index;
 import store.codec.IdentityKit;
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Dec 3, 2018

@@ -1,11 +1,11 @@
 package store.loader;
 
 import lombok.Getter;
-import store.CacheLibrary;
-import store.cache.index.Index;
+import org.displee.CacheLibrary;
+import org.displee.cache.index.Index;
 import store.codec.ParticleDefinition;
 import store.codec.util.Utils;
-import store.io.impl.InputStream;
+import org.displee.io.impl.InputStream;
 
 /**
  * @author ReverendDread Jun 28, 2018

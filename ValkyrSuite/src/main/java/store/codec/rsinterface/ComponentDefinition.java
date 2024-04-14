@@ -6,9 +6,9 @@ package store.codec.rsinterface;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import store.CacheLibrary;
-import store.io.impl.InputStream;
-import store.io.impl.OutputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.InputStream;
+import org.displee.io.impl.OutputStream;
 
 public class ComponentDefinition {
 

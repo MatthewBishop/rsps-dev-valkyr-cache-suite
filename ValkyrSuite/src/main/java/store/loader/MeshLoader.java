@@ -8,10 +8,10 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import lombok.Getter;
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.cache.index.OSRSIndices;
-import store.cache.index.archive.Archive;
-import store.cache.index.archive.file.File;
+import org.displee.cache.index.archive.Archive;
+import org.displee.cache.index.archive.file.File;
 import store.codec.model.Mesh;
 
 /**

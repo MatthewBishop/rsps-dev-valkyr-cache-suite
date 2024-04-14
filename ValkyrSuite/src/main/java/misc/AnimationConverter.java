@@ -4,11 +4,11 @@
 //package misc;
 //
 //import lombok.extern.slf4j.Slf4j;
-//import store.CacheLibrary;
-//import store.CacheLibraryMode;
-//import store.cache.index.Index;
+//import org.displee.CacheLibrary;
+//import org.displee.CacheLibraryMode;
+//import org.displee.cache.index.Index;
 //import store.cache.index.archive.Archive;
-//import store.utilities.Miscellaneous;
+//import org.displee.utilities.Miscellaneous;
 //
 ///**
 // * @author ReverendDread

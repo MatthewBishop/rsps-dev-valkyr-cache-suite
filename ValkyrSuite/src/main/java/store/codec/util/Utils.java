@@ -2,8 +2,8 @@ package store.codec.util;
 
 import java.math.BigInteger;
 
-import store.CacheLibrary;
-import store.io.impl.OutputStream;
+import org.displee.CacheLibrary;
+import org.displee.io.impl.OutputStream;
 
 public final class Utils {
 

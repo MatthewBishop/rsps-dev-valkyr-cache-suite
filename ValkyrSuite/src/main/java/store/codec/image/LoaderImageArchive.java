@@ -3,7 +3,7 @@ package store.codec.image;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 
 public class LoaderImageArchive {
 

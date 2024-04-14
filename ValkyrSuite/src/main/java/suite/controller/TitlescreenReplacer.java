@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import store.CacheLibrary;
+import org.displee.CacheLibrary;
 import store.cache.index.OSRSIndices;
 import suite.Main;
 import utility.FilterMode;
