@@ -215,7 +215,7 @@ class WorldMapRenderer(view: Canvas) : Runnable {
                                     if (hideUnderlay)
                                         readUnsignedByte()
                                     else {
-                                        tileInfo.overlayId = readByte()
+                                        tileInfo.overlayId = readByte().toInt()
                                         tileInfo.overlayShape = (opcode - 2) / 4
                                         tileInfo.overlayRotation = (opcode - 2 + rotation and 0x3)
                                     }
@@ -276,7 +276,7 @@ class WorldMapRenderer(view: Canvas) : Runnable {
                 for (y in 0 until REGION_HEIGHT) {
                     val underlayId = tileInformation[Position(x, y, z)]?.underlayId
                     underlayId?.let {
-                        val underlay = MapPlugin.underlays.underlays[it]
+                        val underlay = MapPlugin.underlays?.underlays?.get(it)
                         underlay?.apply {
                             var rgb: Int = Color.BLACK.rgb
                             try {

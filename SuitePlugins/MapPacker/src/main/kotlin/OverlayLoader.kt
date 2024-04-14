@@ -25,7 +25,7 @@ class OverlayLoader {
                 file?.apply {
                     val definition = OverlayConfig()
                     val buffer = InputBuffer(file.data)
-                    buffer.raw()?.apply {
+                    buffer.raw().apply {
                         while (true) {
                             val opcode = buffer.readUnsignedByte()
                             if (opcode == 0) break
