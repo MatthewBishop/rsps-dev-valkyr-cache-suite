@@ -44,11 +44,11 @@ public class CS2Script extends ConfigExtensionBase {
     @Override
     public void decode(InputBuffer buffer) {
 
-        buffer.setPosition(buffer.buffer.length - 2);
+        buffer.setOffset(buffer.buffer.length - 2);
         int switchLength = buffer.readUnsignedShort();
 
         int endIdx = buffer.buffer.length - 2 - switchLength - 12;
-        buffer.setPosition(endIdx);
+        buffer.setOffset(endIdx);
         int numOpcodes = buffer.readInt();
         localIntCount = buffer.readUnsignedShort();
         localStringCount = buffer.readUnsignedShort();
@@ -76,14 +76,14 @@ public class CS2Script extends ConfigExtensionBase {
                 }
             }
         }
-        buffer.setPosition(0);
+        buffer.setOffset(0);
         buffer.readStringOrNull();
         instructions = new int[numOpcodes];
         intOrphands = new int[numOpcodes];
         stringOrphands = new String[numOpcodes];
         int opcode;
         int index = 0;
-        while (buffer.getPosition() < endIdx)
+        while (buffer.getOffset() < endIdx)
         {
             opcode = buffer.readUnsignedShort();
             if (opcode == SCONST)
@@ -133,7 +133,7 @@ public class CS2Script extends ConfigExtensionBase {
         buffer.writeShort(getLocalStringCount());
         buffer.writeShort(getIntStackCount());
         buffer.writeShort(getStringStackCount());
-        int switchStart = buffer.position;
+        int switchStart = buffer.offset;
         if (switches == null)
         {
             buffer.writeByte(0);
@@ -151,7 +151,7 @@ public class CS2Script extends ConfigExtensionBase {
                 }
             }
         }
-        int switchLength = buffer.position - switchStart;
+        int switchLength = buffer.offset - switchStart;
         buffer.writeShort(switchLength);
 
         return buffer;

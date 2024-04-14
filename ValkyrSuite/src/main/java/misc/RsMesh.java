@@ -79,7 +79,7 @@ public class RsMesh extends Mesh {
         } else {
 	        first.readByte();
 	        version = first.readUnsignedByte();
-	        first.setPosition(data.length - 26);
+	        first.setOffset(data.length - 26);
 	        numVertices = first.readUnsignedShort();
 	        numFaces = first.readUnsignedShort();
 	        numTextures = first.readUnsignedShort();
@@ -124,7 +124,7 @@ public class RsMesh extends Mesh {
 	        int cubeTextureFaceCount = 0;
 	        if (numTextures > 0) {
 	            faceMappings = new byte[numTextures];
-	            first.setPosition(3);
+	            first.setOffset(3);
 	            for (int tri = 0; tri < numTextures; tri++) {
 	                byte type = faceMappings[tri] = (byte) first.readByte();
 	                if (type == 0) {
@@ -200,8 +200,8 @@ public class RsMesh extends Mesh {
 			int tex_coord_v_offset = data.length;
 	        if (hasTextureUV) {
 	        	InputBuffer uvBuffer = new InputBuffer(data);
-	        	uvBuffer.setPosition(data.length - 26);
-	        	uvBuffer.setPosition(uvBuffer.getPosition() - data[uvBuffer.getPosition() - 1]);
+	        	uvBuffer.setOffset(data.length - 26);
+	        	uvBuffer.setOffset(uvBuffer.getOffset() - data[uvBuffer.getOffset() - 1]);
 	        	textureUVCoordCount = uvBuffer.readUnsignedShort();
 	        	int extras_data_size = uvBuffer.readUnsignedShort();
 	        	int uv_index_data_size = uvBuffer.readUnsignedShort();
@@ -257,11 +257,11 @@ public class RsMesh extends Mesh {
 	                textureTransV = new int[cubeTextureFaceCount];
 	            }
 	        }
-	        first.setPosition(vertexFlagsOffset);
-	        second.setPosition(vertexXOffsetOffset);
-	        third.setPosition(vertexYOffsetOffset);
-	        fourth.setPosition(vertexZOffsetOffset);
-	        fifth.setPosition(vertexSkinsOffset);
+	        first.setOffset(vertexFlagsOffset);
+	        second.setOffset(vertexXOffsetOffset);
+	        third.setOffset(vertexYOffsetOffset);
+	        fourth.setOffset(vertexZOffsetOffset);
+	        fifth.setOffset(vertexSkinsOffset);
 	        int baseX = 0;
 	        int baseY = 0;
 	        int baseZ = 0;
@@ -297,9 +297,9 @@ public class RsMesh extends Mesh {
 	            }
 	        }
 	        if (textureUVCoordCount > 0) {
-	        	first.setPosition(vertex_uv_offset);
-	        	second.setPosition(tex_coord_u_offset);
-	        	third.setPosition(tex_coord_v_offset);
+	        	first.setOffset(vertex_uv_offset);
+	        	second.setOffset(tex_coord_u_offset);
+	        	third.setOffset(tex_coord_v_offset);
 	        	vertexUVOffset = new int[numVertices];
 	        	int coord = 0;
 	        	int size = 0;
@@ -317,13 +317,13 @@ public class RsMesh extends Mesh {
 					textureCoordV[coord] = (third.readShort() / 4096.0F);
 				}
 	        }
-	        first.setPosition(faceColorsOffset);
-	        second.setPosition(faceTypesOffset);
-	        third.setPosition(facePrioritiesOffset);
-	        fourth.setPosition(faceAlphasOffset);
-	        fifth.setPosition(faceSkinsOffset);
-	        sixth.setPosition(faceMaterialsOffset);
-	        seventh.setPosition(faceTextureIndicesOffset);
+	        first.setOffset(faceColorsOffset);
+	        second.setOffset(faceTypesOffset);
+	        third.setOffset(facePrioritiesOffset);
+	        fourth.setOffset(faceAlphasOffset);
+	        fifth.setOffset(faceSkinsOffset);
+	        sixth.setOffset(faceMaterialsOffset);
+	        seventh.setOffset(faceTextureIndicesOffset);
 	        for (int face = 0; face < numFaces; face++) {
 	            faceColors[face] = (short) first.readUnsignedShort();
 	            if (hasFaceTypes) {
@@ -360,18 +360,18 @@ public class RsMesh extends Mesh {
 	            }
 	        }
 	        maxIndex = -1;
-	        first.setPosition(faceIndicesOffset);
-	        second.setPosition(facesCompressTypeOffset);
-	        third.setPosition(face_uv_index_offset);
+	        first.setOffset(faceIndicesOffset);
+	        second.setOffset(facesCompressTypeOffset);
+	        third.setOffset(face_uv_index_offset);
 	        decodeIndices(first, second, third);
-	        first.setPosition(simpleTexturesOffset);
-	        second.setPosition(complexTexturesOffset);
-	        third.setPosition(texturesScaleOffset);
-	        fourth.setPosition(texturesRotationOffset);
-	        fifth.setPosition(texturesDirectionOffset);
-	        sixth.setPosition(texturesTranslationOffset);
+	        first.setOffset(simpleTexturesOffset);
+	        second.setOffset(complexTexturesOffset);
+	        third.setOffset(texturesScaleOffset);
+	        fourth.setOffset(texturesRotationOffset);
+	        fifth.setOffset(texturesDirectionOffset);
+	        sixth.setOffset(texturesTranslationOffset);
 	        decodeMapping(first, second, third, fourth, fifth, sixth);
-	        first.setPosition(particleEffectsOffset);
+	        first.setOffset(particleEffectsOffset);
 	        if (hasParticleEffects) {
 	            int numEmitters = first.readUnsignedByte();
 	            if (numEmitters > 0) {

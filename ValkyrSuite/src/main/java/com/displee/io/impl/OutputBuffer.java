@@ -54,7 +54,7 @@ public class OutputBuffer extends Buffer {
 	public void writePacketVarByte(int id) {
 		writeUnsignedSmart(id);
 		writeByte(0);
-		opcodeStart = getPosition() - 1;
+		opcodeStart = getOffset() - 1;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class OutputBuffer extends Buffer {
 	public void writePacketVarShort(int id) {
 		writeUnsignedSmart(id);
 		writeShort(0);
-		opcodeStart = getPosition() - 2;
+		opcodeStart = getOffset() - 2;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class OutputBuffer extends Buffer {
 	 */
 	@Deprecated
 	public void endPacketVarByte() {
-		writeByte((byte) (getPosition() - (opcodeStart + 2) + 1), opcodeStart);
+		writeByte((byte) (getOffset() - (opcodeStart + 2) + 1), opcodeStart);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class OutputBuffer extends Buffer {
 	 */
 	@Deprecated
 	public void endPacketVarShort() {
-		int size = getPosition() - (opcodeStart + 2);
+		int size = getOffset() - (opcodeStart + 2);
 		writeByte((byte) (size >> 8), opcodeStart++);
 		writeByte((byte) size, opcodeStart);
 	}
@@ -342,17 +342,17 @@ public class OutputBuffer extends Buffer {
 	}
 
 	public void method13180(int i) {
-		buffer[position - i - 4] = (byte) (i >> 24);
-		buffer[position - i - 3] = (byte) (i >> 16);
-		buffer[position - i - 2] = (byte) (i >> 8);
-		buffer[position - i - 1] = (byte) i;
+		buffer[offset - i - 4] = (byte) (i >> 24);
+		buffer[offset - i - 3] = (byte) (i >> 16);
+		buffer[offset - i - 2] = (byte) (i >> 8);
+		buffer[offset - i - 1] = (byte) i;
 	}
 
 	/**
 	 * Initialize bit access.
 	 */
 	public void initBitAccess() {
-		bitPosition = position * 8;
+		bitPosition = offset * 8;
 	}
 
 	/**
@@ -385,7 +385,7 @@ public class OutputBuffer extends Buffer {
 	 * Finish the bit access.
 	 */
 	public void finishBitAccess() {
-		position = (bitPosition + 7) / 8;
+		offset = (bitPosition + 7) / 8;
 	}
 
 	/**
@@ -448,9 +448,9 @@ public class OutputBuffer extends Buffer {
 	 * @param length The length.
 	 */
 	public void writeBytes(byte[] bytes, int offset, int length) {
-		expend(this.position + length - offset);
-		System.arraycopy(bytes, offset, this.buffer, this.position, length);
-		this.position += (length - offset);
+		expend(this.offset + length - offset);
+		System.arraycopy(bytes, offset, this.buffer, this.offset, length);
+		this.offset += (length - offset);
 	}
 
 	/**
@@ -461,13 +461,13 @@ public class OutputBuffer extends Buffer {
 	 * @param length The length.
 	 */
 	public void writeReversedBytes(byte[] bytes, int offset, int length) {
-		expend(this.position + length - offset);
+		expend(this.offset + length - offset);
 		final byte[] copy = bytes.clone();
 		for (int i = 0; i < copy.length; i++) {
 			bytes[copy.length - 1 - i] = bytes[i];
 		}
-		System.arraycopy(bytes, offset, this.buffer, this.position, length);
-		this.position += (length - offset);
+		System.arraycopy(bytes, offset, this.buffer, this.offset, length);
+		this.offset += (length - offset);
 	}
 
 	public void write2DIntArray(int[][] array) {
@@ -528,8 +528,8 @@ public class OutputBuffer extends Buffer {
 	 * @return The data.
 	 */
 	public byte[] flip() {
-		byte[] data = new byte[position];
-		clone(data, position = 0, data.length);
+		byte[] data = new byte[offset];
+		clone(data, offset = 0, data.length);
 		return data;
 	}
 

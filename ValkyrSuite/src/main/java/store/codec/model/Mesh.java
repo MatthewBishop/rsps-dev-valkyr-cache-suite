@@ -331,7 +331,7 @@ public class Mesh extends ConfigExtensionBase {
 	public void decode317(byte[] data) {
 
 		InputBuffer buffer = new InputBuffer(data);
-		buffer.setPosition(data.length - 18);
+		buffer.setOffset(data.length - 18);
 		MeshHeader header = new MeshHeader();
 		header.setData(data);
 		header.setVertices(buffer.readUnsignedShort());
@@ -446,19 +446,19 @@ public class Mesh extends ConfigExtensionBase {
 
 		faceColors = new short[numFaces];
 		InputBuffer directions = new InputBuffer(header.getData());
-		directions.setPosition(header.getVertexDirectionOffset());
+		directions.setOffset(header.getVertexDirectionOffset());
 
 		InputBuffer verticesXBuffer = new InputBuffer(header.getData());
-		verticesXBuffer.setPosition(header.getXDataOffset());
+		verticesXBuffer.setOffset(header.getXDataOffset());
 
 		InputBuffer verticesYBuffer = new InputBuffer(header.getData());
-		verticesYBuffer.setPosition(header.getYDataOffset());
+		verticesYBuffer.setOffset(header.getYDataOffset());
 
 		InputBuffer verticesZBuffer = new InputBuffer(header.getData());
-		verticesZBuffer.setPosition(header.getZDataOffset());
+		verticesZBuffer.setOffset(header.getZDataOffset());
 
 		InputBuffer bones = new InputBuffer(header.getData());
-		bones.setPosition(header.getVertexSkinOffset());
+		bones.setOffset(header.getVertexSkinOffset());
 
 		int baseX = 0;
 		int baseY = 0;
@@ -494,18 +494,18 @@ public class Mesh extends ConfigExtensionBase {
 		}
 
 		InputBuffer colours = directions;
-		colours.setPosition(header.getColourDataOffset());
+		colours.setOffset(header.getColourDataOffset());
 
 		InputBuffer points = verticesXBuffer;
-		points.setPosition(header.getTexturePointerOffset());
+		points.setOffset(header.getTexturePointerOffset());
 
 		InputBuffer priorities = verticesYBuffer;
-		priorities.setPosition(header.getFacePriorityOffset());
+		priorities.setOffset(header.getFacePriorityOffset());
 
 		InputBuffer alphas = verticesZBuffer;
-		alphas.setPosition(header.getFaceAlphaOffset());
+		alphas.setOffset(header.getFaceAlphaOffset());
 
-		bones.setPosition(header.getFaceBoneOffset());
+		bones.setOffset(header.getFaceBoneOffset());
 
 		for (int face = 0; face < numFaces; face++) {
 			faceColors[face] = (short) colours.readUnsignedShort();
@@ -524,10 +524,10 @@ public class Mesh extends ConfigExtensionBase {
 		}
 
 		InputBuffer faceData = directions;
-		faceData.setPosition(header.getFaceDataOffset());
+		faceData.setOffset(header.getFaceDataOffset());
 
 		InputBuffer types = verticesXBuffer;
-		types.setPosition(header.getFaceTypeOffset());
+		types.setOffset(header.getFaceTypeOffset());
 
 		short faceX = 0;
 		short faceY = 0;
@@ -579,7 +579,7 @@ public class Mesh extends ConfigExtensionBase {
 		}
 
 		InputBuffer maps = directions;
-		maps.setPosition(header.getUvMapFaceOffset());
+		maps.setOffset(header.getUvMapFaceOffset());
 
 		for (int index = 0; index < numTextures; index++) {
 			textureMappingP[index] = (short) maps.readUnsignedShort();
@@ -636,9 +636,9 @@ public class Mesh extends ConfigExtensionBase {
 		boolean hasVersion = (flags & 0x8) == 8;
 
 		if (hasVersion) {
-			first.position -= 7;
+			first.offset -= 7;
 			version = first.readUnsignedByte();
-			first.position += 6;
+			first.offset += 6;
 		}
 
 		int modelPriority = first.readUnsignedByte();
@@ -657,7 +657,7 @@ public class Mesh extends ConfigExtensionBase {
 
 		if (numTextures > 0) {
 			faceMappings = new byte[numTextures];
-			first.setPosition(0);
+			first.setOffset(0);
 			for (int face = 0; face < numTextures; face++) {
 				byte type = (faceMappings[face] = (byte) first.readByte());
 				if (type == 0)
@@ -785,11 +785,11 @@ public class Mesh extends ConfigExtensionBase {
 			}
 		}
 
-		first.setPosition(vertexFlagsOffset);
-		second.setPosition(verticesXOffsetOffset);
-		third.setPosition(verticesYOffsetOffset);
-		fourth.setPosition(verticesZOffsetOffset);
-		fifth.setPosition(faceIndicesOffset);
+		first.setOffset(vertexFlagsOffset);
+		second.setOffset(verticesXOffsetOffset);
+		third.setOffset(verticesYOffsetOffset);
+		fourth.setOffset(verticesZOffsetOffset);
+		fifth.setOffset(faceIndicesOffset);
 
 		int baseX = 0;
 		int baseY = 0;
@@ -815,13 +815,13 @@ public class Mesh extends ConfigExtensionBase {
 				vertexSkins[vertex] = fifth.readUnsignedByte();
 		}
 
-		first.setPosition(i_187_);
-		second.setPosition(faceTypesOffset);
-		third.setPosition(facesPrioritiesOffset);
-		fourth.setPosition(i_183_);
-		fifth.setPosition(faceAlphasOffset);
-		sixth.setPosition(i_185_);
-		seventh.setPosition(i_186_);
+		first.setOffset(i_187_);
+		second.setOffset(faceTypesOffset);
+		third.setOffset(facesPrioritiesOffset);
+		fourth.setOffset(i_183_);
+		fifth.setOffset(faceAlphasOffset);
+		sixth.setOffset(i_185_);
+		seventh.setOffset(i_186_);
 
 		for (int face = 0; face < numFaces; face++) {
 			faceColors[face] = (short) first.readUnsignedShort();
@@ -843,17 +843,17 @@ public class Mesh extends ConfigExtensionBase {
 			}
 		}
 		maxIndex = -1;
-		first.setPosition(i_184_);
-		second.setPosition(facesCompressTypeOffset);
+		first.setOffset(i_184_);
+		second.setOffset(facesCompressTypeOffset);
 		decodeIndicesRS2(first, second);
-		first.setPosition(i_191_);
-		second.setPosition(i_192_);
-		third.setPosition(i_194_);
-		fourth.setPosition(i_195_);
-		fifth.setPosition(i_196_);
-		sixth.setPosition(i_197_);
+		first.setOffset(i_191_);
+		second.setOffset(i_192_);
+		third.setOffset(i_194_);
+		fourth.setOffset(i_195_);
+		fifth.setOffset(i_196_);
+		sixth.setOffset(i_197_);
 		decodeMapping(first, second, third, fourth, fifth, sixth);
-		first.setPosition(i_198_);
+		first.setOffset(i_198_);
 		if (hasParticleEffects) {
 			int vertex = first.readUnsignedByte();
 			if (vertex > 0) {
@@ -933,7 +933,7 @@ public class Mesh extends ConfigExtensionBase {
 		} else {
 			first.readUnsignedByte();
 			this.version = first.readUnsignedByte();
-			first.setPosition(data.length - 26);
+			first.setOffset(data.length - 26);
 			this.numVertices = first.readUnsignedShort();
 			this.numFaces = first.readUnsignedShort();
 			this.numTextures = first.readUnsignedShort();
@@ -979,7 +979,7 @@ public class Mesh extends ConfigExtensionBase {
 			int offset;
 			if(this.numTextures > 0) {
 				this.faceMappings = new byte[this.numTextures];
-				first.setPosition(3);
+				first.setOffset(3);
 
 				for(offset = 0; offset < this.numTextures; ++offset) {
 					byte type = this.faceMappings[offset] = (byte) first.readByte();
@@ -1066,8 +1066,8 @@ public class Mesh extends ConfigExtensionBase {
 
 			if(hasTextureUV) {
 				InputBuffer uvBuffer = new InputBuffer(data);
-				uvBuffer.setPosition(data.length - 26);
-				uvBuffer.setPosition(data[uvBuffer.getPosition() - 1]);
+				uvBuffer.setOffset(data.length - 26);
+				uvBuffer.setOffset(data[uvBuffer.getOffset() - 1]);
 				this.textureUVCoordCount = uvBuffer.readUnsignedShort();
 				baseY = uvBuffer.readUnsignedShort();
 				baseZ = uvBuffer.readUnsignedShort();
@@ -1133,11 +1133,11 @@ public class Mesh extends ConfigExtensionBase {
 				}
 			}
 
-			first.setPosition(vertexFlagsOffset);
-			second.setPosition(verticesXOffsetOffset);
-			third.setPosition(verticesYOffsetOffset);
-			fourth.setPosition(verticesZOffsetOffset);
-			fifth.setPosition(vertexSkinsOffset);
+			first.setOffset(vertexFlagsOffset);
+			second.setOffset(verticesXOffsetOffset);
+			third.setOffset(verticesYOffsetOffset);
+			fourth.setOffset(verticesZOffsetOffset);
+			fifth.setOffset(vertexSkinsOffset);
 			int baseX = 0;
 			baseY = 0;
 			baseZ = 0;
@@ -1183,9 +1183,9 @@ public class Mesh extends ConfigExtensionBase {
 			}
 
 			if(this.textureUVCoordCount > 0) {
-				first.setPosition(modelDataLength2);
-				second.setPosition(modelDataLength3);
-				third.setPosition(modelDataLength4);
+				first.setOffset(modelDataLength2);
+				second.setOffset(modelDataLength3);
+				third.setOffset(modelDataLength4);
 				this.vertexUVOffset = new int[this.numVertices];
 				vertexCount = 0;
 
@@ -1206,13 +1206,13 @@ public class Mesh extends ConfigExtensionBase {
 				}
 			}
 
-			first.setPosition(faceColorsOffset);
-			second.setPosition(faceTypesOffset);
-			third.setPosition(facePrioritiesOffset);
-			fourth.setPosition(faceAlphasOffset);
-			fifth.setPosition(faceSkinsOffset);
-			sixth.setPosition(faceMaterialsOffset);
-			seventh.setPosition(faceTextureIndicesOffset);
+			first.setOffset(faceColorsOffset);
+			second.setOffset(faceTypesOffset);
+			third.setOffset(facePrioritiesOffset);
+			fourth.setOffset(faceAlphasOffset);
+			fifth.setOffset(faceSkinsOffset);
+			sixth.setOffset(faceMaterialsOffset);
+			seventh.setOffset(faceTextureIndicesOffset);
 
 			for(vertexCount = 0; vertexCount < this.numFaces; ++vertexCount) {
 				this.faceColors[vertexCount] = (short)first.readUnsignedShort();
@@ -1257,18 +1257,18 @@ public class Mesh extends ConfigExtensionBase {
 			}
 
 			this.maxIndex = -1;
-			first.setPosition(faceIndicesOffset);
-			second.setPosition(facesCompressTypeOffset);
-			third.setPosition(modelDataLength1);
+			first.setOffset(faceIndicesOffset);
+			second.setOffset(facesCompressTypeOffset);
+			third.setOffset(modelDataLength1);
 			this.decodeIndices(first, second, third);
-			first.setPosition(simpleTexturesOffset);
-			second.setPosition(complexTexturesOffset);
-			third.setPosition(texturesScaleOffset);
-			fourth.setPosition(texturesRotationOffset);
-			fifth.setPosition(texturesDirectionOffset);
-			sixth.setPosition(texturesTranslationOffset);
+			first.setOffset(simpleTexturesOffset);
+			second.setOffset(complexTexturesOffset);
+			third.setOffset(texturesScaleOffset);
+			fourth.setOffset(texturesRotationOffset);
+			fifth.setOffset(texturesDirectionOffset);
+			sixth.setOffset(texturesTranslationOffset);
 			this.decodeMapping(first, second, third, fourth, fifth, sixth);
-			first.setPosition(offset);
+			first.setOffset(offset);
 			if(hasParticleEffects) {
 				vertexCount = first.readUnsignedByte();
 				if(vertexCount > 0) {

@@ -30,16 +30,16 @@ public class GZIPCompressor {
 	 */
 	public static boolean inflate(InputBuffer inputBuffer, byte[] data) {
 		try {
-			if ((inputBuffer.getBytes()[inputBuffer.getPosition()] ^ 0xffffffff) != -32
-					|| inputBuffer.getBytes()[inputBuffer.getPosition() + 1] != -117) {
+			if ((inputBuffer.getBytes()[inputBuffer.getOffset()] ^ 0xffffffff) != -32
+					|| inputBuffer.getBytes()[inputBuffer.getOffset() + 1] != -117) {
 				return false;
 			}
 			if (inflater == null) {
 				inflater = new Inflater(true);
 			}
 			try {
-				inflater.setInput(inputBuffer.getBytes(), 10 + inputBuffer.getPosition(),
-						(-10 - inputBuffer.getPosition() - (8 - inputBuffer.getBytes().length)));
+				inflater.setInput(inputBuffer.getBytes(), 10 + inputBuffer.getOffset(),
+						(-10 - inputBuffer.getOffset() - (8 - inputBuffer.getBytes().length)));
 				inflater.inflate(data);
 			} catch (Exception exception) {
 				inflater.reset();

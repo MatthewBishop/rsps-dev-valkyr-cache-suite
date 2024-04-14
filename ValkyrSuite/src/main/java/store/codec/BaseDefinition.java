@@ -58,8 +58,8 @@ public class BaseDefinition implements AbstractDefinition, Cloneable {
 			for (int sub_skin = 0; (sub_skin < skin_list[skin].length); sub_skin++)
 				stream.writeByte(skin_list[skin][sub_skin]);
 		}
-		byte[] flipped = new byte[stream.getPosition()];
-		stream.setPosition(0);
+		byte[] flipped = new byte[stream.getOffset()];
+		stream.setOffset(0);
 		stream.flip();
 		return flipped;
 	}

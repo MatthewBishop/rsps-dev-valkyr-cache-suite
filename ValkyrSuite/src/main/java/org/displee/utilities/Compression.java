@@ -45,7 +45,7 @@ public class Compression {
 		}
 		outputBuffer.writeBytes(compressed);
 		if (xteas != null && (xteas[0] != 0 || xteas[1] != 0 || xteas[2] != 0 || 0 != xteas[3])) {
-			outputBuffer.encodeXTEA(xteas, 5, outputBuffer.getPosition());
+			outputBuffer.encodeXTEA(xteas, 5, outputBuffer.getOffset());
 		}
 		if (revision != -1) {
 			outputBuffer.writeShort(revision);

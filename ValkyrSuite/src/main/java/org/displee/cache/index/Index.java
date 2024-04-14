@@ -234,7 +234,7 @@ public class Index extends ReferenceTable {
 					}
 					super.origin.getMainFile().seek((long) archiveSector.getPosition() * Constants.ARCHIVE_SIZE);
 					super.origin.getMainFile().read(inputBuffer.getBytes(), 0, requiredToRead + archiveHeaderSize);
-					inputBuffer.setPosition(0);
+					inputBuffer.setOffset(0);
 					if (!archiveSector.read(inputBuffer)) {
 						throw new RuntimeException("Error, could not read the archive.");
 					} else if (!isIndexValid(archiveSector.getIndex()) || id != archiveSector.getId()
@@ -288,7 +288,7 @@ public class Index extends ReferenceTable {
 					randomAccessFile.seek((long) id * Constants.INDEX_SIZE);
 					randomAccessFile.read(buffer, 0, Constants.INDEX_SIZE);
 					final InputBuffer inputBuffer = new InputBuffer(buffer);
-					inputBuffer.setPosition(3);
+					inputBuffer.setOffset(3);
 					position = inputBuffer.read24BitInt();
 					if (position <= 0 || position > super.origin.getMainFile().length() / Constants.ARCHIVE_SIZE) {
 						return false;

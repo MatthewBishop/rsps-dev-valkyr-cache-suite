@@ -46,7 +46,7 @@ public class Archive317 extends Archive {
 		setFileIds(filesLength);
 		setFiles(filesLength);
 		InputBuffer filesInputBuffer = new InputBuffer(stream.getBytes());
-		filesInputBuffer.setPosition(stream.getPosition() + filesLength * 10);
+		filesInputBuffer.setOffset(stream.getOffset() + filesLength * 10);
 		for (int i = 0; i < filesLength; i++) {
 			int fileName = stream.readInt();
 			decompressedLength = stream.read24BitInt();

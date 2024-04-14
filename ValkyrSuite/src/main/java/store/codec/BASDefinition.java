@@ -444,8 +444,8 @@ public class BASDefinition implements AbstractDefinition, Cloneable {
 		}
 
 		stream.writeByte(0);
-		byte[] offset_stream = new byte[stream.getPosition()];
-		stream.setPosition(0);
+		byte[] offset_stream = new byte[stream.getOffset()];
+		stream.setOffset(0);
 		stream.flip();
 		// stream.flipBuffer(offset_stream, 0, offset_stream.length);
 		return offset_stream;

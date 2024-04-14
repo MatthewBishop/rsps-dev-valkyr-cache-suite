@@ -735,11 +735,11 @@ public class ReferenceTable implements Container {
 					return archive;
 				}
 				final InputBuffer inputBuffer = new InputBuffer(archiveSector.getData());
-				inputBuffer.setPosition(1);
+				inputBuffer.setOffset(1);
 				final int remaining = inputBuffer.getBytes().length
-						- ((inputBuffer.readInt() & 0xFFFFFF) + inputBuffer.getPosition());
+						- ((inputBuffer.readInt() & 0xFFFFFF) + inputBuffer.getOffset());
 				if (remaining >= 2) {
-					inputBuffer.setPosition(inputBuffer.getBytes().length - 2);
+					inputBuffer.setOffset(inputBuffer.getBytes().length - 2);
 					archive.setRevision(inputBuffer.readUnsignedShort());
 				}
 				return archive;

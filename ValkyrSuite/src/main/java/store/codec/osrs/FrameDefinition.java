@@ -33,7 +33,7 @@ public class FrameDefinition {
 		animationCount = settings.readUnsignedByte();
 		int var10 = -1;
 		int stepCount = 0;
-		stream.skip(settings.getPosition() + animationCount);
+		stream.skip(settings.getOffset() + animationCount);
 		this.settings = new int[animationCount];
 		for (int animation = 0; animation < animationCount; animation++) {
 			int setting = settings.readUnsignedByte();
@@ -87,9 +87,9 @@ public class FrameDefinition {
 			}
 		}
 
-		if (stream.getPosition() != data.length) {
+		if (stream.getOffset() != data.length) {
 			System.out.println(
-					"FrameDefinition - Remaining: " + stream.getRemaining() + ", Position: " + stream.getPosition());
+					"FrameDefinition - Remaining: " + stream.getRemaining() + ", Position: " + stream.getOffset());
 		} else {
 			this.stepCount = stepCount;
 			this.opCodeTable = new int[stepCount];

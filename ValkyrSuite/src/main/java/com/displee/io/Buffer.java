@@ -20,7 +20,7 @@ public abstract class Buffer {
 	/**
 	 * The offset.
 	 */
-	public int position;
+	public int offset;
 
 	/**
 	 * The bit position.
@@ -95,7 +95,7 @@ public abstract class Buffer {
 	 * @return The byte.
 	 */
 	public int readByte() {
-		return getRemaining() > 0 ? buffer[position++] : 0;
+		return getRemaining() > 0 ? buffer[offset++] : 0;
 	}
 
 	/**
@@ -122,7 +122,7 @@ public abstract class Buffer {
 	 * @param b The byte.
 	 */
 	public void writeByte(byte b) {
-		writeByte(b, position++);
+		writeByte(b, offset++);
 	}
 
 	/**
@@ -182,8 +182,8 @@ public abstract class Buffer {
 	}
 
 	public void decodeXTEA(int keys[], int start, int end) {
-		int l = position;
-		position = start;
+		int l = offset;
+		offset = start;
 		int i1 = (end - start) / 8;
 		for (int j1 = 0; j1 < i1; j1++) {
 			int k1 = readInt();
@@ -195,17 +195,17 @@ public abstract class Buffer {
 				sum -= delta;
 				k1 -= (l1 >>> 5 ^ l1 << 4) + l1 ^ keys[sum & 3] + sum;
 			}
-			position -= 8;
+			offset -= 8;
 			writeInt(k1);
 			writeInt(l1);
 		}
-		position = l;
+		offset = l;
 	}
 
 	public final void encodeXTEA(int keys[], int start, int end) {
-		int o = position;
+		int o = offset;
 		int j = (end - start) / 8;
-		position = start;
+		offset = start;
 		for (int k = 0; k < j; k++) {
 			int l = readInt();
 			int i1 = readInt();
@@ -216,15 +216,15 @@ public abstract class Buffer {
 				sum += delta;
 				i1 += l + (l >>> 5 ^ l << 4) ^ keys[(0x1eec & sum) >>> 11] + sum;
 			}
-			position -= 8;
+			offset -= 8;
 			writeInt(l);
 			writeInt(i1);
 		}
-		position = o;
+		offset = o;
 	}
 
 	public byte[] getDataTrimmed() {
-		byte[] buff = new byte[getPosition()];
+		byte[] buff = new byte[getOffset()];
 		for (int index = 0; index < buff.length; index++) {
 			buff[index] = buffer[index];
 		}
@@ -232,7 +232,7 @@ public abstract class Buffer {
 	}
 
 	public Buffer getDataTrimmedStream() {
-		byte[] buff = new byte[getPosition()];
+		byte[] buff = new byte[getOffset()];
 		for (int index = 0; index < buff.length; index++) {
 			buff[index] = buffer[index];
 		}
@@ -246,7 +246,7 @@ public abstract class Buffer {
 	 * @return The remaining size.
 	 */
 	public int getRemaining() {
-		return position < buffer.length ? buffer.length - position : 0;
+		return offset < buffer.length ? buffer.length - offset : 0;
 	}
 
 	/**
@@ -261,8 +261,8 @@ public abstract class Buffer {
 	 *
 	 * @return The offset.
 	 */
-	public final int getPosition() {
-		return position;
+	public final int getOffset() {
+		return offset;
 	}
 
 	/**
@@ -271,7 +271,7 @@ public abstract class Buffer {
 	 * @param toIncrease The amount to increase the offset.
 	 */
 	public void updateOffset(int toIncrease) {
-		this.position += toIncrease;
+		this.offset += toIncrease;
 	}
 
 	/**
@@ -279,12 +279,12 @@ public abstract class Buffer {
 	 *
 	 * @param offset The offset.
 	 */
-	public void setPosition(int offset) {
-		this.position = offset;
+	public void setOffset(int offset) {
+		this.offset = offset;
 	}
 
 	public void reverse(int decrease) {
-		this.position -= decrease;
+		this.offset -= decrease;
 	}
 
 	public int length() {

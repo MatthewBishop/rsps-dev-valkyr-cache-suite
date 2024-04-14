@@ -173,7 +173,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 		OutputBuffer out = new OutputBuffer(4);
 		out.writeInt(rgb);
 		InputBuffer stream = new InputBuffer(out.getBytes());
-		stream.setPosition(1);
+		stream.setOffset(1);
 		rgb = stream.read24BitInt();
 		return rgb;
 	}
@@ -202,7 +202,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 
 	@Override
 	public void decode(int opcode, InputBuffer buffer) {
-		buffer.setPosition(buffer.buffer.length - 2);
+		buffer.setOffset(buffer.buffer.length - 2);
 		int count = buffer.readUnsignedShort();
 		this.pixelsIndexes = new int[count][];
 		this.alpha = new byte[count][];
@@ -211,7 +211,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 		int[] imagesMinY = new int[count];
 		int[] imagesWidth = new int[count];
 		int[] imagesHeight = new int[count];
-		buffer.setPosition(buffer.buffer.length - 7 - count * 8);
+		buffer.setOffset(buffer.buffer.length - 7 - count * 8);
 		this.setBiggestWidth(buffer.readShort());
 		this.setBiggestHeight(buffer.readShort());
 		int palleteLength = (buffer.readUnsignedByte() & 255) + 1;
@@ -233,7 +233,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 			imagesHeight[index] = buffer.readUnsignedShort();
 		}
 
-		buffer.setPosition(buffer.buffer.length - 7 - count * 8 - (palleteLength - 1) * 3);
+		buffer.setOffset(buffer.buffer.length - 7 - count * 8 - (palleteLength - 1) * 3);
 		this.palette = new int[palleteLength];
 
 		for (index = 1; index < palleteLength; ++index) {
@@ -243,7 +243,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 			}
 		}
 
-		buffer.setPosition(0);
+		buffer.setOffset(0);
 
 		for (index = 0; index < count; ++index) {
 			int pixelsIndexesLength = imagesWidth[index] * imagesHeight[index];

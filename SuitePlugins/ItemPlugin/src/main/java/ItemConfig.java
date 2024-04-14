@@ -341,7 +341,7 @@ public class ItemConfig extends ConfigExtensionBase {
 		for (int i = 0; i < defs.size(); i++) {
 			ItemConfig def = (ItemConfig) defs.get(i);
 
-			int start = dat.getPosition();
+			int start = dat.getOffset();
 
 			if (def != null) {
 				def.encode(dat);
@@ -349,7 +349,7 @@ public class ItemConfig extends ConfigExtensionBase {
 
 			dat.writeByte(0);
 
-			int end = dat.getPosition();
+			int end = dat.getOffset();
 			idx.writeShort(end - start);
 		}
 

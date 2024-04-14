@@ -112,7 +112,7 @@ public class Archive implements Container {
 			int length = inputBuffer.getBytes()[--offsetPosition] & 0xFF;
 			offsetPosition -= length * (fileIds.length * 4);
 			int filesSize[] = new int[fileIds.length];
-			inputBuffer.setPosition(offsetPosition);
+			inputBuffer.setOffset(offsetPosition);
 			for (int i = 0; i < length; i++) {
 				int offset = 0;
 				for (int fileIndex = 0; fileIndex < fileIds.length; fileIndex++) {
@@ -125,7 +125,7 @@ public class Archive implements Container {
 				filesData[i] = new byte[filesSize[i]];
 				filesSize[i] = 0;
 			}
-			inputBuffer.setPosition(offsetPosition);
+			inputBuffer.setOffset(offsetPosition);
 			int offset = 0;
 			for (int i = 0; i < length; i++) {
 				int read = 0;

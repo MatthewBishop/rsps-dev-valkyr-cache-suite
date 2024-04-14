@@ -116,7 +116,7 @@ public class InputBuffer extends Buffer {
 	 * @return The smart value.
 	 */
 	public int readSmart() {
-		final int i = buffer[position] & 0xFF;
+		final int i = buffer[offset] & 0xFF;
 		if (i < 128) {
 			return readUnsignedByte() - 64;
 		}
@@ -138,7 +138,7 @@ public class InputBuffer extends Buffer {
 	 * @return The smart value.
 	 */
 	public int readUnsignedSmart() {
-		final int i = 0xFF & buffer[position];
+		final int i = 0xFF & buffer[offset];
 		if (i < 128) {
 			return readUnsignedByte();
 		}
@@ -154,7 +154,7 @@ public class InputBuffer extends Buffer {
 	}
 
 	public int readBigSmart() {
-		if (buffer[position] < 0) {
+		if (buffer[offset] < 0) {
 			return readInt() & 0x7fffffff;
 		}
 		int value = readUnsignedShort();
@@ -272,8 +272,8 @@ public class InputBuffer extends Buffer {
 	}
 
 	public String readStringOrNull() {
-		if (buffer[position] == 0) {
-			++position;
+		if (buffer[offset] == 0) {
+			++offset;
 			return null;
 		}
 		return readString();
@@ -295,11 +295,11 @@ public class InputBuffer extends Buffer {
 	 * @return The string.
 	 */
 	public String readString() {
-		int offset = position;
-		while (buffer[position++] != 0) {
+		int offset = this.offset;
+		while (buffer[this.offset++] != 0) {
 			/* empty */
 		}
-		int length = position - offset - 1;
+		int length = this.offset - offset - 1;
 		if (length == 0) {
 			return "";
 		}
@@ -307,11 +307,11 @@ public class InputBuffer extends Buffer {
 	}
 
 	public String readString317() {
-		int start = position;
-		while (buffer[position++] != 10) {
+		int start = offset;
+		while (buffer[offset++] != 10) {
 
 		}
-		return new String(buffer, start, position - start - 1);
+		return new String(buffer, start, offset - start - 1);
 	}
 
 	public int smf_gvlength() {
@@ -378,7 +378,7 @@ public class InputBuffer extends Buffer {
 			bytes[i++] = (byte) readByte();
 		}
 		if (resetOffset) {
-			setPosition(offset);
+			setOffset(offset);
 		}
 	}
 
@@ -452,7 +452,7 @@ public class InputBuffer extends Buffer {
 	 * @param length
 	 */
 	public void skip(int length) {
-		position += length;
+		offset += length;
 	}
 
 	/**
@@ -461,8 +461,8 @@ public class InputBuffer extends Buffer {
 	 * @return The data.
 	 */
 	public byte[] flip() {
-		byte[] data = new byte[position];
-		readBytes(data, 0, position);
+		byte[] data = new byte[offset];
+		readBytes(data, 0, offset);
 		return data;
 	}
 

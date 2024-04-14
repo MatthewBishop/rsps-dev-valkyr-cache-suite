@@ -61,6 +61,10 @@ subprojects {
 		implementation group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.30'
 		implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.7.10'
 		implementation 'org.reflections:reflections:0.9.11'
+
+		// https://mvnrepository.com/artifact/com.displee/disio
+	//	implementation 'com.displee:disio:2.3'
+
 	}
 
 	apply plugin: 'org.openjfx.javafxplugin'
