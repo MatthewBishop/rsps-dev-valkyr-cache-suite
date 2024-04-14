@@ -44,10 +44,10 @@ public class CS2Script extends ConfigExtensionBase {
     @Override
     public void decode(InputBuffer buffer) {
 
-        buffer.setOffset(buffer.buffer.length - 2);
+        buffer.setOffset(buffer.raw().length - 2);
         int switchLength = buffer.readUnsignedShort();
 
-        int endIdx = buffer.buffer.length - 2 - switchLength - 12;
+        int endIdx = buffer.raw().length - 2 - switchLength - 12;
         buffer.setOffset(endIdx);
         int numOpcodes = buffer.readInt();
         localIntCount = buffer.readUnsignedShort();

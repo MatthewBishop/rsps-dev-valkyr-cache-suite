@@ -250,10 +250,10 @@ public class ConfigEditor extends FXController {
         final OutputBuffer[] streams = editing.encodeConfig317(getInfo().getFileName());
 
         if (streams != null) {
-            CacheLibrary.get().getIndex(0).getArchive(2).addFile(getInfo().getFileName() + ".dat", streams[0].buffer);
+            CacheLibrary.get().getIndex(0).getArchive(2).addFile(getInfo().getFileName() + ".dat", streams[0].raw());
 
             if (streams[1] != null) {
-                CacheLibrary.get().getIndex(0).getArchive(2).addFile(getInfo().getFileName() + ".idx", streams[1].buffer);
+                CacheLibrary.get().getIndex(0).getArchive(2).addFile(getInfo().getFileName() + ".idx", streams[1].raw());
             }
         }
     }
