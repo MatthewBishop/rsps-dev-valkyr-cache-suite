@@ -47,7 +47,7 @@ public class ParticleLoader implements DefinitionLoader {
 			for (int id = 0; id < size; id++) {
 				ParticleDefinition definition = new ParticleDefinition(id);
 				try {
-					byte[] data = index.getArchive(0).file(id).getData();
+					byte[] data = index.archive(0).file(id).getData();
 					if (data != null)
 						definition.decode(new InputBuffer(data));
 				} catch (Exception e) {

@@ -16,9 +16,9 @@ public class SpotAnimLoader extends LoaderExtensionBase {
     public boolean load() {
         try {
             Index index = ValkyrCacheLibrary.get().index(getIndex());
-            int[] filesIds = index.getArchive(getArchive()).fileIds();
+            int[] filesIds = index.archive(getArchive()).fileIds();
             for (int fileId : filesIds) {
-                File file = index.getArchive(getArchive()).file(fileId);
+                File file = index.archive(getArchive()).file(fileId);
                 if (file == null || file.getData() == null)
                     continue;
                 SpotAnimConfig definition = new SpotAnimConfig();

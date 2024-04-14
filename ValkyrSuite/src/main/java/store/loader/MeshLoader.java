@@ -34,10 +34,10 @@ public class MeshLoader implements DefinitionLoader {
 	@Override
 	public boolean initialize() {
 		try {
-			int size = ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).getLastArchive().getId();
+			int size = ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).last().getId();
 			for (int id = 0; id < size; id++) {
 				Mesh mesh = new Mesh(id);
-				Archive archive = ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).getArchive(id);
+				Archive archive = ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).archive(id);
 				if (archive == null)
 					continue;
 				File file = archive.file(0);

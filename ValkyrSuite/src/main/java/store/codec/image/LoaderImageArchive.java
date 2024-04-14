@@ -22,7 +22,7 @@ public class LoaderImageArchive {
 	}
 
 	private void decodeArchive(CacheLibrary cache, int idx, int archiveId, int fileId) {
-		byte[] data = cache.index(idx).getArchive(archiveId).file(fileId).getData();
+		byte[] data = cache.index(idx).archive(archiveId).file(fileId).getData();
 		if (data != null) {
 			this.data = data;
 		}

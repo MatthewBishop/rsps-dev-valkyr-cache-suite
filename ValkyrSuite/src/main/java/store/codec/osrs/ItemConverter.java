@@ -21,7 +21,7 @@ public class ItemConverter {
 		CacheLibrary cache = new CacheLibrary("F:\\Mega-Sausage-Server\\data\\cache\\");
 		CacheLibrary osrs = new CacheLibrary("C:\\Users\\Andrew\\Desktop\\177\\");
 
-		final int size = osrs.index(2).getArchive(10).last().getId();
+		final int size = osrs.index(2).archive(10).last().getId();
 
 		System.out.println("Packing " + size + " items...");
 
@@ -30,7 +30,7 @@ public class ItemConverter {
 		double progress;
 
 		for (int index = 0; index < size; index++) {
-			data = osrs.index(2).getArchive(10).file(index).getData();
+			data = osrs.index(2).archive(10).file(index).getData();
 //			cache.getIndexes()[Indices.ITEMS.getIndex()].putFile(Utils.getConfigArchive((index + 30_000), 8), 
 //					Utils.getConfigFile((index + 30_000), 8), Constants.GZIP_COMPRESSION, data, null, false, false, -1, -1);
 			ItemDefinition osrs_definition = new ItemDefinition(index + offset, new InputBuffer(data));

@@ -191,14 +191,14 @@ public class OSRSPacker {
 	}
 
 	private static void pack_osrs_animations(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(12).last().getId();
-		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(12);
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).archive(12).last().getId();
+		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).archive(12);
 		for (int index = 0; index < size; index++) {
 			com.displee.cache.index.archive.file.File file = archive.file(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			double percentage = (double) index / (double) size * 100D;
-			cache.index(20).addArchive(getConfigArchive((index + SEQS_OFFSET), 7)).add(getConfigFile((index + SEQS_OFFSET), 7), file.getData());
+			cache.index(20).add(getConfigArchive((index + SEQS_OFFSET), 7)).add(getConfigFile((index + SEQS_OFFSET), 7), file.getData());
 			System.out.println("Packing sequences (" + index + "/" + size + ") " + percentage);
 		}
 		System.out.println("Updating index 20 reference table...");
@@ -210,50 +210,50 @@ public class OSRSPacker {
 	}
 
 	private static void pack_osrs_skins(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int archiveSize = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).getLastArchive().getId();
+		int archiveSize = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).last().getId();
 		for (int archive = 0; archive < archiveSize; archive++) {
-			Archive osrs_archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).getArchive(archive);
+			Archive osrs_archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).archive(archive);
 			if (Objects.isNull(osrs_archive) || !osrs_archive.containsData())
 				continue;
-			cache.index(1).addArchive(osrs_archive, true, true, archive + BASE_OFFSET);
+			cache.index(1).add(osrs_archive, true, true, archive + BASE_OFFSET);
 		}
 		cache.index(1).update(progress);
 	}
 
 	private static void pack_osrs_skeletons(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int archiveSize = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).getLastArchive().getId();
+		int archiveSize = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).last().getId();
 		for (int archive = 0; archive < archiveSize; archive++) {
-			Archive osrs_archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).getArchive(archive);
+			Archive osrs_archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).archive(archive);
 			if (Objects.isNull(osrs_archive) || !osrs_archive.containsData())
 				continue;
-			cache.index(0).addArchive(osrs_archive, true, true, archive + FRAMES_OFFSET);
+			cache.index(0).add(osrs_archive, true, true, archive + FRAMES_OFFSET);
 		}
 		cache.index(0).update(progress);
 	}
 
 	private static void pack_osrs_npcs(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(9).last().getId();
-		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(9);
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).archive(9).last().getId();
+		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).archive(9);
 		for (int index = 0; index < size; index++) {
 			com.displee.cache.index.archive.file.File file = archive.file(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			double percentage = (double) index / (double) size * 100D;
-			cache.index(18).addArchive(getConfigArchive((index + NPC_OFFSET), 7)).add(getConfigFile((index + NPC_OFFSET), 7), file.getData());
+			cache.index(18).add(getConfigArchive((index + NPC_OFFSET), 7)).add(getConfigFile((index + NPC_OFFSET), 7), file.getData());
 			System.out.println("Packing npcs (" + index + "/" + size + ") " + percentage);
 		}
 		cache.index(18).update(progress);
 	}
 
 	private static void pack_osrs_items(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(10).last().getId();
-		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).getArchive(10);
+		int size = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).archive(10).last().getId();
+		Archive archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.CONFIG).archive(10);
 		for (int index = 0; index < size; index++) {
 			com.displee.cache.index.archive.file.File file = archive.file(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			double percentage = (double) index / (double) size * 100D;
-			cache.index(19).addArchive(getConfigArchive((index + ITEM_OFFSET), 8)).add(getConfigFile((index + ITEM_OFFSET), 8), file.getData());
+			cache.index(19).add(getConfigArchive((index + ITEM_OFFSET), 8)).add(getConfigFile((index + ITEM_OFFSET), 8), file.getData());
 			System.out.println("Packing items (" + index + "/" + size + ") " + percentage);
 		}
 		cache.index(19).update(progress);
@@ -275,26 +275,26 @@ public class OSRSPacker {
 
 		//Map data
 		String name = "m" + fromRegionX + "_" + fromRegionY;
-		archiveId = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchiveId(name);
+		archiveId = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).archiveId(name);
 		if (archiveId != -1) {
-			data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchive(archiveId).file(0).getData();
+			data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).archive(archiveId).file(0).getData();
 			nameHash = Utils.getNameHash(name);
-			archiveId = cache.index(5).getArchiveId(name);
-			lastArchive = cache.index(5).getLastArchive().getId() + 1;
+			archiveId = cache.index(5).archiveId(name);
+			lastArchive = cache.index(5).last().getId() + 1;
 			if (Objects.nonNull(data))
-			cache.index(5).addArchive(archiveId == -1 ? lastArchive : archiveId, nameHash, true).add(0, data);
+			cache.index(5).add(archiveId == -1 ? lastArchive : archiveId, nameHash, true).add(0, data);
 		}
 
 		//Location data
 		name = "l" + fromRegionX + "_" + fromRegionY;
-		archiveId = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchiveId(name);
+		archiveId = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).archiveId(name);
 		if (archiveId != -1) {
-			data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).getArchive(archiveId, XTEASManager.lookup(region)).file(0).getData();
+			data = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.MAPS).archive(archiveId, XTEASManager.lookup(region)).file(0).getData();
 			nameHash = Utils.getNameHash(name);
-			archiveId = cache.index(5).getArchiveId(name);
-			lastArchive = cache.index(5).getLastArchive().getId() + 1;
+			archiveId = cache.index(5).archiveId(name);
+			lastArchive = cache.index(5).last().getId() + 1;
 			if (Objects.nonNull(data))
-			cache.index(5).addArchive(archiveId == -1 ? lastArchive : archiveId, nameHash, true).add(0, data);
+			cache.index(5).add(archiveId == -1 ? lastArchive : archiveId, nameHash, true).add(0, data);
 		}
 
 		System.out.println("Packed region " + region);
@@ -326,9 +326,9 @@ public class OSRSPacker {
 			DataOutputStream dos;
 
 			//Map
-			int map = cache.index(5).getArchiveId("m" + x + "_" + y);
+			int map = cache.index(5).archiveId("m" + x + "_" + y);
 			if (map != -1) {
-				data = cache.index(5).getArchive(map).file(0).getData();
+				data = cache.index(5).archive(map).file(0).getData();
 				file = new File("./maps/", "m" + x + "_" + y + ".dat");
 				dos = new DataOutputStream(new FileOutputStream(file));
 				dos.write(data);
@@ -337,10 +337,10 @@ public class OSRSPacker {
 			}
 
 			//Locations
-			int location =  cache.index(5).getArchiveId("l" + x + "_" + y);
+			int location =  cache.index(5).archiveId("l" + x + "_" + y);
 			if (location != -1) {
 				int[] xteas = XTEASManager.lookup(region);
-				data = cache.index(5).getArchive(location, xteas).file(0).getData();
+				data = cache.index(5).archive(location, xteas).file(0).getData();
 				if (data == null)
 					continue;
 				file = new File("./maps/", "l" + x + "_" + y + ".dat");
@@ -354,8 +354,8 @@ public class OSRSPacker {
 	}
 
 	public static void pack_osrs_spotanims(CacheLibrary cache, CacheLibrary osrs) {
-		int length = osrs.index(2).getArchive(13).last().getId();
-		Archive archive = ValkyrCacheLibrary.getIndex(osrs, OSRSIndices.CONFIG).getArchive(13);
+		int length = osrs.index(2).archive(13).last().getId();
+		Archive archive = ValkyrCacheLibrary.getIndex(osrs, OSRSIndices.CONFIG).archive(13);
 		for (int index = 0; index < length; index++) {
 			com.displee.cache.index.archive.file.File file = archive.file(index);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
@@ -365,7 +365,7 @@ public class OSRSPacker {
 				int id = (index + SPOTS_OFFSET);
 				System.out.println("Packing spot " + id + "... Data: " + Arrays.toString(data));
 				cache.index(21)
-				.addArchive(Utils.getConfigArchive(id, 8))
+				.add(Utils.getConfigArchive(id, 8))
 				.add(Utils.getConfigFile(id, 8), data);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -375,42 +375,42 @@ public class OSRSPacker {
 	}
 
 	private static final void pack_osrs_flos(CacheLibrary osrs_cache, CacheLibrary cache) throws IOException {
-	    int size = osrs_cache.index(2).getArchive(4).last().getId();
-	    Archive archive = osrs_cache.index(2).getArchive(4);
+	    int size = osrs_cache.index(2).archive(4).last().getId();
+	    Archive archive = osrs_cache.index(2).archive(4);
 		for (int fileId = 0; fileId < size; fileId++) {
 			com.displee.cache.index.archive.file.File file = archive.file(fileId);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			byte[] data = file.getData();
-			cache.index(2).addArchive(4).add((fileId + OVERLAY_OFFSET), data);
+			cache.index(2).add(4).add((fileId + OVERLAY_OFFSET), data);
 		}
 	}
 
 	private static final void pack_osrs_flus(CacheLibrary osrs_cache, CacheLibrary cache) throws IOException {
-		int size = osrs_cache.index(2).getArchive(1).last().getId();
-		Archive archive = osrs_cache.index(2).getArchive(1);
+		int size = osrs_cache.index(2).archive(1).last().getId();
+		Archive archive = osrs_cache.index(2).archive(1);
 		for (int fileId = 0; fileId < size; fileId++) {
 			com.displee.cache.index.archive.file.File file = archive.file(fileId);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			byte[] data = file.getData();
-			cache.index(2).addArchive(1).add((fileId + UNDERLAY_OFFSET), data);
+			cache.index(2).add(1).add((fileId + UNDERLAY_OFFSET), data);
 		}
 	}
 
 	public static void pack_osrs_objects(CacheLibrary osrs_cache, CacheLibrary cache) throws IOException {
 		double percentage;
 		Index index = osrs_cache.index(2);
-		Archive archive = index.getArchive(6);
+		Archive archive = index.archive(6);
 		if (Objects.isNull(archive)) {
 		    return;
         }
 		int valid_objects = archive.last().getId();
 		for (int id = 0; id < valid_objects; id++) {
-			byte[] data = index.getArchive(6).file(id).getData();
+			byte[] data = index.archive(6).file(id).getData();
 			if (data == null)
 				continue;
-			cache.index(16).addArchive(getConfigArchive(id + OBJECT_OFFSET, 8)).add(getConfigFile(id + OBJECT_OFFSET, 8), data);
+			cache.index(16).add(getConfigArchive(id + OBJECT_OFFSET, 8)).add(getConfigFile(id + OBJECT_OFFSET, 8), data);
 			percentage = (double) id / (double) valid_objects * 100D;
 			System.out.println("Packing objects: " + format.format(percentage) + "%");
 		}
@@ -420,16 +420,16 @@ public class OSRSPacker {
 
 	public static void pack_osrs_models(CacheLibrary osrs_cache, CacheLibrary cache) throws IOException {
 		double percentage;
-		int valid_models = osrs_cache.index(7).getLastArchive().getId();
+		int valid_models = osrs_cache.index(7).last().getId();
 		for (int index = 0; index < valid_models; index++) {
-			Archive archive = osrs_cache.index(7).getArchive(index);
+			Archive archive = osrs_cache.index(7).archive(index);
 			if (!archive.containsData())
 				continue;
 			com.displee.cache.index.archive.file.File file = archive.file(0);
 			if (Objects.isNull(file) || Objects.isNull(file.getData()))
 				continue;
 			byte[] data = file.getData();
-			cache.index(7).addArchive((index + MODEL_OFFSET)).add(0, data);
+			cache.index(7).add((index + MODEL_OFFSET)).add(0, data);
 			percentage = (double) index / (double) valid_models * 100D;
 			System.out.println("Packing models: (" + index + "/" + valid_models + ") " + format.format(percentage) + "%");
 		}
@@ -444,8 +444,8 @@ public class OSRSPacker {
 	private static void transport_archive(CacheLibrary source_cache, int source_id, CacheLibrary target_cache, int target_id, int group_id, boolean rewrite) throws IOException {
 		Index target_index = target_cache.index(target_id);
 		System.out.println("Attempting to transport group of id " + group_id + "..");
-		if (source_cache.index(source_id).getArchive(group_id) == null) {
-		    target_index.addArchive(source_cache.index(source_id + 1000).getArchive(group_id), false, true);
+		if (source_cache.index(source_id).archive(group_id) == null) {
+		    target_index.add(source_cache.index(source_id + 1000).archive(group_id), false, true);
 		}
 		if (rewrite) {
 			target_index.update(progress);
@@ -459,18 +459,18 @@ public class OSRSPacker {
 			if (target_cache.indices().length != target_id) {
 				throw new IllegalStateException("The cache has more than one gap between the source_index and the target_index!");
 			}
-			target_cache.createIndex(source_index.isNamed(), source_index.usingWhirlpool());
+			target_cache.createIndex(source_index.isNamed(), source_index.hasWhirlpool());
 			System.out.println("\t ^ Index was created!");
 		}
 
 		Index target_index = target_cache.index(target_id);
-		int num_groups = source_index.getLastArchive().getId() + 1;
+		int num_groups = source_index.last().getId() + 1;
 		System.out.println("\t ^ Attempting to pack " + num_groups + " group(s)..");
 
 		double last = 0.0D;
 		for (int group_id = 0; group_id < num_groups; group_id++) {
-			if (source_index.getArchive(group_id) != null) {
-				target_index.addArchive(source_index.getArchive(group_id), true, true);
+			if (source_index.archive(group_id) != null) {
+				target_index.add(source_index.archive(group_id), true, true);
 				double percentage = (double) group_id / (double) num_groups * 100D;
 				if (group_id == num_groups - 1 || percentage - last >= 1.0D) {
 					System.out.println("\t ^ Percentage Completed: " + format.format(percentage) + "%");

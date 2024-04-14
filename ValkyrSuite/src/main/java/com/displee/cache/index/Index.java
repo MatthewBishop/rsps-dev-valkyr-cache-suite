@@ -275,7 +275,7 @@ public class Index extends ReferenceTable {
 				Archive archive = null;
 				ArchiveSector archiveSector = null;
 				if (super.id != 255) {
-					archive = getArchive(id, true);
+					archive = archive(id, true);
 				}
 				boolean overWrite = (super.id == 255 && (archiveSector = readArchiveSector(id)) != null)
 						|| (archive != null && !archive.getNew());
@@ -406,7 +406,7 @@ public class Index extends ReferenceTable {
 		if (!cached) {
 			for (final int archive : super.archiveIds) {
 				try {
-					super.getArchive(archive, xteas == null ? null : xteas[archive]);
+					super.archive(archive, xteas == null ? null : xteas[archive]);
 				} catch (Throwable t) {
 					t.printStackTrace();
 				}

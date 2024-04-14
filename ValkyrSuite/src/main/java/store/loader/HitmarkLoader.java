@@ -36,12 +36,12 @@ public class HitmarkLoader implements DefinitionLoader {
 	public boolean initialize() {
 		try {
 			Index index = cache.index(2);
-			int size = index.getArchive(46).last().getId();
+			int size = index.archive(46).last().getId();
 			definitions = new HitmarkDefinition[size];
 			for (int id = 0; id < size; id++) {
 				HitmarkDefinition definition = new HitmarkDefinition(id);
 				try {
-					byte[] data = index.getArchive(46).file(id).getData();
+					byte[] data = index.archive(46).file(id).getData();
 					if (data != null) {
 						definition.decode(new InputBuffer(data));
 					}

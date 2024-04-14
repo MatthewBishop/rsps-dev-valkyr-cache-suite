@@ -136,7 +136,7 @@ public class IdentityKit implements AbstractDefinition {
 	 */
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.index(2).addArchive(3).add(id, encode());
+		cache.index(2).add(3).add(id, encode());
 		return cache.index(2).update();
 	}
 

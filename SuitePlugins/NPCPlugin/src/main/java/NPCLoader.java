@@ -21,10 +21,10 @@ public class NPCLoader extends LoaderExtensionBase {
 	public boolean load() {
 		try {
 			Index index = ValkyrCacheLibrary.get().index(getIndex());
-			int[] fileIds = index.getArchive(getArchive()).fileIds();
+			int[] fileIds = index.archive(getArchive()).fileIds();
 			int size = fileIds.length;
 			for (int id : fileIds) {
-				File file = index.getArchive(getArchive()).file(id);
+				File file = index.archive(getArchive()).file(id);
 				if (file == null)
 					continue;
 				NPCConfig definition = new NPCConfig();

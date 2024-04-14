@@ -136,7 +136,7 @@ public class SpriteEditor extends FXController {
 					sprite.addImage(placeholder);
 					Task<Boolean> task = TaskUtil.create(() -> {
 						byte[] data = sprite.encode(new OutputBuffer(16)).array();
-						ValkyrCacheLibrary.get().index(getInfo().getIndex()).addArchive(id).add(0, data);
+						ValkyrCacheLibrary.get().index(getInfo().getIndex()).add(id).add(0, data);
 						ValkyrCacheLibrary.get().index(getInfo().getIndex()).update(Selection.progressListener);
 						PluginManager.get().getLoaderForType(PluginType.SPRITE).reload();
 						Platform.runLater(() -> initialize(tab, true, id));
@@ -199,7 +199,7 @@ public class SpriteEditor extends FXController {
 					SpriteContainer container = (SpriteContainer) PluginManager.get().getLoaderForType(PluginType.SPRITE).getDefinitions().get(selected.id); //this is just a copy not a reference
 					container.requestLoad().addImage(ImageIO.read(file));
 					frames.getItems().setAll(container.toSpriteFrames());
-					ValkyrCacheLibrary.get().index(getInfo().getIndex()).addArchive(container.id).add(0, container.encode(new OutputBuffer(16)).array());
+					ValkyrCacheLibrary.get().index(getInfo().getIndex()).add(container.id).add(0, container.encode(new OutputBuffer(16)).array());
 				}
 			} catch (IOException e) {
 				Dialogues.alert(AlertType.ERROR, "Error", "Palette size is to large!", null, false);
@@ -227,7 +227,7 @@ public class SpriteEditor extends FXController {
 						container.setBiggestWidth(image.getWidth());
 					}
 					frames.getItems().setAll(container.toSpriteFrames());
-					ValkyrCacheLibrary.get().index(8).addArchive(selected.id).add(0, container.encode(new OutputBuffer(16)).array());
+					ValkyrCacheLibrary.get().index(8).add(selected.id).add(0, container.encode(new OutputBuffer(16)).array());
 				}
 				select_archive();
 			} catch (IOException e) {
@@ -240,7 +240,7 @@ public class SpriteEditor extends FXController {
 		delete.setOnAction((action) -> {
 			SpriteContainer container = (SpriteContainer) PluginManager.get().getLoaderForType(PluginType.SPRITE).getDefinitions().get(selected.id);
 			container.removeImage(frame);
-			ValkyrCacheLibrary.get().index(8).addArchive(container.id).add(0, container.encode(new OutputBuffer(16)).array());
+			ValkyrCacheLibrary.get().index(8).add(container.id).add(0, container.encode(new OutputBuffer(16)).array());
 			frames.getItems().setAll(container.toSpriteFrames());
 		});
 		frameContext.getItems().add(delete);
@@ -266,9 +266,9 @@ public class SpriteEditor extends FXController {
 	}
 
 	private int findNextAvailable() {
-		int lastId = ValkyrCacheLibrary.get().index(getInfo().getIndex()).getLastArchive().getId();
+		int lastId = ValkyrCacheLibrary.get().index(getInfo().getIndex()).last().getId();
 		for (int i = 0; i < lastId; i++) {
-			Archive archive = ValkyrCacheLibrary.get().index(getInfo().getIndex()).getArchive(i);
+			Archive archive = ValkyrCacheLibrary.get().index(getInfo().getIndex()).archive(i);
 			if (archive == null) {
 				return i;
 			}

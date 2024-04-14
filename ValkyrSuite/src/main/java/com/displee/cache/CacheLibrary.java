@@ -253,7 +253,7 @@ public class CacheLibrary {
 	 */
 	public Index createIndex(Index index, boolean writeReferenceTabel) throws Exception {
 		return createIndex(index.getCompressionType(), index.getVersion(), index.getRevision(),
-				index.isNamed(), index.usingWhirlpool(), index.isFlag4(), index.isFlag8(), writeReferenceTabel);
+				index.isNamed(), index.hasWhirlpool(), index.hasFlag4(), index.hasFlag8(), writeReferenceTabel);
 	}
 
 	/**
@@ -384,7 +384,7 @@ public class CacheLibrary {
 				System.out.println("Creating new index file...");
 				Index newIndex = newLibrary.createIndex(index, writeReferenceTabel);
 
-				for (int i : index.getArchiveIds()) {
+				for (int i : index.archiveIds()) {
 					byte[] data = index.readArchiveSector(i).getData();
 					if (data == null)
 						continue;

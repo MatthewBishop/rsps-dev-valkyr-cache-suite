@@ -179,7 +179,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 	}
 	
 	public boolean hasImages(int indexId, int archiveId, int fileId) {
-		Archive archive = ValkyrCacheLibrary.get().index(indexId).getArchive(archiveId);
+		Archive archive = ValkyrCacheLibrary.get().index(indexId).archive(archiveId);
 		if (Objects.isNull(archive))
 			return false;
 		File file = archive.file(fileId);
@@ -191,7 +191,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 			return this;
 		}
 		Index index = ValkyrCacheLibrary.get().index(8);
-		Archive archive = index.getArchive(id);
+		Archive archive = index.archive(id);
 		if (Objects.nonNull(archive) && archive.containsData()) {
 			File file = archive.file(0);
 			if (Objects.nonNull(file) && Objects.nonNull(file.getData()))

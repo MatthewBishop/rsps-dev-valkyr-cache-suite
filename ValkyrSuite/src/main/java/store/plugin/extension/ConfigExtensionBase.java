@@ -60,7 +60,7 @@ public abstract class ConfigExtensionBase implements Cloneable {
 	protected byte[] getConfigFile317(String name) {
 		CacheLibrary cache = ValkyrCacheLibrary.get();
 		Index index = cache.index(0);
-		Archive archive = index.getArchive(2);
+		Archive archive = index.archive(2);
 		File file = archive.file(name);
 		return file.getData();
 	}

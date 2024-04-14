@@ -192,7 +192,7 @@ public class SpotDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.index(21).addArchive(id >>> 8).add(id & 0xff, encode());
+		cache.index(21).add(id >>> 8).add(id & 0xff, encode());
 		return cache.index(21).update();
 	}
 

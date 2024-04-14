@@ -136,7 +136,7 @@ public class NamedValueObject {
 						comboBox.getItems().forEach((value) -> {
 							if (!value.isEmpty()) {
 								int id = Integer.parseInt(value);
-								Archive archive = ValkyrCacheLibrary.get().index(7).getArchive(id);
+								Archive archive = ValkyrCacheLibrary.get().index(7).archive(id);
 								if (Objects.nonNull(archive)) {
 									byte[] data = archive.files()[0].getData();
 

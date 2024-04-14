@@ -375,7 +375,7 @@ public class ReferenceTable implements Container {
 	 * 
 	 * @return {@code archiveIds}
 	 */
-	public int[] getArchiveIds() {
+	public int[] archiveIds() {
 		return archiveIds;
 	}
 
@@ -396,7 +396,7 @@ public class ReferenceTable implements Container {
 	public Archive[] copyArchives() {
 		final Archive[] archives = new Archive[archiveIds.length];
 		for (int i = 0; i < archives.length; i++) {
-			final Archive original = getArchive(archiveIds[i]);
+			final Archive original = archive(archiveIds[i]);
 			archives[i] = original.copy();
 			if (origin.getMode() == CacheLibraryMode.UN_CACHED) {
 				original.restore();
@@ -413,7 +413,7 @@ public class ReferenceTable implements Container {
 	 */
 	public void addArchives(Archive[] archives, boolean resetFiles) {
 		for (Archive archive : archives) {
-			addArchive(archive, resetFiles);
+			add(archive, resetFiles);
 		}
 	}
 
@@ -427,7 +427,7 @@ public class ReferenceTable implements Container {
 	 */
 	public void addArchives(Archive[] archives, boolean addFiles, boolean resetFiles) {
 		for (Archive archive : archives) {
-			addArchive(archive, addFiles, resetFiles);
+			add(archive, addFiles, resetFiles);
 		}
 	}
 
@@ -438,8 +438,8 @@ public class ReferenceTable implements Container {
 	 * @param resetFiles If we need to reset all files in the new archive.
 	 * @return The new archive instance.
 	 */
-	public Archive addArchive(Archive archive, boolean resetFiles) {
-		return addArchive(archive, true, resetFiles, getLastArchive().getId() + 1);
+	public Archive add(Archive archive, boolean resetFiles) {
+		return add(archive, true, resetFiles, last().getId() + 1);
 	}
 
 	/**
@@ -451,8 +451,8 @@ public class ReferenceTable implements Container {
 	 * @param resetFiles If we need to reset all the files in the new archive.
 	 * @return The new archive instance.
 	 */
-	public Archive addArchive(Archive archive, boolean addFiles, boolean resetFiles) {
-		return addArchive(archive, addFiles, resetFiles, archive.getId());
+	public Archive add(Archive archive, boolean addFiles, boolean resetFiles) {
+		return add(archive, addFiles, resetFiles, archive.getId());
 	}
 
 	/**
@@ -465,9 +465,9 @@ public class ReferenceTable implements Container {
 	 * @param id         The id to give to the new archive.
 	 * @return The new archive instance.
 	 */
-	public Archive addArchive(Archive archive, boolean addFiles, boolean resetFiles, int id) {
+	public Archive add(Archive archive, boolean addFiles, boolean resetFiles, int id) {
 		final File[] files = archive.copy().files();
-		final Archive newArchive = addArchive(id, archive.getHashName(), resetFiles);
+		final Archive newArchive = add(id, archive.getHashName(), resetFiles);
 		if (addFiles) {
 			newArchive.addFiles(files);
 			newArchive.setRead(true);
@@ -480,8 +480,8 @@ public class ReferenceTable implements Container {
 	 * 
 	 * @return The new added archive.
 	 */
-	public Archive addArchive() {
-		return addArchive(getLastArchive().getId() + 1);
+	public Archive add() {
+		return add(last().getId() + 1);
 	}
 
 	/**
@@ -490,8 +490,8 @@ public class ReferenceTable implements Container {
 	 * @param name The name.
 	 * @return The archive instance.
 	 */
-	public Archive addArchive(String name) {
-		return addArchive(name, false);
+	public Archive add(String name) {
+		return add(name, false);
 	}
 
 	/**
@@ -501,11 +501,11 @@ public class ReferenceTable implements Container {
 	 * @param resetFiles If we need to reset all the files in this archive.
 	 * @return The archive instance.
 	 */
-	public Archive addArchive(String name, boolean resetFiles) {
-		final int archiveId = getArchiveId(name);
+	public Archive add(String name, boolean resetFiles) {
+		final int archiveId = archiveId(name);
 		int hashedName = name == null ? -1
 				: this instanceof Index317 ? Miscellaneous.to317Hash(name) : name.toLowerCase().hashCode();
-		return addArchive(archiveId == -1 ? (getLastArchive().getId() + 1) : archiveId, hashedName, resetFiles);
+		return add(archiveId == -1 ? (last().getId() + 1) : archiveId, hashedName, resetFiles);
 	}
 
 	/**
@@ -514,8 +514,8 @@ public class ReferenceTable implements Container {
 	 * @param id The id of the new archive.
 	 * @return The archive instance.
 	 */
-	public Archive addArchive(int id) {
-		return addArchive(id, false);
+	public Archive add(int id) {
+		return add(id, false);
 	}
 
 	/**
@@ -525,8 +525,8 @@ public class ReferenceTable implements Container {
 	 * @param resetFiles If we need to reset all the files in this archive.
 	 * @return The archive instance.
 	 */
-	public Archive addArchive(int id, boolean resetFiles) {
-		return addArchive(id, -1, resetFiles);
+	public Archive add(int id, boolean resetFiles) {
+		return add(id, -1, resetFiles);
 	}
 
 	/**
@@ -537,10 +537,10 @@ public class ReferenceTable implements Container {
 	 * @param resetFiles If we need to reset all the files in this archive.
 	 * @return The archive instance.
 	 */
-	public Archive addArchive(int id, int name, boolean resetFiles) {
-		Archive current = getArchive(id, true);
+	public Archive add(int id, int name, boolean resetFiles) {
+		Archive current = archive(id, true);
 		if (current != null && !current.getRead() && !current.getNew() && !current.flagged()) {
-			current = getArchive(id);
+			current = archive(id);
 		}
 		if (current != null) {
 			if (name != -1 && current.getHashName() != name) {
@@ -573,16 +573,16 @@ public class ReferenceTable implements Container {
 	 * 
 	 * @param name The name of the archive to remove.
 	 */
-	public void removeArchive(String name) {
-		removeArchive(getArchiveId(name));
+	public void remove(String name) {
+		remove(archiveId(name));
 	}
 
 	public boolean archiveExists(String name) {
-		return getArchive(name) != null;
+		return archive(name) != null;
 	}
 
 	public boolean archiveExists(int id) {
-		return getArchive(id) != null;
+		return archive(id) != null;
 	}
 
 	/**
@@ -590,7 +590,7 @@ public class ReferenceTable implements Container {
 	 * 
 	 * @param id The id of the archive to remove.
 	 */
-	public void removeArchive(int id) {
+	public void remove(int id) {
 		try {
 			boolean exists = false;
 			for (final Archive archive : archives) {
@@ -647,8 +647,8 @@ public class ReferenceTable implements Container {
 	 * @param name The name of the archive to get.
 	 * @return The archive instance.
 	 */
-	public Archive getArchive(String name) {
-		return getArchive(name, null);
+	public Archive archive(String name) {
+		return archive(name, null);
 	}
 
 	/**
@@ -658,8 +658,8 @@ public class ReferenceTable implements Container {
 	 * @param xteas The xteas
 	 * @return The archive instance.
 	 */
-	public Archive getArchive(String name, int[] xteas) {
-		return getArchive(getArchiveId(name), xteas, false);
+	public Archive archive(String name, int[] xteas) {
+		return archive(archiveId(name), xteas, false);
 	}
 
 	/**
@@ -669,8 +669,8 @@ public class ReferenceTable implements Container {
 	 * @param direct If we must get the archive instance without reading it.
 	 * @return The archive instance.
 	 */
-	public Archive getArchive(String name, boolean direct) {
-		return getArchive(getArchiveId(name), null, direct);
+	public Archive archive(String name, boolean direct) {
+		return archive(archiveId(name), null, direct);
 	}
 
 	/**
@@ -679,8 +679,8 @@ public class ReferenceTable implements Container {
 	 * @param id The id of the archive to get.
 	 * @return The archive instance.
 	 */
-	public Archive getArchive(int id) {
-		return getArchive(id, false);
+	public Archive archive(int id) {
+		return archive(id, false);
 	}
 
 	/**
@@ -690,8 +690,8 @@ public class ReferenceTable implements Container {
 	 * @param xteas The xteas.
 	 * @return The archive instance.
 	 */
-	public Archive getArchive(int id, int[] xteas) {
-		return getArchive(id, xteas, false);
+	public Archive archive(int id, int[] xteas) {
+		return archive(id, xteas, false);
 	}
 
 	/**
@@ -701,8 +701,8 @@ public class ReferenceTable implements Container {
 	 * @param direct If we want to get the instance without reading it.
 	 * @return The archive instance.
 	 */
-	public Archive getArchive(int id, boolean direct) {
-		return getArchive(id, null, direct);
+	public Archive archive(int id, boolean direct) {
+		return archive(id, null, direct);
 	}
 
 	/**
@@ -713,7 +713,7 @@ public class ReferenceTable implements Container {
 	 * @param direct If we want to get the archive without reading it.
 	 * @return The archive instance.
 	 */
-	public Archive getArchive(int id, int[] xtea, boolean direct) {
+	public Archive archive(int id, int[] xtea, boolean direct) {
 		if (origin.isClosed()) {
 			return null;
 		}
@@ -754,7 +754,7 @@ public class ReferenceTable implements Container {
 	 * @param name The name.
 	 * @return The archive id of the argued name.
 	 */
-	public int getArchiveId(String name) {
+	public int archiveId(String name) {
 		boolean is317 = origin.is317();
 		for (Archive archive : archives) {
 			if (name != null && (is317 ? archive.getHashName() == Miscellaneous.to317Hash(name)
@@ -766,7 +766,7 @@ public class ReferenceTable implements Container {
 	}
 
 	public File getFile(int archive, int file) {
-		return getArchive(archive).file(file);
+		return archive(archive).file(file);
 	}
 
 	public byte[] getFileData(int archive, int file) {
@@ -782,10 +782,10 @@ public class ReferenceTable implements Container {
 	 * 
 	 * @return The last archive instance of this index.
 	 */
-	public Archive getLastArchive() {
+	public Archive last() {
 		Archive archive = archives[archives.length - 1];
 		if (!archive.getRead()) {
-			archive = getArchive(archive.getId());
+			archive = archive(archive.getId());
 		}
 		return archive;
 	}
@@ -795,7 +795,7 @@ public class ReferenceTable implements Container {
 	 * 
 	 * @return {@code needUpdate}
 	 */
-	public boolean isUpdateRequired() {
+	public boolean flagged() {
 		return needUpdate;
 	}
 
@@ -817,7 +817,7 @@ public class ReferenceTable implements Container {
 	 * 
 	 * @return {@code whirlpool}
 	 */
-	public boolean usingWhirlpool() {
+	public boolean hasWhirlpool() {
 		return whirlpool;
 	}
 
@@ -848,7 +848,7 @@ public class ReferenceTable implements Container {
 	 *
 	 * @return {@code flag4}
 	 */
-	public boolean isFlag4() {
+	public boolean hasFlag4() {
 		return flag4;
 	}
 
@@ -861,7 +861,7 @@ public class ReferenceTable implements Container {
 	 *
 	 * @return {@code flag8}
 	 */
-	public boolean isFlag8() {
+	public boolean hasFlag8() {
 		return flag8;
 	}
 

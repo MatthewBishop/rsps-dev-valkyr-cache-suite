@@ -40,9 +40,9 @@ public class ModelDumper {
 				Optional<String> result = dialog.showAndWait();
 				String[] models = result.get().split(";");
 				for (int index = 0; index < models.length; index++) {
-					if (Selection.cache.index(7).getArchive(models[index]).file(0) == null)
+					if (Selection.cache.index(7).archive(models[index]).file(0) == null)
 						continue;
-					byte[] data = Selection.cache.index(7).getArchive(Integer.parseInt(models[index])).file(0)
+					byte[] data = Selection.cache.index(7).archive(Integer.parseInt(models[index])).file(0)
 							.getData();
 					DataOutputStream dos = new DataOutputStream(
 							new FileOutputStream(directory + File.separator + models[index] + ".dat"));
@@ -51,9 +51,9 @@ public class ModelDumper {
 				}
 			} else {
 				for (int index = 0; index < modelIds.length; index++) {
-					if (Selection.cache.index(7).getArchive(modelIds[index]).file(0) == null)
+					if (Selection.cache.index(7).archive(modelIds[index]).file(0) == null)
 						continue;
-					byte[] data = Selection.cache.index(7).getArchive(modelIds[index]).file(0).getData();
+					byte[] data = Selection.cache.index(7).archive(modelIds[index]).file(0).getData();
 					DataOutputStream dos = new DataOutputStream(
 							new FileOutputStream(directory + File.separator + modelIds[index] + ".dat"));
 					dos.write(data);

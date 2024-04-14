@@ -19,9 +19,9 @@ class UnderlayLoader {
     fun load(): UnderlayLoader {
         try {
             val index = ValkyrCacheLibrary.get().index(index)
-            val files = index.getArchive(archive).fileIds()
+            val files = index.archive(archive).fileIds()
             for (id in files) {
-                val file = index.getArchive(archive).file(id)
+                val file = index.archive(archive).file(id)
                 file?.apply {
                     val definition = UnderlayConfig()
                     definition.id = id

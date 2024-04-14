@@ -45,7 +45,7 @@ public abstract class LoaderExtensionBase {
 	protected byte[] getConfigFile317(String name) {
 		CacheLibrary cache = ValkyrCacheLibrary.get();
 		Index index = cache.index(0);
-		Archive archive = index.getArchive(2);
+		Archive archive = index.archive(2);
 		return archive.file(name).getData();
 	}
 

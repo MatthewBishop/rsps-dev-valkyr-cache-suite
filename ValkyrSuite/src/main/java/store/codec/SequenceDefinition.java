@@ -147,7 +147,7 @@ public class SequenceDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.index(20).addArchive(Utils.getConfigArchive(id, 7)).add(Utils.getConfigFile(id, 7), encode());
+		cache.index(20).add(Utils.getConfigArchive(id, 7)).add(Utils.getConfigFile(id, 7), encode());
 		return cache.index(20).update();
 	}
 

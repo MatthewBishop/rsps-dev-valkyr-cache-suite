@@ -21,9 +21,9 @@ public class CS2Loader extends LoaderExtensionBase {
     public boolean load() {
         try {
             Index index = ValkyrCacheLibrary.get().index(getIndex());
-            int[] archiveIds = index.getArchiveIds();
+            int[] archiveIds = index.archiveIds();
             for (int archive : archiveIds) {
-                byte[] data = index.getArchive(archive).files()[0].getData();
+                byte[] data = index.archive(archive).files()[0].getData();
                 if (data == null) continue;
                 CS2Script script = new CS2Script();
                 script.id = archive;

@@ -66,7 +66,7 @@ public class BaseDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.index(1).getArchive(id).add(0, encode());
+		cache.index(1).archive(id).add(0, encode());
 		return cache.index(1).update();
 	}
 

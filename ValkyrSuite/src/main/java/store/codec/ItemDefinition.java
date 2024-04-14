@@ -1107,7 +1107,7 @@ public class ItemDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.index(19).addArchive(Utils.getConfigArchive(id, 8)).add(Utils.getConfigFile(id, 8), encode());
+		cache.index(19).add(Utils.getConfigArchive(id, 8)).add(Utils.getConfigFile(id, 8), encode());
 		return cache.index(19).update();
 	}
 

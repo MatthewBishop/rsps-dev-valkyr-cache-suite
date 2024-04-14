@@ -47,7 +47,7 @@ public class BASLoader implements DefinitionLoader {
 			for (int id = 0; id < size; id++) {
 				BASDefinition definition = new BASDefinition(id);
 				try {
-					byte[] data = index.getArchive(32).file(id).getData();
+					byte[] data = index.archive(32).file(id).getData();
 					if (data != null)
 						definition.decode(new InputBuffer(data));
 				} catch (Exception e) {

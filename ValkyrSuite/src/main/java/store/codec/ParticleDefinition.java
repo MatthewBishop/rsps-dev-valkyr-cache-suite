@@ -374,7 +374,7 @@ public class ParticleDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.index(27).addArchive(0).add(id, encode());
+		cache.index(27).add(0).add(id, encode());
 		return cache.index(27).update();
 	}
 

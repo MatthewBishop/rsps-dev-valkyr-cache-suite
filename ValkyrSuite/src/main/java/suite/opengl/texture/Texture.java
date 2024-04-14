@@ -33,7 +33,7 @@ public class Texture {
     private int[] pixels;
 
     public void decode(CacheLibrary library) {
-        data = ValkyrCacheLibrary.get().index(9).getArchive(0).file(this.id).getData();
+        data = ValkyrCacheLibrary.get().index(9).archive(0).file(this.id).getData();
         InputBuffer buffer = new InputBuffer(data);
         this.averageRGB = buffer.readUnsignedShort();
         this.field1587 = buffer.readUnsignedByte() == 1;

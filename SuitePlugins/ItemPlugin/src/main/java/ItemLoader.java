@@ -54,12 +54,12 @@ public class ItemLoader extends LoaderExtensionBase {
 			}
 
 			Index index = cache.index(getIndex());
-			Archive archive = index.getArchive(getArchive());
+			Archive archive = index.archive(getArchive());
 
-			int[] fileIds = index.getArchive(getArchive()).fileIds();
+			int[] fileIds = index.archive(getArchive()).fileIds();
 
 			for (int id : fileIds) {
-				File file = index.getArchive(getArchive()).file(id);
+				File file = index.archive(getArchive()).file(id);
 				if (file == null || file.getData() == null)
 					continue;
 				ItemConfig definition = new ItemConfig();

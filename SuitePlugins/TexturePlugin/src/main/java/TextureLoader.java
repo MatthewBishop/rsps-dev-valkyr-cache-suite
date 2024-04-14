@@ -18,9 +18,9 @@ public class TextureLoader extends LoaderExtensionBase {
     @Override
     public boolean load() {
         Index index = ValkyrCacheLibrary.get().index(getIndex());
-        int[] fileIds = index.getArchive(getArchive()).fileIds();
+        int[] fileIds = index.archive(getArchive()).fileIds();
         for (int id : fileIds) {
-            File file = index.getArchive(getArchive()).file(id);
+            File file = index.archive(getArchive()).file(id);
             if (file == null || file.getData() == null)
                 continue;
             TextureConfig def = new TextureConfig();

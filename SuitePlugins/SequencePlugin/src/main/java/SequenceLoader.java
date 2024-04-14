@@ -19,9 +19,9 @@ public class SequenceLoader extends LoaderExtensionBase {
 	public boolean load() {
 		try {
 			Index index = ValkyrCacheLibrary.get().index(getIndex());
-			int[] files = index.getArchive(getArchive()).fileIds();
+			int[] files = index.archive(getArchive()).fileIds();
 			for (int id : files) {
-				File file = index.getArchive(getArchive()).file(id);
+				File file = index.archive(getArchive()).file(id);
 				if (file == null || file.getData() == null)
 					continue;
 				SequenceConfig definition = new SequenceConfig();

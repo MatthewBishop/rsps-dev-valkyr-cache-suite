@@ -26,12 +26,12 @@ public class IdkConverter {
 		CacheLibrary cache = new CacheLibrary("");
 		CacheLibrary old_cache = new CacheLibrary("C:\\Users\\Andrew\\Desktop\\667 cache\\");
 
-		int size = old_cache.index(2).getArchive(3).last().getId();
+		int size = old_cache.index(2).archive(3).last().getId();
 
 		System.out.println("Reading " + size + " IdentityKits...");
 		for (int index = 0; index < size; index++) {
 			IdentityKit kit = new IdentityKit(index);
-			byte[] data = old_cache.index(2).getArchive(3).file(index).getData();
+			byte[] data = old_cache.index(2).archive(3).file(index).getData();
 			if (data != null) {
 				kit.decode(new InputBuffer(data));
 				for (int model = 0; model < kit.bodyModels.length; model++) {
@@ -47,9 +47,9 @@ public class IdkConverter {
 
 		System.out.println("Replacing models...");
 		modelsToReplace.forEach((model) -> {
-			byte[] data = old_cache.index(7).getArchive(model).file(0).getData();
+			byte[] data = old_cache.index(7).archive(model).file(0).getData();
 			if (data != null) {
-				cache.index(7).addArchive(model).add(0, data);
+				cache.index(7).add(model).add(0, data);
 			}
 		});
 
@@ -71,18 +71,18 @@ public class IdkConverter {
 				throw new IllegalStateException(
 						"The cache has more than one gap between the source_index and the target_index!");
 			}
-			target_cache.createIndex(source_index.isNamed(), source_index.usingWhirlpool());
+			target_cache.createIndex(source_index.isNamed(), source_index.hasWhirlpool());
 			System.out.println("\t ^ Index was created!");
 		}
 
 		Index target_index = target_cache.index(target_id);
-		int num_groups = source_index.getLastArchive().getId() + 1;
+		int num_groups = source_index.last().getId() + 1;
 		System.out.println("\t ^ Attempting to pack " + num_groups + " group(s)..");
 
 		double last = 0.0D;
 		for (int group_id = 0; group_id < num_groups; group_id++) {
-			if (source_index.getArchive(group_id) != null) {
-				target_index.addArchive(source_index.getArchive(group_id), true, false);
+			if (source_index.archive(group_id) != null) {
+				target_index.add(source_index.archive(group_id), true, false);
 				double percentage = (double) group_id / (double) num_groups * 100D;
 				if (group_id == num_groups - 1 || percentage - last >= 1.0D) {
 					System.out.println("\t ^ Percentage Completed: " + format.format(percentage) + "%");
@@ -105,8 +105,8 @@ public class IdkConverter {
 			int target_id, int group_id, boolean rewrite) throws IOException {
 		Index target_index = target_cache.index(target_id);
 		System.out.println("Attempting to transport group of id " + group_id + "..");
-		if (source_cache.index(source_id).getArchive(group_id) != null) {
-			target_index.addArchive(source_cache.index(source_id).getArchive(group_id), true, false);
+		if (source_cache.index(source_id).archive(group_id) != null) {
+			target_index.add(source_cache.index(source_id).archive(group_id), true, false);
 		}
 		if (rewrite) {
 			System.out.println("\t ^ Rewriting table..");

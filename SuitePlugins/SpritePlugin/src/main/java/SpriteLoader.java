@@ -22,9 +22,9 @@ public class SpriteLoader extends LoaderExtensionBase {
 	@Override
 	public boolean load() {
 		try {
-			int[] archiveIds = ValkyrCacheLibrary.get().index(getIndex()).getArchiveIds();
+			int[] archiveIds = ValkyrCacheLibrary.get().index(getIndex()).archiveIds();
 			for (int archiveId : archiveIds) {
-				Archive archive = ValkyrCacheLibrary.get().index(getIndex()).getArchive(archiveId);
+				Archive archive = ValkyrCacheLibrary.get().index(getIndex()).archive(archiveId);
 				if (Objects.nonNull(archive) && archive.containsData()) {
 					definitions.put(archiveId, new SpriteContainer(archiveId));
 					Selection.progressListener.pluginNotify("(" + archiveId + "/" + archiveIds.length + ")");

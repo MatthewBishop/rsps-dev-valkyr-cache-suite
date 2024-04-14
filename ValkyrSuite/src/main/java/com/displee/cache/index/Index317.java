@@ -155,7 +155,7 @@ public class Index317 extends Index {
 	}
 
 	@Override
-	public Archive getArchive(int id, int[] xtea, boolean direct) {
+	public Archive archive(int id, int[] xtea, boolean direct) {
 		if (origin.isClosed()) {
 			return null;
 		}
@@ -180,10 +180,10 @@ public class Index317 extends Index {
 	}
 
 	@Override
-	public Archive addArchive(int id, int name, boolean resetFiles) {
-		Archive current = getArchive(id, true);
+	public Archive add(int id, int name, boolean resetFiles) {
+		Archive current = archive(id, true);
 		if (current != null && !current.getRead() && !current.getNew() && !current.flagged()) {
-			current = getArchive(id);
+			current = archive(id);
 		}
 		if (current != null) {
 			if (name != -1 && current.getHashName() != name) {
@@ -218,7 +218,7 @@ public class Index317 extends Index {
 		if (id == 0 || id == 4 || id > VERSION_NAMES.length) {
 			return null;
 		}
-		byte[] data = origin.index(0).getArchive(5).file(fileId).getData();
+		byte[] data = origin.index(0).archive(5).file(fileId).getData();
 		InputBuffer buffer = new InputBuffer(data);
 		int[] properties = new int[data.length / (type == 0 ? 1 : type == 1 ? 2 : 4)];
 		switch (type) {
@@ -259,7 +259,7 @@ public class Index317 extends Index {
 				buffer.writeInt(i);
 			}
 		}
-		origin.index(0).getArchive(5).add(fileId, buffer.array());
+		origin.index(0).archive(5).add(fileId, buffer.array());
 		return origin.index(0).update();
 	}
 

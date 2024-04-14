@@ -62,7 +62,7 @@ public class Interface {
 			for (int componentId = 0; componentId < this.components.length; ++componentId) {
 				this.components[componentId] = new IComponent();
 				this.components[componentId].hash = this.id << 16 | componentId;
-				byte[] data = this.cache.index(3).getArchive(this.id).file(componentId).getData();
+				byte[] data = this.cache.index(3).archive(this.id).file(componentId).getData();
 				if (data == null) {
 					throw new RuntimeException(
 							"Interface " + this.id + ", component " + componentId + " data is null.");

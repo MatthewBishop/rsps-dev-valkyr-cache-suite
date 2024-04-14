@@ -338,21 +338,21 @@ class MapPacker : FXController() {
         return try {
             val mapArchiveName = "m" + regionX + "_" + regionY
             val landArchiveName = "l" + regionX + "_" + regionY
-            var mapArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).getArchive(mapArchiveName)
+            var mapArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).archive(mapArchiveName)
             var exists = Objects.nonNull(mapArchive)
             if (exists) {
                 mapArchive.reset()
             } else {
-                mapArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).addArchive(mapArchiveName)
+                mapArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).add(mapArchiveName)
             }
             mapArchive.add(0, tileData)
             mapArchive.flag()
-            var landArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).getArchive(landArchiveName)
+            var landArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).archive(landArchiveName)
             exists = Objects.nonNull(landArchive)
             if (exists) {
                 landArchive.reset()
             } else {
-                landArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).addArchive(landArchiveName)
+                landArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).add(landArchiveName)
             }
             landArchive.add(0, objData)
             landArchive.flag()

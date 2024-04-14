@@ -73,12 +73,12 @@ public class ModelPacker extends FXController {
 		if (value.isPresent()) {
 			Main.getSelection().createTask("Injecting blanks...", true, TaskUtil.create(() -> {
 				int amount = Integer.parseInt(value.get());
-				int start = ValkyrCacheLibrary.get().index(7).getLastArchive().getId() + 1;
+				int start = ValkyrCacheLibrary.get().index(7).last().getId() + 1;
 				for (int index = start; index < (start + amount); index++) {
-					ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(index).add(new byte[1]);
+					ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).add(index).add(new byte[1]);
 				}
 				ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
-				console.appendText("Injected " + amount + " blanks, last model index: " + ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).getLastArchive().getId() + ".\n");
+				console.appendText("Injected " + amount + " blanks, last model index: " + ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).last().getId() + ".\n");
 				return true;
 			}));
 		}
@@ -97,12 +97,12 @@ public class ModelPacker extends FXController {
 				File[] files = directory.listFiles();
 				String packed_models = "";
 				int[] model_ids = new int[files.length];
-				int archive = ValkyrCacheLibrary.get().index(7).getLastArchive().getId() + 1;
+				int archive = ValkyrCacheLibrary.get().index(7).last().getId() + 1;
 				for (int index = 0; index < files.length; index++) {
 					if (!files[index].getName().endsWith(".dat"))
 						continue;
 					byte[] data = Files.readAllBytes(files[index].toPath());
-					ValkyrCacheLibrary.get().index(7).addArchive(archive).add(0, data);
+					ValkyrCacheLibrary.get().index(7).add(archive).add(0, data);
 					String original_id = files[index].getName().substring(0,
 							files[index].getName().length() - ".dat".length());
 					model_ids[index] = archive;
@@ -148,7 +148,7 @@ public class ModelPacker extends FXController {
 					Integer id = Integer.parseInt(FileUtilities.stripExtension(file.getName()));
 					byte[] data = Files.readAllBytes(file.toPath());
 					Main.getSelection().createTask("Packing model...", true, TaskUtil.create(() -> {
-						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
+						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).add(id).add(0, data);
 						ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
 						return true;
 					}));
@@ -171,7 +171,7 @@ public class ModelPacker extends FXController {
 							Integer id = Integer.parseInt(FileUtilities.stripExtension(file.getName()));
 							try {
 								byte[] data = Files.readAllBytes(file.toPath());
-								ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
+								ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).add(id).add(0, data);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
