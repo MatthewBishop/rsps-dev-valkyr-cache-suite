@@ -14,7 +14,7 @@ subprojects {
 
     dependencies {
         implementation project(':ValkyrSuite')
-        implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.10'
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.0'
     }
 
     sourceSets {
