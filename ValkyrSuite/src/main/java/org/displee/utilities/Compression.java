@@ -68,7 +68,7 @@ public class Compression {
 			inputBuffer.decryptXTEA(keys, 5, packedData.length);
 		}
 		int type = inputBuffer.readUnsignedByte();
-		archiveSector.setCompression(CompressionType.values()[type]);
+		archiveSector.setCompressionType(CompressionType.values()[type]);
 		if (type > CompressionType.values().length - 1) {
 			throw new RuntimeException("Unknown compression type - type=" + type);
 		}

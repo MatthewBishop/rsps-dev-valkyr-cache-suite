@@ -453,7 +453,7 @@ public class BASDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(2).getArchive(32).addFile(id, encode());
+		cache.getIndex(2).getArchive(32).add(id, encode());
 		return cache.getIndex(2).update();
 	}
 

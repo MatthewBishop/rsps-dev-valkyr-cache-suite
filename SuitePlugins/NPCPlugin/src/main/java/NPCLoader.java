@@ -21,10 +21,10 @@ public class NPCLoader extends LoaderExtensionBase {
 	public boolean load() {
 		try {
 			Index index = CacheLibrary.get().getIndex(getIndex());
-			int[] fileIds = index.getArchive(getArchive()).getFileIds();
+			int[] fileIds = index.getArchive(getArchive()).fileIds();
 			int size = fileIds.length;
 			for (int id : fileIds) {
-				File file = index.getArchive(getArchive()).getFile(id);
+				File file = index.getArchive(getArchive()).file(id);
 				if (file == null)
 					continue;
 				NPCConfig definition = new NPCConfig();

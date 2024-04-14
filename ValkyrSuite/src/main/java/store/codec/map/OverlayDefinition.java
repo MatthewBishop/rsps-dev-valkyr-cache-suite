@@ -49,7 +49,7 @@ public class OverlayDefinition {
 		OverlayDefinition definition = cached_definition.get(id);
 		if (definition != null)
 			return definition;
-		byte[] data = cache.getIndex(2).getArchive(4).getFile(id).getData();
+		byte[] data = cache.getIndex(2).getArchive(4).file(id).getData();
 		definition = new OverlayDefinition();
 		definition.id = id;
 		if (data != null)
@@ -110,7 +110,7 @@ public class OverlayDefinition {
 	}
 
 	public void write(CacheLibrary cache) {
-		cache.getIndex(2).addArchive(4).addFile(this.id, this.encode());
+		cache.getIndex(2).addArchive(4).add(this.id, this.encode());
 	}
 
 	private byte[] encode() {

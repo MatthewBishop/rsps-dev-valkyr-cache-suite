@@ -23,7 +23,7 @@ public class TitlescreenReplacer {
 		try {
 			File file = RetentionFileChooser.showOpenDialog("Choose an image...", Main.getPrimaryStage(), FilterMode.JPG);
 			byte[] bytes = Files.readAllBytes(file.toPath());
-			CacheLibrary.get().getIndex(OSRSIndices.HUFFMAN).addArchive(10).addFile(0, bytes, "title.jpg".hashCode());
+			CacheLibrary.get().getIndex(OSRSIndices.HUFFMAN).addArchive(10).add(0, bytes, "title.jpg".hashCode());
 			CacheLibrary.get().getIndex(OSRSIndices.HUFFMAN).update(Main.getSelection().getProgressListener());
 		} catch (IOException e) {
 			e.printStackTrace();

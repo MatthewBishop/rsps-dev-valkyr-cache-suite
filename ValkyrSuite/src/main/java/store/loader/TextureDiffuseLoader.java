@@ -46,7 +46,7 @@ public class TextureDiffuseLoader implements DefinitionLoader {
 			for (int id = 0; id < size; id++) {
 				TextureDefinition definition = new TextureDefinition(id);
 				try {
-					byte[] data = index.getArchive(0).getFile(id).getData();
+					byte[] data = index.getArchive(0).file(id).getData();
 					if (data != null) {
 						definition.decode(new InputBuffer(data));
 					}

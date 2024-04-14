@@ -19,9 +19,9 @@ class OverlayLoader {
     fun load(): OverlayLoader {
         try {
             val index = CacheLibrary.get().getIndex(index)
-            val files = index.getArchive(archive).fileIds
+            val files = index.getArchive(archive).fileIds()
             for (id in files) {
-                val file = index.getArchive(archive).getFile(id)
+                val file = index.getArchive(archive).file(id)
                 file?.apply {
                     val definition = OverlayConfig()
                     val buffer = InputBuffer(file.data)

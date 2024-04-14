@@ -28,7 +28,7 @@ public class Archive317 extends Archive {
 		if (compressionType == CompressionType.GZIP) {
 			setFileIds(1);
 			setFiles(1);
-			getFiles()[0] = new File(0, GZIPCompressor.deflate317(s.raw()));
+			files()[0] = new File(0, GZIPCompressor.deflate317(s.raw()));
 			return read = true;
 		}
 		byte[] decompressed;
@@ -57,8 +57,8 @@ public class Archive317 extends Archive {
 			} else {
 				data = BZIP2Compressor.decompress317(decompressedLength, compressedLength, filesInputBuffer);
 			}
-			getFileIds()[i] = i;
-			getFiles()[i] = new File(i, data, fileName);
+			fileIds()[i] = i;
+			files()[i] = new File(i, data, fileName);
 		}
 		return read = true;
 	}
@@ -66,13 +66,13 @@ public class Archive317 extends Archive {
 	@Override
 	public byte[] write(OutputBuffer outputBuffer) {
 		if (compressionType == CompressionType.GZIP) {
-			return GZIPCompressor.inflate317(getFiles()[0] == null ? new byte[0] : getFiles()[0].getData());
+			return GZIPCompressor.inflate317(files()[0] == null ? new byte[0] : files()[0].getData());
 		}
-		int length = getFiles().length;
+		int length = files().length;
 		outputBuffer.writeShort(length);
 		final OutputBuffer out = new OutputBuffer(2048);
 		for (int i = 0; i < length; i++) {
-			File file = getFiles()[i];
+			File file = files()[i];
 			outputBuffer.writeInt(file.getName());
 			outputBuffer.write24BitInt(file.getData().length);
 			byte[] toWrite = extracted ? file.getData() : BZIP2Compressor.compress(file.getData());

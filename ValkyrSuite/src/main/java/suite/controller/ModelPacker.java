@@ -75,7 +75,7 @@ public class ModelPacker extends FXController {
 				int amount = Integer.parseInt(value.get());
 				int start = CacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
 				for (int index = start; index < (start + amount); index++) {
-					CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(index).addFile(new byte[1]);
+					CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(index).add(new byte[1]);
 				}
 				CacheLibrary.get().getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
 				console.appendText("Injected " + amount + " blanks, last model index: " + CacheLibrary.get().getIndex(OSRSIndices.MODELS).getLastArchive().getId() + ".\n");
@@ -102,7 +102,7 @@ public class ModelPacker extends FXController {
 					if (!files[index].getName().endsWith(".dat"))
 						continue;
 					byte[] data = Files.readAllBytes(files[index].toPath());
-					CacheLibrary.get().getIndex(7).addArchive(archive).addFile(0, data);
+					CacheLibrary.get().getIndex(7).addArchive(archive).add(0, data);
 					String original_id = files[index].getName().substring(0,
 							files[index].getName().length() - ".dat".length());
 					model_ids[index] = archive;
@@ -148,7 +148,7 @@ public class ModelPacker extends FXController {
 					Integer id = Integer.parseInt(FileUtilities.stripExtension(file.getName()));
 					byte[] data = Files.readAllBytes(file.toPath());
 					Main.getSelection().createTask("Packing model...", true, TaskUtil.create(() -> {
-						CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(id).addFile(0, data);
+						CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
 						CacheLibrary.get().getIndex(OSRSIndices.MODELS).update(Selection.progressListener);
 						return true;
 					}));
@@ -171,7 +171,7 @@ public class ModelPacker extends FXController {
 							Integer id = Integer.parseInt(FileUtilities.stripExtension(file.getName()));
 							try {
 								byte[] data = Files.readAllBytes(file.toPath());
-								CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(id).addFile(0, data);
+								CacheLibrary.get().getIndex(OSRSIndices.MODELS).addArchive(id).add(0, data);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}

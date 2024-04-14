@@ -16,9 +16,9 @@ public class SpotAnimLoader extends LoaderExtensionBase {
     public boolean load() {
         try {
             Index index = CacheLibrary.get().getIndex(getIndex());
-            int[] filesIds = index.getArchive(getArchive()).getFileIds();
+            int[] filesIds = index.getArchive(getArchive()).fileIds();
             for (int fileId : filesIds) {
-                File file = index.getArchive(getArchive()).getFile(fileId);
+                File file = index.getArchive(getArchive()).file(fileId);
                 if (file == null || file.getData() == null)
                     continue;
                 SpotAnimConfig definition = new SpotAnimConfig();

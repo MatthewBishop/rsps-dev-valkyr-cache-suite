@@ -45,7 +45,7 @@ public abstract class LoaderExtensionBase {
 		CacheLibrary cache = CacheLibrary.get();
 		Index index = cache.getIndex(0);
 		Archive archive = index.getArchive(2);
-		return archive.getFile(name).getData();
+		return archive.file(name).getData();
 	}
 
 	protected void readConfig(InputBuffer buffer, ConfigExtensionBase definition) {

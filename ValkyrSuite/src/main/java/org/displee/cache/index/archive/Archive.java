@@ -137,7 +137,7 @@ public class Archive implements Container {
 				}
 			}
 			for (int i = 0; i < fileIds.length; i++) {
-				getFile(fileIds[i]).setData(filesData[i]);
+				file(fileIds[i]).setData(filesData[i]);
 			}
 		}
 		return read = true;
@@ -149,18 +149,18 @@ public class Archive implements Container {
 			return files[0].getData();
 		} else {
 			for (int i = 0; i < fileIds.length; i++) {
-				final File file = getFile(fileIds[i]);
+				final File file = file(fileIds[i]);
 				if (file != null && file.getData() != null) {
 					outputBuffer.writeBytes(file.getData());
 				}
 			}
 			for (int i = 0; i < files.length; i++) {
-				final File file = getFile(fileIds[i]);
+				final File file = file(fileIds[i]);
 				if (file != null && file.getData() != null) {
 					outputBuffer.writeInt(file.getData().length
-							- ((i == 0 || getFile(fileIds[i - 1]) == null || getFile(fileIds[i - 1]).getData() == null)
+							- ((i == 0 || file(fileIds[i - 1]) == null || file(fileIds[i - 1]).getData() == null)
 									? 0
-									: getFile(fileIds[i - 1]).getData().length));
+									: file(fileIds[i - 1]).getData().length));
 				}
 			}
 		}
@@ -192,7 +192,7 @@ public class Archive implements Container {
 	 */
 	public void addFiles(File[] files) {
 		for (File file : files) {
-			addFile(file);
+			add(file);
 		}
 	}
 
@@ -201,8 +201,8 @@ public class Archive implements Container {
 	 * 
 	 * @param file The file instance.
 	 */
-	public File addFile(File file) {
-		return addFile(file.getId(), file.getData(), file.getName());
+	public File add(File file) {
+		return add(file.getId(), file.getData(), file.getName());
 	}
 
 	/**
@@ -211,8 +211,8 @@ public class Archive implements Container {
 	 * @param name The name.
 	 * @return The file instance.
 	 */
-	public File addFile(String name) {
-		return addFile(name);
+	public File add(String name) {
+		return add(name);
 	}
 
 	/**
@@ -220,8 +220,8 @@ public class Archive implements Container {
 	 * 
 	 * @param data The data of the file to add.
 	 */
-	public File addFile(byte[] data) {
-		return addFile(null, data);
+	public File add(byte[] data) {
+		return add(null, data);
 	}
 
 	/**
@@ -230,11 +230,11 @@ public class Archive implements Container {
 	 * @param name The name of the file to add.
 	 * @param data The data.
 	 */
-	public File addFile(String name, byte[] data) {
-		final int fileId = getFileId(name);
+	public File add(String name, byte[] data) {
+		final int fileId = fileId(name);
 		int hashedName = name == null ? -1
 				: this instanceof Archive317 ? Miscellaneous.to317Hash(name) : name.toLowerCase().hashCode();
-		return addFile(fileId == -1 ? (getLastFile() == null ? 0 : getLastFile().getId() + 1) : fileId, data,
+		return add(fileId == -1 ? (last() == null ? 0 : last().getId() + 1) : fileId, data,
 				hashedName);
 	}
 
@@ -244,8 +244,8 @@ public class Archive implements Container {
 	 * @param id   The id of the new file.
 	 * @param data The data.
 	 */
-	public File addFile(int id, byte[] data) {
-		return addFile(id, data, -1);
+	public File add(int id, byte[] data) {
+		return add(id, data, -1);
 	}
 
 	/**
@@ -255,8 +255,8 @@ public class Archive implements Container {
 	 * @param data The data.
 	 * @param name The file name.
 	 */
-	public File addFile(int id, byte[] data, int name) {
-		final File current = getFile(id);
+	public File add(int id, byte[] data, int name) {
+		final File current = file(id);
 		if (current != null) {
 			boolean flag = false;
 			if (!Arrays.equals(current.getData(), data)) {
@@ -287,8 +287,8 @@ public class Archive implements Container {
 	 * 
 	 * @param name The name.
 	 */
-	public void removeFile(String name) {
-		removeFile(getFileId(name));
+	public void remove(String name) {
+		remove(fileId(name));
 	}
 
 	/**
@@ -296,7 +296,7 @@ public class Archive implements Container {
 	 * 
 	 * @param id The id of the file to delete.
 	 */
-	public void removeFile(int id) {
+	public void remove(int id) {
 		try {
 			boolean exists = false;
 			for (final File file : files) {
@@ -407,7 +407,7 @@ public class Archive implements Container {
 	 * @param name The new name to set.
 	 * @return
 	 */
-	public void setName(int name) {
+	public void setHashName(int name) {
 		this.name = name;
 	}
 
@@ -416,7 +416,7 @@ public class Archive implements Container {
 	 * 
 	 * @return {@code name}
 	 */
-	public int getName() {
+	public int getHashName() {
 		return name;
 	}
 
@@ -443,7 +443,7 @@ public class Archive implements Container {
 	 * 
 	 * @param crc The new crc value to set.
 	 */
-	public void setCRC(int crc) {
+	public void setCrc(int crc) {
 		this.crc = crc;
 	}
 
@@ -452,7 +452,7 @@ public class Archive implements Container {
 	 * 
 	 * @return {@code crc}
 	 */
-	public int getCRC() {
+	public int getCrc() {
 		return crc;
 	}
 
@@ -488,7 +488,7 @@ public class Archive implements Container {
 	 * 
 	 * @return {@code fileIds}
 	 */
-	public int[] getFileIds() {
+	public int[] fileIds() {
 		return fileIds;
 	}
 
@@ -506,7 +506,7 @@ public class Archive implements Container {
 	 * 
 	 * @return {@code files}
 	 */
-	public File[] getFiles() {
+	public File[] files() {
 		return files;
 	}
 
@@ -516,7 +516,7 @@ public class Archive implements Container {
 	 * @param name The name.
 	 * @return The file id of the argued name.
 	 */
-	public int getFileId(String name) {
+	public int fileId(String name) {
 		if (files == null) {
 			return -1;
 		}
@@ -536,7 +536,7 @@ public class Archive implements Container {
 	 * @param id The id of the file to get.
 	 * @return The file instance.
 	 */
-	public File getFile(int id) {
+	public File file(int id) {
 		if (files == null) {
 			return null;
 		}
@@ -554,8 +554,8 @@ public class Archive implements Container {
 	 * @param name The name of the file.
 	 * @return The file instance.
 	 */
-	public File getFile(String name) {
-		return getFile(getFileId(name));
+	public File file(String name) {
+		return file(fileId(name));
 	}
 
 	/**
@@ -563,7 +563,7 @@ public class Archive implements Container {
 	 * 
 	 * @return The last file of this archive.
 	 */
-	public File getLastFile() {
+	public File last() {
 		return files == null || files.length == 0 ? null : files[files.length - 1];
 	}
 
@@ -572,7 +572,7 @@ public class Archive implements Container {
 	 * 
 	 * @param read If this archive has been read.
 	 */
-	public void setIsRead(boolean read) {
+	public void setRead(boolean read) {
 		this.read = read;
 	}
 
@@ -581,7 +581,7 @@ public class Archive implements Container {
 	 * 
 	 * @return {@code read}
 	 */
-	public boolean isRead() {
+	public boolean getRead() {
 		return read;
 	}
 
@@ -590,7 +590,7 @@ public class Archive implements Container {
 	 * 
 	 * @return {@code needUpdate}
 	 */
-	public boolean isUpdateRequired() {
+	public boolean flagged() {
 		return needUpdate;
 	}
 
@@ -610,7 +610,7 @@ public class Archive implements Container {
 	 * 
 	 * @param isNew If this archive is new.
 	 */
-	public void setIsNew(boolean isNew) {
+	public void setNew(boolean isNew) {
 		this.isNew = isNew;
 	}
 
@@ -619,7 +619,7 @@ public class Archive implements Container {
 	 * 
 	 * @return {@code isNew}
 	 */
-	public boolean isNew() {
+	public boolean getNew() {
 		return isNew;
 	}
 

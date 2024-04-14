@@ -48,7 +48,7 @@ public class TextureDefinition implements AbstractDefinition, Cloneable {
 	 */
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(9).addArchive(id).addFile(id, encode());
+		cache.getIndex(9).addArchive(id).add(id, encode());
 		return cache.getIndex(9).update();
 	}
 

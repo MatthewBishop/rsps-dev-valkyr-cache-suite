@@ -86,7 +86,7 @@ public class MagnetDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(27).addArchive(1).addFile(id, encode());
+		cache.getIndex(27).addArchive(1).add(id, encode());
 		return cache.getIndex(27).update();
 	}
 

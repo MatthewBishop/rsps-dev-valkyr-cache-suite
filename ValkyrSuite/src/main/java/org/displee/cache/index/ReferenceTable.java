@@ -125,13 +125,13 @@ public class ReferenceTable implements Container {
 		}
 		if (named) {
 			for (int i = 0; i < archives.length; i++) {
-				archives[i].setName(inputBuffer.readInt());
-				archiveNames.add(archives[i].getName());
+				archives[i].setHashName(inputBuffer.readInt());
+				archiveNames.add(archives[i].getHashName());
 			}
 		}
 		if (origin.isRS3()) {
 			for (int i = 0; i < archives.length; i++) {
-				archives[i].setCRC(inputBuffer.readInt());
+				archives[i].setCrc(inputBuffer.readInt());
 			}
 			if (flag8) {
 				for (int i = 0; i < archives.length; i++) {
@@ -156,7 +156,7 @@ public class ReferenceTable implements Container {
 				}
 			}
 			for (int i = 0; i < archives.length; i++) {
-				archives[i].setCRC(inputBuffer.readInt());
+				archives[i].setCrc(inputBuffer.readInt());
 			}
 		}
 		for (int i = 0; i < archives.length; i++) {
@@ -168,23 +168,23 @@ public class ReferenceTable implements Container {
 		for (int i = 0; i < archives.length; i++) {
 			int lastFileId = -1;
 			final Archive archive = archives[i];
-			for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
-				archive.getFileIds()[fileIndex] = (version >= 7 ? inputBuffer.readBigSmart()
-						: inputBuffer.readUnsignedShort()) + (fileIndex == 0 ? 0 : archive.getFileIds()[fileIndex - 1]);
-				if (archive.getFileIds()[fileIndex] > lastFileId) {
-					lastFileId = archive.getFileIds()[fileIndex];
+			for (int fileIndex = 0; fileIndex < archive.fileIds().length; fileIndex++) {
+				archive.fileIds()[fileIndex] = (version >= 7 ? inputBuffer.readBigSmart()
+						: inputBuffer.readUnsignedShort()) + (fileIndex == 0 ? 0 : archive.fileIds()[fileIndex - 1]);
+				if (archive.fileIds()[fileIndex] > lastFileId) {
+					lastFileId = archive.fileIds()[fileIndex];
 				}
 			}
-			archive.setFiles(archive.getFileIds().length);
-			for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
-				archive.getFiles()[fileIndex] = new File(archive.getFileIds()[fileIndex]);
+			archive.setFiles(archive.fileIds().length);
+			for (int fileIndex = 0; fileIndex < archive.fileIds().length; fileIndex++) {
+				archive.files()[fileIndex] = new File(archive.fileIds()[fileIndex]);
 			}
 		}
 		if (named) {
 			for (int i = 0; i < archives.length; i++) {
 				final Archive archive = archives[i];
-				for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
-					archive.getFile(archive.getFileIds()[fileIndex]).setName(inputBuffer.readInt());
+				for (int fileIndex = 0; fileIndex < archive.fileIds().length; fileIndex++) {
+					archive.file(archive.fileIds()[fileIndex]).setName(inputBuffer.readInt());
 				}
 			}
 		}
@@ -225,12 +225,12 @@ public class ReferenceTable implements Container {
 		}
 		if (named) {
 			for (int i = 0; i < archives.length; i++) {
-				outputBuffer.writeInt(archives[i].getName());
+				outputBuffer.writeInt(archives[i].getHashName());
 			}
 		}
 		if (origin.isRS3()) {
 			for (int i = 0; i < archives.length; i++) {
-				outputBuffer.writeInt(archives[i].getCRC());
+				outputBuffer.writeInt(archives[i].getCrc());
 			}
 			if (flag8) {
 				for (int i = 0; i < archives.length; i++) {
@@ -255,7 +255,7 @@ public class ReferenceTable implements Container {
 				}
 			}
 			for (int i = 0; i < archives.length; i++) {
-				outputBuffer.writeInt(archives[i].getCRC());
+				outputBuffer.writeInt(archives[i].getCrc());
 			}
 		}
 		for (int i = 0; i < archives.length; i++) {
@@ -263,28 +263,28 @@ public class ReferenceTable implements Container {
 		}
 		for (int i = 0; i < archives.length; i++) {
 			if (version >= 7) {
-				outputBuffer.writeBigSmart(archives[i].getFileIds().length);
+				outputBuffer.writeBigSmart(archives[i].fileIds().length);
 			} else {
-				outputBuffer.writeShort(archives[i].getFileIds().length);
+				outputBuffer.writeShort(archives[i].fileIds().length);
 			}
 		}
 		for (int i = 0; i < archives.length; i++) {
 			final Archive archive = archives[i];
-			for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
+			for (int fileIndex = 0; fileIndex < archive.fileIds().length; fileIndex++) {
 				if (version >= 7) {
-					outputBuffer.writeBigSmart(archive.getFileIds()[fileIndex]
-							- (fileIndex == 0 ? 0 : archive.getFileIds()[fileIndex - 1]));
+					outputBuffer.writeBigSmart(archive.fileIds()[fileIndex]
+							- (fileIndex == 0 ? 0 : archive.fileIds()[fileIndex - 1]));
 				} else {
-					outputBuffer.writeShort(archive.getFileIds()[fileIndex]
-							- (fileIndex == 0 ? 0 : archive.getFileIds()[fileIndex - 1]));
+					outputBuffer.writeShort(archive.fileIds()[fileIndex]
+							- (fileIndex == 0 ? 0 : archive.fileIds()[fileIndex - 1]));
 				}
 			}
 		}
 		if (named) {
 			for (int i = 0; i < archives.length; i++) {
 				final Archive archive = archives[i];
-				for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
-					outputBuffer.writeInt(archive.getFile(archive.getFileIds()[fileIndex]).getName());
+				for (int fileIndex = 0; fileIndex < archive.fileIds().length; fileIndex++) {
+					outputBuffer.writeInt(archive.file(archive.fileIds()[fileIndex]).getName());
 				}
 			}
 		}
@@ -466,11 +466,11 @@ public class ReferenceTable implements Container {
 	 * @return The new archive instance.
 	 */
 	public Archive addArchive(Archive archive, boolean addFiles, boolean resetFiles, int id) {
-		final File[] files = archive.copy().getFiles();
-		final Archive newArchive = addArchive(id, archive.getName(), resetFiles);
+		final File[] files = archive.copy().files();
+		final Archive newArchive = addArchive(id, archive.getHashName(), resetFiles);
 		if (addFiles) {
 			newArchive.addFiles(files);
-			newArchive.setIsRead(true);
+			newArchive.setRead(true);
 		}
 		return newArchive;
 	}
@@ -539,15 +539,15 @@ public class ReferenceTable implements Container {
 	 */
 	public Archive addArchive(int id, int name, boolean resetFiles) {
 		Archive current = getArchive(id, true);
-		if (current != null && !current.isRead() && !current.isNew() && !current.isUpdateRequired()) {
+		if (current != null && !current.getRead() && !current.getNew() && !current.flagged()) {
 			current = getArchive(id);
 		}
 		if (current != null) {
-			if (name != -1 && current.getName() != name) {
-				if (current.getName() > 0) {
-					archiveNames.set(archiveNames.indexOf(current.getName()), name);
+			if (name != -1 && current.getHashName() != name) {
+				if (current.getHashName() > 0) {
+					archiveNames.set(archiveNames.indexOf(current.getHashName()), name);
 				}
-				current.setName(name);
+				current.setHashName(name);
 			}
 			if (resetFiles) {
 				current.reset();
@@ -561,7 +561,7 @@ public class ReferenceTable implements Container {
 		archives = Arrays.copyOf(archives, archives.length + 1);
 		final Archive archive = new Archive(id, name);
 		archive.reset();
-		archive.setIsNew(true);
+		archive.setNew(true);
 		archive.flag();
 		archives[archives.length - 1] = archive;
 		flag();
@@ -719,19 +719,19 @@ public class ReferenceTable implements Container {
 		}
 		for (final Archive archive : archives) {
 			if (archive.getId() == id) {
-				if (direct || archive.isRead() || archive.isNew()) {
+				if (direct || archive.getRead() || archive.getNew()) {
 					return archive;
 				}
 				final ArchiveSector archiveSector = origin.getIndex(this.id).readArchiveSector(id);
 				if (archiveSector == null) {
-					archive.setIsRead(true);
-					archive.setIsNew(true);
+					archive.setRead(true);
+					archive.setNew(true);
 					archive.reset();
 					return archive;
 				}
 				archive.read(new InputBuffer(Compression.decompress(archiveSector, xtea)));
 				if (this.id == 5 && !archive.containsData()) {// reset map data if archive has no data
-					archive.setIsRead(false);
+					archive.setRead(false);
 					return archive;
 				}
 				final InputBuffer inputBuffer = new InputBuffer(archiveSector.getData());
@@ -757,8 +757,8 @@ public class ReferenceTable implements Container {
 	public int getArchiveId(String name) {
 		boolean is317 = origin.is317();
 		for (Archive archive : archives) {
-			if (name != null && (is317 ? archive.getName() == Miscellaneous.to317Hash(name)
-					: archive.getName() == name.toLowerCase().hashCode())) {
+			if (name != null && (is317 ? archive.getHashName() == Miscellaneous.to317Hash(name)
+					: archive.getHashName() == name.toLowerCase().hashCode())) {
 				return archive.getId();
 			}
 		}
@@ -766,7 +766,7 @@ public class ReferenceTable implements Container {
 	}
 
 	public File getFile(int archive, int file) {
-		return getArchive(archive).getFile(file);
+		return getArchive(archive).file(file);
 	}
 
 	public byte[] getFileData(int archive, int file) {
@@ -784,7 +784,7 @@ public class ReferenceTable implements Container {
 	 */
 	public Archive getLastArchive() {
 		Archive archive = archives[archives.length - 1];
-		if (!archive.isRead()) {
+		if (!archive.getRead()) {
 			archive = getArchive(archive.getId());
 		}
 		return archive;

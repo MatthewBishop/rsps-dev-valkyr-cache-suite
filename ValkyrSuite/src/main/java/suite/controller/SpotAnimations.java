@@ -158,7 +158,7 @@ public class SpotAnimations {
 				else {
 					int id = Integer.parseInt(input);
 					if (cache.getIndex(21).getArchive(Utils.getConfigArchive(id, 8))
-							.getFile(Utils.getConfigFile(id, 8)) != null) { // File exists
+							.file(Utils.getConfigFile(id, 8)) != null) { // File exists
 						boolean confirm = JOptionPane.showConfirmDialog(null,
 								"That graphics already exists, would you like to overwrite it?") == 0;
 						if (!confirm) {

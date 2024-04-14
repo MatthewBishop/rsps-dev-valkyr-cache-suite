@@ -15,7 +15,7 @@ public class InterfaceName {
 
 	public static void main(String[] args) throws IOException {
 		CacheLibrary rscache = new CacheLibrary("cache/");
-		int hash = rscache.getIndex(3).copy().getArchives()[884].getName();
+		int hash = rscache.getIndex(3).copy().getArchives()[884].getHashName();
 		char[] arr$ = VALID_CHARS;
 		int len$ = arr$.length;
 

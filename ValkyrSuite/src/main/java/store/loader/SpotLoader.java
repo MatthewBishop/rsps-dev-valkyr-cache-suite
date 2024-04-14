@@ -47,7 +47,7 @@ public class SpotLoader implements DefinitionLoader {
 			for (int id = 0; id < size; id++) {
 				SpotDefinition definition = new SpotDefinition(id);
 				try {
-					byte[] data = index.getArchive(id >>> 8).getFile(id & 0xff).getData();
+					byte[] data = index.getArchive(id >>> 8).file(id & 0xff).getData();
 					if (data != null) {
 						definition.decode(new InputBuffer(data));
 					}

@@ -442,7 +442,7 @@ public class ObjectDefinition implements AbstractDefinition, Cloneable {
 	@Override
 	public boolean save(CacheLibrary cache) {
 		System.out.println("Above");
-		cache.getIndex(2).addArchive(6).addFile(id, encode());
+		cache.getIndex(2).addArchive(6).add(id, encode());
 		System.out.println("Below");
 		return cache.getIndex(2).update();
 	}

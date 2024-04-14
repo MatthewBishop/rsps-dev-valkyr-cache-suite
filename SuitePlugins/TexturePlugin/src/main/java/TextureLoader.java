@@ -18,9 +18,9 @@ public class TextureLoader extends LoaderExtensionBase {
     @Override
     public boolean load() {
         Index index = CacheLibrary.get().getIndex(getIndex());
-        int[] fileIds = index.getArchive(getArchive()).getFileIds();
+        int[] fileIds = index.getArchive(getArchive()).fileIds();
         for (int id : fileIds) {
-            File file = index.getArchive(getArchive()).getFile(id);
+            File file = index.getArchive(getArchive()).file(id);
             if (file == null || file.getData() == null)
                 continue;
             TextureConfig def = new TextureConfig();

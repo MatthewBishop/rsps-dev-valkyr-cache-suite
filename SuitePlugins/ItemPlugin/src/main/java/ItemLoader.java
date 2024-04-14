@@ -55,10 +55,10 @@ public class ItemLoader extends LoaderExtensionBase {
 			Index index = cache.getIndex(getIndex());
 			Archive archive = index.getArchive(getArchive());
 
-			int[] fileIds = index.getArchive(getArchive()).getFileIds();
+			int[] fileIds = index.getArchive(getArchive()).fileIds();
 
 			for (int id : fileIds) {
-				File file = index.getArchive(getArchive()).getFile(id);
+				File file = index.getArchive(getArchive()).file(id);
 				if (file == null || file.getData() == null)
 					continue;
 				ItemConfig definition = new ItemConfig();

@@ -138,7 +138,7 @@ public class NamedValueObject {
 								int id = Integer.parseInt(value);
 								Archive archive = CacheLibrary.get().getIndex(7).getArchive(id);
 								if (Objects.nonNull(archive)) {
-									byte[] data = archive.getFiles()[0].getData();
+									byte[] data = archive.files()[0].getData();
 
 									File file = new File(directory, id + ".dat");
 									try {

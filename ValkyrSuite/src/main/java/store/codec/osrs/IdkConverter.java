@@ -26,12 +26,12 @@ public class IdkConverter {
 		CacheLibrary cache = new CacheLibrary("");
 		CacheLibrary old_cache = new CacheLibrary("C:\\Users\\Andrew\\Desktop\\667 cache\\");
 
-		int size = old_cache.getIndex(2).getArchive(3).getLastFile().getId();
+		int size = old_cache.getIndex(2).getArchive(3).last().getId();
 
 		System.out.println("Reading " + size + " IdentityKits...");
 		for (int index = 0; index < size; index++) {
 			IdentityKit kit = new IdentityKit(index);
-			byte[] data = old_cache.getIndex(2).getArchive(3).getFile(index).getData();
+			byte[] data = old_cache.getIndex(2).getArchive(3).file(index).getData();
 			if (data != null) {
 				kit.decode(new InputBuffer(data));
 				for (int model = 0; model < kit.bodyModels.length; model++) {
@@ -47,9 +47,9 @@ public class IdkConverter {
 
 		System.out.println("Replacing models...");
 		modelsToReplace.forEach((model) -> {
-			byte[] data = old_cache.getIndex(7).getArchive(model).getFile(0).getData();
+			byte[] data = old_cache.getIndex(7).getArchive(model).file(0).getData();
 			if (data != null) {
-				cache.getIndex(7).addArchive(model).addFile(0, data);
+				cache.getIndex(7).addArchive(model).add(0, data);
 			}
 		});
 

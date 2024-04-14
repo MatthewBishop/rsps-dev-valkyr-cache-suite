@@ -293,7 +293,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param library The cache library.
 	 */
 	public void decode(CacheLibrary library) {
-		byte[] data = library.getIndex(library.is317() ? 1 : 7).getArchive(id).getFile(0).getData();
+		byte[] data = library.getIndex(library.is317() ? 1 : 7).getArchive(id).file(0).getData();
 		if (data == null) {
 			throw new RuntimeException("No model data found for model " + id);
 		}

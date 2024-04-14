@@ -86,7 +86,7 @@ public class PureOSRSPacker {
 			throws NumberFormatException, IOException {
 		File[] textures = new File("C:\\Users\\Andrew\\Desktop\\osrs textures\\").listFiles();
 		for (File file : textures) {
-			cache.getIndex(37).addArchive(Integer.parseInt(stripExtension(file.getName()))).addFile(0, Files.readAllBytes(file.toPath()));
+			cache.getIndex(37).addArchive(Integer.parseInt(stripExtension(file.getName()))).add(0, Files.readAllBytes(file.toPath()));
 		}
 		cache.getIndex(37).update(progress);
 	}
@@ -100,7 +100,7 @@ public class PureOSRSPacker {
 		int archive = cache.getIndex(OSRSIndices.MAPS).getArchiveId(name);
 		int lastArchive = cache.getIndex(OSRSIndices.MAPS).getLastArchive().getId() + 1;
 		if (data != null) { // map pack
-			cache.getIndex(OSRSIndices.MAPS).addArchive(archive == -1 ? lastArchive : archive, hash, true).addFile(0,
+			cache.getIndex(OSRSIndices.MAPS).addArchive(archive == -1 ? lastArchive : archive, hash, true).add(0,
 					data);
 		}
 		data = Files.readAllBytes(landscape.toPath());
@@ -109,7 +109,7 @@ public class PureOSRSPacker {
 		archive = cache.getIndex(OSRSIndices.MAPS).getArchiveId(name);
 		lastArchive = cache.getIndex(OSRSIndices.MAPS).getLastArchive().getId() + 1;
 		if (data != null) {
-			cache.getIndex(OSRSIndices.MAPS).addArchive(archive == -1 ? lastArchive : archive, hash, true).addFile(0,
+			cache.getIndex(OSRSIndices.MAPS).addArchive(archive == -1 ? lastArchive : archive, hash, true).add(0,
 					data);
 		}
 		if (cache.getIndex(OSRSIndices.MAPS).isUpdateRequired()) {
@@ -127,14 +127,14 @@ public class PureOSRSPacker {
 				cache.getIndex(20).update(progress);
 			}
 		}
-		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12).getLastFile().getId() + 1;
+		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12).last().getId() + 1;
 		for (int sequence = 0; sequence < size; sequence++) {
 			try {
 				Archive archive = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(12);
-				byte[] data = archive.getFile(sequence).getData();
+				byte[] data = archive.file(sequence).getData();
 				System.out.println("Packing sequence " + sequence + "/" + size + "...");
 				cache.getIndex(20).addArchive(Utils.getConfigArchive(sequence, 7))
-						.addFile(Utils.getConfigFile(sequence, 7), data);
+						.add(Utils.getConfigFile(sequence, 7), data);
 			} catch (Exception ex) {
 				System.err.println("Missing data for sequence " + sequence);
 			}
@@ -204,12 +204,12 @@ public class PureOSRSPacker {
 				cache.getIndex(18).update(progress);
 			}
 		}
-		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9).getLastFile().getId();
+		int size = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9).last().getId();
 		for (int npc = 0; npc < size; npc++) {
 			try {
-				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9).getFile(npc).getData();
+				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(9).file(npc).getData();
 				System.out.println("Packing NPC " + npc + "/" + size + "...");
-				cache.getIndex(18).addArchive(getConfigArchive(npc, 7)).addFile(getConfigFile(npc, 7), data);
+				cache.getIndex(18).addArchive(getConfigArchive(npc, 7)).add(getConfigFile(npc, 7), data);
 			} catch (Exception ex) {
 				System.err.println("Missing data for NPC " + npc);
 			}
@@ -221,7 +221,7 @@ public class PureOSRSPacker {
 
 	public static void import_idk(CacheLibrary osrs_cache, CacheLibrary cache, boolean resetIndices) {
 		if (resetIndices) {
-			int clear = cache.getIndex(2).getArchive(3).getLastFile().getId();
+			int clear = cache.getIndex(2).getArchive(3).last().getId();
 			for (int file = 0; file < clear; file++) {
 				cache.getIndex(2).removeArchive(3);
 			}
@@ -229,13 +229,13 @@ public class PureOSRSPacker {
 				cache.getIndex(2).update(progress);
 			}
 		}
-		int kits = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(3).getLastFile().getId();
+		int kits = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(3).last().getId();
 		for (int kit = 0; kit < kits; kit++) {
 			try {
-				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(3).getFile(kit).getData();
+				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(3).file(kit).getData();
 				System.out.println("Packing IDK " + kit + "/" + kits + "...");
 				if (data != null) {
-					cache.getIndex(2).addArchive(3).addFile(kit, data);
+					cache.getIndex(2).addArchive(3).add(kit, data);
 				}
 			} catch (Exception ex) {
 				System.err.println("Missing data for IDK " + kit);
@@ -269,7 +269,7 @@ public class PureOSRSPacker {
 				data = Files.readAllBytes(file.toPath());
 				hash = Utils.getNameHash(file.getName());
 				archive = osrs_cache.getIndex(OSRSIndices.MAPS).getArchiveId(file.getName());
-				cache.getIndex(5).addArchive(archive, hash, true).addFile(0, data);
+				cache.getIndex(5).addArchive(archive, hash, true).add(0, data);
 			}
 			file = new File("C:\\Users\\Andrew\\Desktop\\maps raw\\l" + regionX + "_" + regionY);
 			if (file.exists()) {
@@ -277,7 +277,7 @@ public class PureOSRSPacker {
 				data = Files.readAllBytes(file.toPath());
 				hash = Utils.getNameHash(file.getName());
 				archive = osrs_cache.getIndex(OSRSIndices.MAPS).getArchiveId(file.getName());
-				cache.getIndex(5).addArchive(archive, hash, true).addFile(0, data);
+				cache.getIndex(5).addArchive(archive, hash, true).add(0, data);
 			}
 		}
 		if (cache.getIndex(5).isUpdateRequired()) {
@@ -299,7 +299,7 @@ public class PureOSRSPacker {
 			// Map
 			int map = cache.getIndex(OSRSIndices.MAPS).getArchiveId("m" + x + "_" + y);
 			if (map != -1) {
-				data = cache.getIndex(OSRSIndices.MAPS).getArchive(map, xteas).getFile(0).getData();
+				data = cache.getIndex(OSRSIndices.MAPS).getArchive(map, xteas).file(0).getData();
 				if (data == null)
 					continue;
 				file = new File("./maps/", "m" + x + "_" + y + ".dat");
@@ -312,7 +312,7 @@ public class PureOSRSPacker {
 			// Locations
 			int location = cache.getIndex(OSRSIndices.MAPS).getArchiveId("l" + x + "_" + y);
 			if (location != -1) {
-				data = cache.getIndex(OSRSIndices.MAPS).getArchive(location, xteas).getFile(0).getData();
+				data = cache.getIndex(OSRSIndices.MAPS).getArchive(location, xteas).file(0).getData();
 				if (data == null)
 					continue;
 				file = new File("./maps/", "l" + x + "_" + y + ".dat");
@@ -336,16 +336,16 @@ public class PureOSRSPacker {
 			cache.getIndex(19).update(progress);
 		}
 
-		int size = osrs.getIndex(OSRSIndices.CONFIG).getArchive(10).getLastFile().getId();
+		int size = osrs.getIndex(OSRSIndices.CONFIG).getArchive(10).last().getId();
 		int packed = 0;
 		for (int index = 0; index < size; index++) {
 			Archive archive = osrs.getIndex(OSRSIndices.CONFIG).getArchive(10);
 			if (archive == null)
 				continue;
-			byte[] data = archive.getFile(index).getData();
+			byte[] data = archive.file(index).getData();
 			if (data == null)
 				continue;
-			cache.getIndex(19).addArchive(getConfigArchive(index, 8)).addFile(getConfigFile(index, 8), data);
+			cache.getIndex(19).addArchive(getConfigArchive(index, 8)).add(getConfigFile(index, 8), data);
 			packed++;
 		}
 		cache.getIndex(19).update(progress);
@@ -363,15 +363,15 @@ public class PureOSRSPacker {
 		}
 
 		double percentage;
-		int valid_objects = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(6).getLastFile().getId();
+		int valid_objects = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(6).last().getId();
 		for (int id = 0; id < valid_objects; id++) {
 			try {
-				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(6).getFile(id).getData();
+				byte[] data = osrs_cache.getIndex(OSRSIndices.CONFIG).getArchive(6).file(id).getData();
 				if (data == null)
 					continue;
 				percentage = (double) id / (double) valid_objects * 100D;
 				System.out.println("[" + percentage + "%]: Packing object " + id + "...");
-				cache.getIndex(16).addArchive(getConfigArchive(id, 8)).addFile(getConfigFile(id, 8), data);
+				cache.getIndex(16).addArchive(getConfigArchive(id, 8)).add(getConfigFile(id, 8), data);
 			} catch (Exception ex) {
 				System.err.println("No data exists for object " + id + ".");
 			}
@@ -386,23 +386,23 @@ public class PureOSRSPacker {
 			Archive archive = osrs_cache.getIndex(OSRSIndices.MODELS).getArchive(id);
 			if (archive == null)
 				continue;
-			byte[] data = archive.getFile(0).getData();
+			byte[] data = archive.file(0).getData();
 			if (data == null)
 				continue;
 			percentage = (double) id / (double) valid_models * 100D;
 			System.out.println("[" + format.format(percentage) + "%]: Packing model " + id + "...");
-			cache.getIndex(7).addArchive(id).addFile(0, data);
+			cache.getIndex(7).addArchive(id).add(0, data);
 		}
 		cache.getIndex(7).update(progress);
 	}
 
 	public static void import_gfx(CacheLibrary osrs_cache, CacheLibrary cache) {
-		int length = osrs_cache.getIndex(2).getArchive(13).getLastFile().getId() + 1;
+		int length = osrs_cache.getIndex(2).getArchive(13).last().getId() + 1;
 		for (int index = 0; index < length; index++) {
 			try {
-				byte[] data = osrs_cache.getIndex(2).getArchive(13).getFile(index).getData();
+				byte[] data = osrs_cache.getIndex(2).getArchive(13).file(index).getData();
 				System.out.println("Packing gfx " + index + "/" + length + "...");
-				cache.getIndex(21).addArchive(Utils.getConfigArchive(index, 8)).addFile(Utils.getConfigFile(index, 8),
+				cache.getIndex(21).addArchive(Utils.getConfigArchive(index, 8)).add(Utils.getConfigFile(index, 8),
 						data);
 			} catch (Exception ex) {
 				System.err.println("Missing data for gfx " + index + ".");
@@ -412,32 +412,32 @@ public class PureOSRSPacker {
 	}
 
 	private static final void import_flos(CacheLibrary osrs_cache, CacheLibrary cache) throws IOException {
-		int size = osrs_cache.getIndex(2).getArchive(4).getLastFile().getId();
+		int size = osrs_cache.getIndex(2).getArchive(4).last().getId();
 		Archive archive = osrs_cache.getIndex(2).getArchive(4);
 		for (int id = 0; id < size; id++) {
-			org.displee.cache.index.archive.file.File file = archive.getFile(id);
+			org.displee.cache.index.archive.file.File file = archive.file(id);
 			if (file == null)
 				continue;
 			byte[] data = file.getData();
 			if (data == null)
 				continue;
-			cache.getIndex(2).addArchive(4).addFile(id, data);
+			cache.getIndex(2).addArchive(4).add(id, data);
 			System.out.println("Packed overlay " + file);
 		}
 		cache.getIndex(2).update(progress);
 	}
 
 	private static final void import_flus(CacheLibrary osrs_cache, CacheLibrary cache) throws IOException {
-		int size = osrs_cache.getIndex(2).getArchive(1).getLastFile().getId();
+		int size = osrs_cache.getIndex(2).getArchive(1).last().getId();
 		Archive archive = osrs_cache.getIndex(2).getArchive(1);
 		for (int id = 0; id < size; id++) {
-			org.displee.cache.index.archive.file.File file = archive.getFile(id);
+			org.displee.cache.index.archive.file.File file = archive.file(id);
 			if (file == null)
 				continue;
 			byte[] data = file.getData();
 			if (data == null)
 				continue;
-			cache.getIndex(2).addArchive(1).addFile(id, data);
+			cache.getIndex(2).addArchive(1).add(id, data);
 			System.out.println("Packed underlay " + id);
 		}
 		cache.getIndex(2).update(progress);

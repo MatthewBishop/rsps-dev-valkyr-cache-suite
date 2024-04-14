@@ -60,7 +60,7 @@ public abstract class ConfigExtensionBase implements Cloneable {
 		CacheLibrary cache = CacheLibrary.get();
 		Index index = cache.getIndex(0);
 		Archive archive = index.getArchive(2);
-		File file = archive.getFile(name);
+		File file = archive.file(name);
 		return file.getData();
 	}
 	@Override

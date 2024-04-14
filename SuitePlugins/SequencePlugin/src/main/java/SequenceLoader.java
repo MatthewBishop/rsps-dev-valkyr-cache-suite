@@ -19,9 +19,9 @@ public class SequenceLoader extends LoaderExtensionBase {
 	public boolean load() {
 		try {
 			Index index = CacheLibrary.get().getIndex(getIndex());
-			int[] files = index.getArchive(getArchive()).getFileIds();
+			int[] files = index.getArchive(getArchive()).fileIds();
 			for (int id : files) {
-				File file = index.getArchive(getArchive()).getFile(id);
+				File file = index.getArchive(getArchive()).file(id);
 				if (file == null || file.getData() == null)
 					continue;
 				SequenceConfig definition = new SequenceConfig();

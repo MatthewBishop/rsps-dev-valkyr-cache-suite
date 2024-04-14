@@ -345,7 +345,7 @@ class MapPacker : FXController() {
             } else {
                 mapArchive = CacheLibrary.get().getIndex(OSRSIndices.MAPS).addArchive(mapArchiveName)
             }
-            mapArchive.addFile(0, tileData)
+            mapArchive.add(0, tileData)
             mapArchive.flag()
             var landArchive = CacheLibrary.get().getIndex(OSRSIndices.MAPS).getArchive(landArchiveName)
             exists = Objects.nonNull(landArchive)
@@ -354,7 +354,7 @@ class MapPacker : FXController() {
             } else {
                 landArchive = CacheLibrary.get().getIndex(OSRSIndices.MAPS).addArchive(landArchiveName)
             }
-            landArchive.addFile(0, objData)
+            landArchive.add(0, objData)
             landArchive.flag()
             val xteaKeys: MutableMap<Int, IntArray> = Maps.newHashMap()
             xteaKeys[landArchive.id] = xteas

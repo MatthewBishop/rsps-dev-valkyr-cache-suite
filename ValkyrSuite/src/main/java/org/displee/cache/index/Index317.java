@@ -46,14 +46,14 @@ public class Index317 extends Index {
 		boolean updateChecksumTable = false;
 		int updateCount = 0;
 		for (Archive archive : archives) {
-			if (archive == null || !archive.isUpdateRequired()) {
+			if (archive == null || !archive.flagged()) {
 				continue;
 			}
 			updateCount++;
 		}
 		double i = 0;
 		for (Archive archive : archives) {
-			if (archive == null || !archive.isUpdateRequired()) {
+			if (archive == null || !archive.flagged()) {
 				continue;
 			}
 			i++;
@@ -65,7 +65,7 @@ public class Index317 extends Index {
 				listener.notify((i / updateCount) * 80.0, "Repacking archive " + archive.getId() + "...");
 			}
 			final byte[] compressed = archive.write(new OutputBuffer(1024));
-			archive.setCRC(HashGenerator.getCRCHash(compressed));
+			archive.setCrc(HashGenerator.getCRCHash(compressed));
 			archive.setWhirlpool(Whirlpool.getHash(compressed));
 			final ArchiveSector backup = readArchiveSector(archive.getId());
 			if (!writeArchiveSector(archive.getId(), compressed)) {
@@ -88,7 +88,7 @@ public class Index317 extends Index {
 		if (id != 0 && id < VERSION_NAMES.length && updateChecksumTable) {
 			writeArchiveProperties(Arrays.stream(archives).mapToInt(Archive::getRevision).toArray(),
 					VERSION_NAMES[id - 1], 1);
-			writeArchiveProperties(Arrays.stream(archives).mapToInt(Archive::getCRC).toArray(), CRC_NAMES[id - 1], 2);
+			writeArchiveProperties(Arrays.stream(archives).mapToInt(Archive::getCrc).toArray(), CRC_NAMES[id - 1], 2);
 			writeArchiveProperties(Arrays.stream(archives).mapToInt(e -> ((Archive317) e).getPriority()).toArray(),
 					INDEX_NAMES[id - 1], id == 2 ? 1 : 0);
 		}
@@ -137,7 +137,7 @@ public class Index317 extends Index {
 				continue;
 			}
 			archive.setRevision(versions[i]);
-			archive.setCRC(crcs[i]);
+			archive.setCrc(crcs[i]);
 			if (priorities != null) {
 				archive.setPriority(i < priorities.length ? priorities[i] : 0);
 			}
@@ -161,13 +161,13 @@ public class Index317 extends Index {
 		}
 		for (final Archive archive : archives) {
 			if (archive.getId() == id) {
-				if (direct || archive.isRead() || archive.isNew()) {
+				if (direct || archive.getRead() || archive.getNew()) {
 					return archive;
 				}
 				final ArchiveSector archiveSector = origin.getIndex(this.id).readArchiveSector(id);
 				if (archiveSector == null) {
-					archive.setIsRead(true);
-					archive.setIsNew(true);
+					archive.setRead(true);
+					archive.setNew(true);
 					archive.reset();
 					return archive;
 				}
@@ -182,15 +182,15 @@ public class Index317 extends Index {
 	@Override
 	public Archive addArchive(int id, int name, boolean resetFiles) {
 		Archive current = getArchive(id, true);
-		if (current != null && !current.isRead() && !current.isNew() && !current.isUpdateRequired()) {
+		if (current != null && !current.getRead() && !current.getNew() && !current.flagged()) {
 			current = getArchive(id);
 		}
 		if (current != null) {
-			if (name != -1 && current.getName() != name) {
-				if (current.getName() > 0) {
-					archiveNames.set(archiveNames.indexOf(current.getName()), name);
+			if (name != -1 && current.getHashName() != name) {
+				if (current.getHashName() > 0) {
+					archiveNames.set(archiveNames.indexOf(current.getHashName()), name);
 				}
-				current.setName(name);
+				current.setHashName(name);
 			}
 			if (resetFiles) {
 				current.reset();
@@ -207,7 +207,7 @@ public class Index317 extends Index {
 			archive.setCompressionType(CompressionType.GZIP);
 		}
 		archive.reset();
-		archive.setIsNew(true);
+		archive.setNew(true);
 		archive.flag();
 		archives[archives.length - 1] = archive;
 		flag();
@@ -218,7 +218,7 @@ public class Index317 extends Index {
 		if (id == 0 || id == 4 || id > VERSION_NAMES.length) {
 			return null;
 		}
-		byte[] data = origin.getIndex(0).getArchive(5).getFile(fileId).getData();
+		byte[] data = origin.getIndex(0).getArchive(5).file(fileId).getData();
 		InputBuffer buffer = new InputBuffer(data);
 		int[] properties = new int[data.length / (type == 0 ? 1 : type == 1 ? 2 : 4)];
 		switch (type) {
@@ -259,7 +259,7 @@ public class Index317 extends Index {
 				buffer.writeInt(i);
 			}
 		}
-		origin.getIndex(0).getArchive(5).addFile(fileId, buffer.array());
+		origin.getIndex(0).getArchive(5).add(fileId, buffer.array());
 		return origin.getIndex(0).update();
 	}
 

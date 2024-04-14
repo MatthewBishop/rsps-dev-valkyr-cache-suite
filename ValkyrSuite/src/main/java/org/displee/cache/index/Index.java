@@ -75,7 +75,7 @@ public class Index extends ReferenceTable {
 			crc = HashGenerator.getCRCHash(archiveSectorData);
 			whirlpool = Whirlpool.getHash(archiveSectorData, 0, archiveSectorData.length);
 			super.read(new InputBuffer(Compression.decompress(archiveSector, null)));
-			type = archiveSector.getCompression();
+			type = archiveSector.getCompressionType();
 		} else {
 			System.out.println("Archive sector is null for index " + id);
 			//this.randomAccessFile = null;
@@ -124,14 +124,14 @@ public class Index extends ReferenceTable {
 		int updateCount = 0;
 		if (archives != null) {
 			for (Archive archive : archives) {
-				if (archive == null || !archive.isUpdateRequired()) {
+				if (archive == null || !archive.flagged()) {
 					continue;
 				}
 				updateCount++;
 			}
 			double i = 0;
 			for (Archive archive : archives) {
-				if (archive == null || !archive.isUpdateRequired()) {
+				if (archive == null || !archive.flagged()) {
 					continue;
 				}
 				i++;
@@ -147,7 +147,7 @@ public class Index extends ReferenceTable {
 				final byte[] uncompressed = archive.write(new OutputBuffer(0));
 				final byte[] compressed = Compression.compress(uncompressed,
 						super.id == 7 ? CompressionType.NONE : CompressionType.GZIP, keys, archive.getRevision());
-				archive.setCRC(HashGenerator.getCRCHash(compressed, 0, compressed.length - 2));
+				archive.setCrc(HashGenerator.getCRCHash(compressed, 0, compressed.length - 2));
 				archive.setWhirlpool(Whirlpool.getHash(compressed, 0, compressed.length - 2));
 				final ArchiveSector backup = readArchiveSector(archive.getId());
 				if (!writeArchiveSector(archive.getId(), compressed)) {
@@ -278,7 +278,7 @@ public class Index extends ReferenceTable {
 					archive = getArchive(id, true);
 				}
 				boolean overWrite = (super.id == 255 && (archiveSector = readArchiveSector(id)) != null)
-						|| (archive != null && !archive.isNew());
+						|| (archive != null && !archive.getNew());
 				final byte[] buffer = new byte[Constants.ARCHIVE_SIZE];
 				if (overWrite) {
 					if (Constants.INDEX_SIZE * id + Constants.INDEX_SIZE > randomAccessFile.length()) {

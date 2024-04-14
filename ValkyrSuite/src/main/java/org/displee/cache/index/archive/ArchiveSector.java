@@ -257,7 +257,7 @@ public class ArchiveSector implements Container {
 	 * 
 	 * @param compression The new compression type to set.
 	 */
-	public void setCompression(CompressionType compression) {
+	public void setCompressionType(CompressionType compression) {
 		this.compression = compression;
 	}
 
@@ -266,7 +266,7 @@ public class ArchiveSector implements Container {
 	 * 
 	 * @return {@code compression}
 	 */
-	public CompressionType getCompression() {
+	public CompressionType getCompressionType() {
 		return compression;
 	}
 

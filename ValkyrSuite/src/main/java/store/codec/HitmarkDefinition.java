@@ -171,7 +171,7 @@ public class HitmarkDefinition implements AbstractDefinition, Cloneable {
 	 */
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(2).addArchive(46).addFile(id, encode());
+		cache.getIndex(2).addArchive(46).add(id, encode());
 		return cache.getIndex(2).update();
 	}
 

@@ -182,7 +182,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 		Archive archive = CacheLibrary.get().getIndex(indexId).getArchive(archiveId);
 		if (Objects.isNull(archive))
 			return false;
-		File file = archive.getFile(fileId);
+		File file = archive.file(fileId);
 		return Objects.nonNull(file) && Objects.nonNull(file.getData());
 	}
 	
@@ -193,7 +193,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 		Index index = CacheLibrary.get().getIndex(8);
 		Archive archive = index.getArchive(id);
 		if (Objects.nonNull(archive) && archive.containsData()) {
-			File file = archive.getFile(0);
+			File file = archive.file(0);
 			if (Objects.nonNull(file) && Objects.nonNull(file.getData()))
 				return new SpriteContainer(id, file.getData());
 		}

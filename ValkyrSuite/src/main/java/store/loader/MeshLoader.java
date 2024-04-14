@@ -40,7 +40,7 @@ public class MeshLoader implements DefinitionLoader {
 				Archive archive = CacheLibrary.get().getIndex(OSRSIndices.MODELS).getArchive(id);
 				if (archive == null)
 					continue;
-				File file = archive.getFile(0);
+				File file = archive.file(0);
 				if (file == null || file.getData() == null)
 					continue;
 				meshes.put(id, mesh);

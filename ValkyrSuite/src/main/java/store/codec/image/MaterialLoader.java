@@ -36,7 +36,7 @@ public class MaterialLoader {
 	 * Decode existing materials
 	 */
 	public void init() {
-		InputBuffer buffer = new InputBuffer(cache.getIndex(26).getArchive(0).getFile(0).getData());
+		InputBuffer buffer = new InputBuffer(cache.getIndex(26).getArchive(0).file(0).getData());
 		int count = buffer.readUnsignedShort();
 		for (int index = 0; index < count; index++) {
 			if (buffer.readUnsignedByte() == 1)
@@ -212,7 +212,7 @@ public class MaterialLoader {
 	}
 
 	public final void save() {
-		cache.getIndex(26).addArchive(0).addFile(0, encode());
+		cache.getIndex(26).addArchive(0).add(0, encode());
 	}
 
 	public ArrayList<MaterialRaw> getMaterials() {
