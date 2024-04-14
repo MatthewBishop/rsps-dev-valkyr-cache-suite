@@ -14,7 +14,7 @@ import org.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.OutputBuffer;
 import com.displee.cache.ProgressListener;
 import org.displee.utilities.Compression;
-import org.displee.utilities.Compression.CompressionType;
+import com.displee.compress.CompressionType;
 import org.displee.utilities.Constants;
 
 /**

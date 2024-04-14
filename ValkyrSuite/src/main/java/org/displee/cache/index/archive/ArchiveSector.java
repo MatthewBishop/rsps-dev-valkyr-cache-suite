@@ -3,7 +3,7 @@ package org.displee.cache.index.archive;
 import org.displee.cache.Container;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
-import org.displee.utilities.Compression;
+import com.displee.compress.CompressionType;
 
 /**
  * A class representing the information of an {@link Index}.
@@ -60,7 +60,7 @@ public class ArchiveSector implements Container {
 	/**
 	 * The compression type.
 	 */
-	private Compression.CompressionType compression;
+	private CompressionType compression;
 
 	/**
 	 * Constructs a new {@code Archive} {@code Object}.
@@ -257,7 +257,7 @@ public class ArchiveSector implements Container {
 	 * 
 	 * @param compression The new compression type to set.
 	 */
-	public void setCompression(Compression.CompressionType compression) {
+	public void setCompression(CompressionType compression) {
 		this.compression = compression;
 	}
 
@@ -266,7 +266,7 @@ public class ArchiveSector implements Container {
 	 * 
 	 * @return {@code compression}
 	 */
-	public Compression.CompressionType getCompression() {
+	public CompressionType getCompression() {
 		return compression;
 	}
 

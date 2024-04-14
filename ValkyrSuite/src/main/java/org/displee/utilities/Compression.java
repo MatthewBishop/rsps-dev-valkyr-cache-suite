@@ -1,5 +1,6 @@
 package org.displee.utilities;
 
+import com.displee.compress.CompressionType;
 import org.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
@@ -88,35 +89,6 @@ public class Compression {
 			return decompressed;
 		}
 		return inputBuffer.array(0, compressedSize);
-	}
-
-	/**
-	 * An enumeration of compression types.
-	 * 
-	 * @author Displee
-	 */
-	public enum CompressionType {
-
-		/**
-		 * {@link #NONE} Represents the 'none' compression type.
-		 */
-		NONE,
-
-		/**
-		 * {@link #BZIP2} Represents the 'bzip2' compression type.
-		 */
-		BZIP2,
-
-		/**
-		 * {@link #GZIP} Represents the 'gzip' compression type.
-		 */
-		GZIP,
-
-		/**
-		 * {@link #LZMA} Represents the 'lzma' compression type.
-		 */
-		LZMA
-
 	}
 
 }

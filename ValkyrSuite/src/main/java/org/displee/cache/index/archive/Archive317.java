@@ -4,14 +4,14 @@ import org.displee.cache.index.archive.file.File;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 import org.displee.utilities.BZIP2Compressor;
-import org.displee.utilities.Compression;
+import com.displee.compress.CompressionType;
 import org.displee.utilities.GZIPCompressor;
 
 public class Archive317 extends Archive {
 
 	private boolean extracted;
 
-	private Compression.CompressionType compressionType;
+	private CompressionType compressionType;
 
 	private int priority;
 
@@ -25,7 +25,7 @@ public class Archive317 extends Archive {
 
 	@Override
 	public boolean read(InputBuffer s) {
-		if (compressionType == Compression.CompressionType.GZIP) {
+		if (compressionType == CompressionType.GZIP) {
 			setFileIds(1);
 			setFiles(1);
 			getFiles()[0] = new File(0, GZIPCompressor.deflate317(s.raw()));
@@ -65,7 +65,7 @@ public class Archive317 extends Archive {
 
 	@Override
 	public byte[] write(OutputBuffer outputBuffer) {
-		if (compressionType == Compression.CompressionType.GZIP) {
+		if (compressionType == CompressionType.GZIP) {
 			return GZIPCompressor.inflate317(getFiles()[0] == null ? new byte[0] : getFiles()[0].getData());
 		}
 		int length = getFiles().length;
@@ -94,11 +94,11 @@ public class Archive317 extends Archive {
 		return finalStream.array();
 	}
 
-	public Compression.CompressionType getCompressionType() {
+	public CompressionType getCompressionType() {
 		return compressionType;
 	}
 
-	public void setCompressionType(Compression.CompressionType compressionType) {
+	public void setCompressionType(CompressionType compressionType) {
 		this.compressionType = compressionType;
 	}
 
