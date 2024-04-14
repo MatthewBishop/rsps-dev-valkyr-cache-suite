@@ -1172,7 +1172,7 @@ public class Mesh extends ConfigExtensionBase {
 				baseZ = this.verticesZ[vertexCount];
 				if(hasVertexSkins == 1) {
 					if(hasExtendedVertexSkins) {
-						this.vertexSkins[vertexCount] = fifth.readSmartNS();
+						this.vertexSkins[vertexCount] = fifth.readUnsignedSmartMin1();
 					} else {
 						this.vertexSkins[vertexCount] = fifth.readUnsignedByte();
 						if(this.vertexSkins[vertexCount] == 255) {
@@ -1230,7 +1230,7 @@ public class Mesh extends ConfigExtensionBase {
 
 				if(hasFaceSkins == 1) {
 					if(hasExtendedTriangleSkins) {
-						this.faceSkins[vertexCount] = fifth.readSmartNS();
+						this.faceSkins[vertexCount] = fifth.readUnsignedSmartMin1();
 					} else {
 						this.faceSkins[vertexCount] = fifth.readUnsignedByte();
 						if(this.faceSkins[vertexCount] == 255) {
@@ -1307,7 +1307,7 @@ public class Mesh extends ConfigExtensionBase {
 						xOffset = first.readUnsignedShort();
 						yOffset = first.readUnsignedShort();
 						if(hasExtendedBillboards) {
-							zOffset = first.readSmartNS();
+							zOffset = first.readUnsignedSmartMin1();
 						} else {
 							zOffset = first.readUnsignedByte();
 							if(zOffset == 255) {

@@ -756,7 +756,7 @@ public class ComponentDefinition {
 			i_37_ = stream.readUnsignedByte();
 			for (int i_38_ = 0; i_38_ < i_37_; i_38_++) {
 				i_39_ = stream.read24BitInt();
-				String string = stream.readJagString();
+				String string = stream.readByteAndString();
 				aHashTable4823.put((long) i_39_, string);
 				hashLong2.add((long) i_39_);
 				System.out.println(string);

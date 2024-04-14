@@ -128,7 +128,7 @@ public class InputBuffer extends Buffer {
 	 * 
 	 * @return the read smart value.
 	 */
-	public int readSmartNS() {
+	public int readUnsignedSmartMin1() {
 		return readUnsignedSmart() - 1;
 	}
 
@@ -284,7 +284,7 @@ public class InputBuffer extends Buffer {
 	 * 
 	 * @return The string.
 	 */
-	public String readJagString() {
+	public String readByteAndString() {
 		readByte();
 		return readString();
 	}

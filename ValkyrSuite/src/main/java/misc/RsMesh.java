@@ -287,7 +287,7 @@ public class RsMesh extends Mesh {
 	            baseZ = verticesZ[vertex];
 	            if (hasVertexSkins == 1) {
 	                if (hasExtendedVertexSkins) {
-	                    vertexSkins[vertex] = fifth.readSmartNS();
+	                    vertexSkins[vertex] = fifth.readUnsignedSmartMin1();
 	                } else {
 	                    vertexSkins[vertex] = fifth.readUnsignedByte();
 	                    if (vertexSkins[vertex] == 255) {
@@ -337,7 +337,7 @@ public class RsMesh extends Mesh {
 	            }
 	            if (hasFaceSkins == 1) {
 	                if (hasExtendedTriangleSkins) {
-	                    faceSkins[face] = fifth.readSmartNS();
+	                    faceSkins[face] = fifth.readUnsignedSmartMin1();
 	                } else {
 	                    faceSkins[face] = fifth.readUnsignedByte();
 	                    if (faceSkins[face] == 255) {
@@ -406,7 +406,7 @@ public class RsMesh extends Mesh {
 	                    int face = first.readUnsignedShort();
 	                    int skin;
 	                    if (hasExtendedBillboards) {
-	                        skin = first.readSmartNS();
+	                        skin = first.readUnsignedSmartMin1();
 	                    } else {
 	                        skin = first.readUnsignedByte();
 	                        if (skin == 255) {

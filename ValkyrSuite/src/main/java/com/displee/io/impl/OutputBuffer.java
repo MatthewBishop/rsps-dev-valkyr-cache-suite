@@ -411,7 +411,7 @@ public class OutputBuffer extends Buffer {
 	 * 
 	 * @param string The string.
 	 */
-	public void writeJagString(String string) {
+	public void writeByteAndString(String string) {
 		writeByte((byte) 0);
 		writeString(string);
 	}

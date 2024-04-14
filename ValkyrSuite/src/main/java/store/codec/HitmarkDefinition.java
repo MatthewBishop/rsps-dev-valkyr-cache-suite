@@ -69,7 +69,7 @@ public class HitmarkDefinition implements AbstractDefinition, Cloneable {
 			} else if (opcode == 7) {
 				horizontalSpeed = stream.readShort();
 			} else if (opcode == 8) {
-				text = stream.readJagString();
+				text = stream.readByteAndString();
 			} else if (opcode == 9) {
 				fadeSpeed = stream.readUnsignedShort();
 			} else if (opcode == 10) {
@@ -131,7 +131,7 @@ public class HitmarkDefinition implements AbstractDefinition, Cloneable {
 
 		if (!text.isEmpty()) {
 			stream.writeByte(8);
-			stream.writeJagString(text);
+			stream.writeByteAndString(text);
 		}
 
 		if (fadeSpeed != -1) {
