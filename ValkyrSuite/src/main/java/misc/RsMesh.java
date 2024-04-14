@@ -536,10 +536,10 @@ public class RsMesh extends Mesh {
         footer_buffer.writeBoolean(hasFaceAlpha);
         footer_buffer.writeBoolean(hasFaceSkins);
         footer_buffer.writeBoolean(hasVertexSkins);
-        footer_buffer.writeShort(vertex_x_buffer.getDataTrimmed().length);
-        footer_buffer.writeShort(vertex_y_buffer.getDataTrimmed().length);
-        footer_buffer.writeShort(vertex_z_buffer.getDataTrimmed().length);
-        footer_buffer.writeShort(face_indices_buffer.getDataTrimmed().length);
+        footer_buffer.writeShort(vertex_x_buffer.array().length);
+        footer_buffer.writeShort(vertex_y_buffer.array().length);
+        footer_buffer.writeShort(vertex_z_buffer.array().length);
+        footer_buffer.writeShort(face_indices_buffer.array().length);
 
         if (hasExtendedVertexSkins) {
             footer_buffer.writeShort(vertex_skins_buffer.raw().length);
@@ -552,9 +552,9 @@ public class RsMesh extends Mesh {
                 texture_direction_buffer, texture_translation_buffer, particle_effects_buffer, footer_buffer };
         for (int i = 0; i < buffers.length; i++) {
             Buffer buffer = buffers[i];
-            master.writeBytes(buffer.getDataTrimmed());
+            master.writeBytes(buffer.array());
         }
-        return master.getDataTrimmed();
+        return master.array();
     }
     
     @Override
@@ -780,11 +780,11 @@ public class RsMesh extends Mesh {
         }
         for (int i = 0; i < buffers.length; i++) {
         	OutputBuffer buffer = buffers[i];
-            master.writeBytes(buffer.getDataTrimmed());
+            master.writeBytes(buffer.array());
         }
         master.writeByte(255);
         master.writeByte(255);
-        return master.getDataTrimmed();
+        return master.array();
     }
 
     /**

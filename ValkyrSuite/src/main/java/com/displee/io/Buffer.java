@@ -223,7 +223,7 @@ public abstract class Buffer {
 		offset = o;
 	}
 
-	public byte[] getDataTrimmed() {
+	public byte[] array() {
 		byte[] buff = new byte[getOffset()];
 		for (int index = 0; index < buff.length; index++) {
 			buff[index] = buffer[index];

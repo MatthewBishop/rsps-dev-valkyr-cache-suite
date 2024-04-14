@@ -29,11 +29,11 @@ public class FrameDefinition {
 		this.skin = skin;
 		InputBuffer settings = new InputBuffer(data);
 		InputBuffer stream = new InputBuffer(data);
-		settings.skip(2);
+		settings.readUnsignedShort();
 		animationCount = settings.readUnsignedByte();
 		int var10 = -1;
 		int stepCount = 0;
-		stream.skip(settings.getOffset() + animationCount);
+		stream.setOffset(settings.getOffset() + animationCount);
 		this.settings = new int[animationCount];
 		for (int animation = 0; animation < animationCount; animation++) {
 			int setting = settings.readUnsignedByte();

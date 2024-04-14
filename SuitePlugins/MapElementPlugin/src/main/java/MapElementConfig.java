@@ -104,9 +104,9 @@ public class MapElementConfig extends ConfigExtensionBase {
             } else if (opcode == 28) {
                 buffer.readUnsignedByte();
             } else if (opcode == 29) {
-                buffer.skip(1);
+                buffer.readUnsignedByte();
             } else if (opcode == 30) {
-                buffer.skip(1);
+                buffer.readUnsignedByte();
 
             }
         }
