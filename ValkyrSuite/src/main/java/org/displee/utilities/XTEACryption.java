@@ -89,8 +89,8 @@ public final class XTEACryption {
 		int numQuads = (end - start) / 8;
 		for (int i = 0; i < numQuads; i++) {
 			int sum = GOLDEN_RATIO * ROUNDS;
-			int v0 = buffer.readInt();
-			int v1 = buffer.readInt();
+			int v0 = readInt(buffer);
+			int v1 = readInt(buffer);
 			for (int j = 0; j < ROUNDS; j++) {
 				v1 -= (((v0 << 4) ^ (v0 >>> 5)) + v0) ^ (sum + key[(sum >>> 11) & 3]);
 				sum -= GOLDEN_RATIO;
@@ -142,8 +142,8 @@ public final class XTEACryption {
 		int numQuads = (end - start) / 8;
 		for (int i = 0; i < numQuads; i++) {
 			int sum = 0;
-			int v0 = buffer.readInt();
-			int v1 = buffer.readInt();
+			int v0 = readInt(buffer);
+			int v1 = readInt(buffer);
 			for (int j = 0; j < ROUNDS; j++) {
 				v0 += (((v1 << 4) ^ (v1 >>> 5)) + v1) ^ (sum + key[sum & 3]);
 				sum += GOLDEN_RATIO;
@@ -154,4 +154,26 @@ public final class XTEACryption {
 		}
 	}
 
+	/**
+	 * Read an integer.
+	 *
+	 * @return The integer.
+	 */
+	private static int readInt(OutputBuffer buffer) {
+		return (readUnsignedByte(buffer) << 24)
+				+ (readUnsignedByte(buffer) << 16)
+				+ (readUnsignedByte(buffer) << 8)
+				+ readUnsignedByte(buffer);
+	}
+
+	/**
+	 * Read an unsigned byte.
+	 *
+	 * @return The unsigned byte.
+	 */
+	private static int readUnsignedByte(OutputBuffer buffer) {
+		int result = buffer.remaining() > 0 ? buffer.raw()[buffer.getOffset()] : 0;
+		buffer.setOffset(buffer.getOffset() + 1);
+		return result & 0xFF;
+	}
 }

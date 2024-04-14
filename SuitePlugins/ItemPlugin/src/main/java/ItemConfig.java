@@ -186,9 +186,9 @@ public class ItemConfig extends ConfigExtensionBase {
 		if (opcode == 1) {
 			inventoryModel = buffer.readUnsignedShort();
 		} else if (opcode == 2) {
-			name = buffer.readString317();
+			name = buffer.readStringRaw();
 		} else if (opcode == 3) {
-			buffer.readString317();
+			buffer.readStringRaw();
 		} else if (opcode == 4) {
 			zoom2d = buffer.readUnsignedShort();
 		} else if (opcode == 5) {
@@ -222,12 +222,12 @@ public class ItemConfig extends ConfigExtensionBase {
 		} else if (opcode == 26) {
 			femaleModel1 = buffer.readUnsignedShort();
 		} else if (opcode >= 30 && opcode < 35) {
-			options[opcode - 30] = buffer.readString317();
+			options[opcode - 30] = buffer.readStringRaw();
 			if (options[opcode - 30].equalsIgnoreCase("Hidden")) {
 				options[opcode - 30] = null;
 			}
 		} else if (opcode >= 35 && opcode < 40) {
-			interfaceOptions[opcode - 35] = buffer.readString317();
+			interfaceOptions[opcode - 35] = buffer.readStringRaw();
 		} else if (opcode == 40) {
 			int var5 = buffer.readUnsignedByte();
 			colorFind = new int[var5];
@@ -307,7 +307,7 @@ public class ItemConfig extends ConfigExtensionBase {
 				Object value;
 
 				if (isString) {
-					value = buffer.readString317();
+					value = buffer.readStringRaw();
 				} else {
 					value = buffer.readInt();
 				}
@@ -367,7 +367,7 @@ public class ItemConfig extends ConfigExtensionBase {
 		if (!name.equals("null")) {
 			buffer.writeByte(2);
 			if (CacheLibrary.get().is317())
-				buffer.writeString317(name);
+				buffer.writeStringRaw(name);
 			else
 				buffer.writeString(name);
 		}
@@ -445,7 +445,7 @@ public class ItemConfig extends ConfigExtensionBase {
 			if (options[index] != null && !options[index].isEmpty() && !options[index].equals("null")) {
 				buffer.writeByte(index + 30);
 				if (CacheLibrary.get().is317())
-					buffer.writeString317(options[index]);
+					buffer.writeStringRaw(options[index]);
 				else
 					buffer.writeString(options[index]);
 			}
@@ -455,7 +455,7 @@ public class ItemConfig extends ConfigExtensionBase {
 			if (interfaceOptions[index] != null && !interfaceOptions[index].isEmpty() && !interfaceOptions[index].equals("null")) {
 				buffer.writeByte(index + 35);
 				if (CacheLibrary.get().is317())
-					buffer.writeString317(interfaceOptions[index]);
+					buffer.writeStringRaw(interfaceOptions[index]);
 				else
 					buffer.writeString(interfaceOptions[index]);
 			}
@@ -628,7 +628,7 @@ public class ItemConfig extends ConfigExtensionBase {
 				buffer.write24BitInt(key);
 				if (value instanceof String) {
 					if (CacheLibrary.get().is317())
-						buffer.writeString317((String) value);
+						buffer.writeStringRaw((String) value);
 					else
 						buffer.writeString((String) value);
 				} else {

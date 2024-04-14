@@ -636,9 +636,9 @@ public class Mesh extends ConfigExtensionBase {
 		boolean hasVersion = (flags & 0x8) == 8;
 
 		if (hasVersion) {
-			first.offset -= 7;
+			first.setOffset(first.getOffset() - 7);
 			version = first.readUnsignedByte();
-			first.offset += 6;
+			first.setOffset(first.getOffset() + 6);
 		}
 
 		int modelPriority = first.readUnsignedByte();

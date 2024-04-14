@@ -41,7 +41,7 @@ public class ItemLoader extends LoaderExtensionBase {
 				}
 
 				for (int id = 0; id < totalItems; id++) {
-					stream.offset = streamIndices[id];
+					stream.setOffset(streamIndices[id]);
 					ItemConfig definition = new ItemConfig();
 					definition.id = id;
 					readConfig(stream, definition);

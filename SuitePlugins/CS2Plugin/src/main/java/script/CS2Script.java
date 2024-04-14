@@ -77,7 +77,7 @@ public class CS2Script extends ConfigExtensionBase {
             }
         }
         buffer.setOffset(0);
-        buffer.readStringOrNull();
+        buffer.readStringNull();
         instructions = new int[numOpcodes];
         intOrphands = new int[numOpcodes];
         stringOrphands = new String[numOpcodes];
@@ -133,7 +133,7 @@ public class CS2Script extends ConfigExtensionBase {
         buffer.writeShort(getLocalStringCount());
         buffer.writeShort(getIntStackCount());
         buffer.writeShort(getStringStackCount());
-        int switchStart = buffer.offset;
+        int switchStart = buffer.getOffset();
         if (switches == null)
         {
             buffer.writeByte(0);
@@ -151,7 +151,7 @@ public class CS2Script extends ConfigExtensionBase {
                 }
             }
         }
-        int switchLength = buffer.offset - switchStart;
+        int switchLength = buffer.getOffset() - switchStart;
         buffer.writeShort(switchLength);
 
         return buffer;

@@ -45,7 +45,7 @@ public class Compression {
 		}
 		outputBuffer.writeBytes(compressed);
 		if (xteas != null && (xteas[0] != 0 || xteas[1] != 0 || xteas[2] != 0 || 0 != xteas[3])) {
-			outputBuffer.encodeXTEA(xteas, 5, outputBuffer.getOffset());
+			outputBuffer.encryptXTEA(xteas, 5, outputBuffer.getOffset());
 		}
 		if (revision != -1) {
 			outputBuffer.writeShort(revision);
@@ -64,7 +64,7 @@ public class Compression {
 		byte[] packedData = archiveSector.getData();
 		InputBuffer inputBuffer = new InputBuffer(packedData);
 		if (keys != null && (keys[0] != 0 || keys[1] != 0 || keys[2] != 0 || 0 != keys[3])) {
-			inputBuffer.decodeXTEA(keys, 5, packedData.length);
+			inputBuffer.decryptXTEA(keys, 5, packedData.length);
 		}
 		int type = inputBuffer.readUnsignedByte();
 		archiveSector.setCompression(CompressionType.values()[type]);
@@ -87,7 +87,7 @@ public class Compression {
 			}
 			return decompressed;
 		}
-		return inputBuffer.flip(compressedSize);
+		return inputBuffer.array(0, compressedSize);
 	}
 
 	/**
