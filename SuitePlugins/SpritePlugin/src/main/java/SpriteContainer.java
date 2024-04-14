@@ -172,7 +172,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 	public int convertToMediumInt(int rgb) {
 		OutputBuffer out = new OutputBuffer(4);
 		out.writeInt(rgb);
-		InputBuffer stream = new InputBuffer(out.getBytes());
+		InputBuffer stream = new InputBuffer(out.raw());
 		stream.setOffset(1);
 		rgb = stream.read24BitInt();
 		return rgb;

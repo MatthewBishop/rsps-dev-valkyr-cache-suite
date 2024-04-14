@@ -81,7 +81,7 @@ public class MagnetDefinition implements AbstractDefinition, Cloneable {
 			stream.writeByte(10);
 
 		stream.writeByte(0);
-		return stream.flip();
+		return stream.array();
 	}
 
 	@Override

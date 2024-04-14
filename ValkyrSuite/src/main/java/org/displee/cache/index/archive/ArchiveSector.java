@@ -113,7 +113,7 @@ public class ArchiveSector implements Container {
 		outputBuffer.writeShort(chunk);
 		outputBuffer.write24BitInt(position);
 		outputBuffer.writeByte(index);
-		return outputBuffer.flip();
+		return outputBuffer.array();
 	}
 
 	/**

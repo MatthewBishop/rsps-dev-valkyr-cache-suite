@@ -28,7 +28,7 @@ public final class Utils {
 			stream.writeByte(archive[var6]);
 			++offset;
 		}
-		return stream.flip();
+		return stream.array();
 	}
 
 	public static int getNameHash(String name) {

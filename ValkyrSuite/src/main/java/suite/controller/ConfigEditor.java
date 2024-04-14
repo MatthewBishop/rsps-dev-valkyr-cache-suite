@@ -176,7 +176,7 @@ public class ConfigEditor extends FXController {
             try {
                 OutputBuffer data = selectedItem.encode(new OutputBuffer(16));
                 DataOutputStream dos = new DataOutputStream(new FileOutputStream(file));
-                dos.write(data.flip());
+                dos.write(data.array());
                 dos.close();
             } catch (IOException e) {
                 Dialogues.alert(Alert.AlertType.ERROR, "Error", "An error has occured.", StringUtilities.getStackTrace(e), true);
@@ -198,7 +198,7 @@ public class ConfigEditor extends FXController {
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                         } else {
                             OutputBuffer buffer = replacing.encode(new OutputBuffer(16));
-                            CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).addFile(selected.id, buffer.flip());
+                            CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).addFile(selected.id, buffer.array());
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                             PluginManager.get().getLoaderForType(getInfo().getType()).reload();
                         }
@@ -282,7 +282,7 @@ public class ConfigEditor extends FXController {
                                 pack317Config();
                             } else {
                                 OutputBuffer encoded = editing.encode(new OutputBuffer(16));
-                                CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).addFile(editing.id, encoded.flip());
+                                CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).addFile(editing.id, encoded.array());
                             }
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                             PluginManager.get().getLoaderForType(getInfo().getType()).reload();

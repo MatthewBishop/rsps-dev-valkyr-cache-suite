@@ -75,9 +75,9 @@ public class LZMACompressor {
 	 * @param decompressedLength The decompressed length.
 	 */
 	public static byte[] decompress(InputBuffer buffer, int decompressedLength) {
-		OutputBuffer output = new OutputBuffer(buffer.getRemaining());
-		output.writeBytes(buffer.getBytes(), buffer.getOffset(), buffer.getRemaining());
-		return decompress(output.getBytes(), decompressedLength);
+		OutputBuffer output = new OutputBuffer(buffer.remaining());
+		output.writeBytes(buffer.raw(), buffer.getOffset(), buffer.remaining());
+		return decompress(output.raw(), decompressedLength);
 	}
 
 	/**

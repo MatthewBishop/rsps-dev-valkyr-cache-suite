@@ -321,7 +321,7 @@ public class CacheLibrary {
 			outputBuffer.writeShort(0);
 			final int id = indices.length;
 			if (!checksumTable.writeArchiveSector(id,
-					Compression.compress(outputBuffer.flip(), CompressionType.GZIP, null, -1))) {
+					Compression.compress(outputBuffer.array(), CompressionType.GZIP, null, -1))) {
 				throw new RuntimeException("Failed to write the archive sector for a new index[id=" + id + "]");
 			}
 			indices = Arrays.copyOf(indices, indices.length + 1);

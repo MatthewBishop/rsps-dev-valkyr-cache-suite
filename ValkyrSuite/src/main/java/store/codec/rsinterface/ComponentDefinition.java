@@ -502,7 +502,7 @@ public class ComponentDefinition {
 		encodeScripts3(this.anIntArray4789, out);
 		encodeScripts3(this.anIntArray4829, out);
 		encodeScripts3(this.anIntArray4805, out);
-		return out.flip();
+		return out.array();
 
 	}
 

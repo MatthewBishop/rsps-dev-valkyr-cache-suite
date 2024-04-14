@@ -1102,7 +1102,7 @@ public class ItemDefinition implements AbstractDefinition, Cloneable {
 		}
 
 		stream.writeByte(0);
-		return stream.flip();
+		return stream.array();
 	}
 
 	@Override

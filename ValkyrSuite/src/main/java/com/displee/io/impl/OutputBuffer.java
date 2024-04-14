@@ -527,7 +527,7 @@ public class OutputBuffer extends Buffer {
 	 * 
 	 * @return The data.
 	 */
-	public byte[] flip() {
+	public byte[] array() {
 		byte[] data = new byte[offset];
 		clone(data, offset = 0, data.length);
 		return data;

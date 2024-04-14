@@ -60,7 +60,7 @@ public class BaseDefinition implements AbstractDefinition, Cloneable {
 		}
 		byte[] flipped = new byte[stream.getOffset()];
 		stream.setOffset(0);
-		stream.flip();
+		stream.array();
 		return flipped;
 	}
 

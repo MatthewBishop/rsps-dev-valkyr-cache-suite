@@ -50,7 +50,7 @@ public class ChecksumTable extends Index implements Container {
 			outputBuffer.writeInt(index == null ? 0 : index.getCRC());
 			outputBuffer.writeInt(index == null ? 0 : index.getRevision());
 		}
-		return data = outputBuffer.flip();
+		return data = outputBuffer.array();
 	}
 
 	/**

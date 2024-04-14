@@ -95,7 +95,7 @@ public abstract class Buffer {
 	 * @return The byte.
 	 */
 	public int readByte() {
-		return getRemaining() > 0 ? buffer[offset++] : 0;
+		return remaining() > 0 ? buffer[offset++] : 0;
 	}
 
 	/**
@@ -245,14 +245,14 @@ public abstract class Buffer {
 	 *
 	 * @return The remaining size.
 	 */
-	public int getRemaining() {
+	public int remaining() {
 		return offset < buffer.length ? buffer.length - offset : 0;
 	}
 
 	/**
 	 * Get the bytes serving as a buffer.
 	 */
-	public final byte[] getBytes() {
+	public final byte[] raw() {
 		return buffer;
 	}
 

@@ -436,7 +436,7 @@ public class ObjectDefinition implements AbstractDefinition, Cloneable {
 		
 		buffer.writeByte(0);
 		
-		return buffer.flip();
+		return buffer.array();
 	}
 
 	@Override

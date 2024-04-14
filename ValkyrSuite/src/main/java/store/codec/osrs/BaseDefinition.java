@@ -52,7 +52,7 @@ public class BaseDefinition {
 			for (int subSkin = 0; (subSkin < skinList[skin].length); subSkin++)
 				stream.writeByte(skinList[skin][subSkin]);
 		}
-		return stream.flip();
+		return stream.array();
 	}
 
 }

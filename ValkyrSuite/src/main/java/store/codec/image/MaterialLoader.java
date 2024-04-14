@@ -208,7 +208,7 @@ public class MaterialLoader {
 			if (materials.get(index) != null)
 				buffer.writeByte(materials.get(index).blendType);
 		}
-		return buffer.flip();
+		return buffer.array();
 	}
 
 	public final void save() {

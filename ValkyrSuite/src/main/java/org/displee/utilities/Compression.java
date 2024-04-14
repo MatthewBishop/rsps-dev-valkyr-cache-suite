@@ -50,7 +50,7 @@ public class Compression {
 		if (revision != -1) {
 			outputBuffer.writeShort(revision);
 		}
-		return outputBuffer.flip();
+		return outputBuffer.array();
 	}
 
 	/**

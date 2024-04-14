@@ -162,7 +162,7 @@ public class HitmarkDefinition implements AbstractDefinition, Cloneable {
 		}
 
 		stream.writeByte(0);
-		return stream.flip();
+		return stream.array();
 
 	}
 

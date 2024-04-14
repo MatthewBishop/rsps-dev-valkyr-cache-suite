@@ -259,7 +259,7 @@ public class Index317 extends Index {
 				buffer.writeInt(i);
 			}
 		}
-		origin.getIndex(0).getArchive(5).addFile(fileId, buffer.flip());
+		origin.getIndex(0).getArchive(5).addFile(fileId, buffer.array());
 		return origin.getIndex(0).update();
 	}
 

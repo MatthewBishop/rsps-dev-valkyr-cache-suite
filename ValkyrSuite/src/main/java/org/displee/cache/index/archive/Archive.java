@@ -106,10 +106,10 @@ public class Archive implements Container {
 	@Override
 	public boolean read(InputBuffer inputBuffer) {
 		if (fileIds.length == 1) {
-			files[0].setData(inputBuffer.getBytes());
+			files[0].setData(inputBuffer.raw());
 		} else {
-			int offsetPosition = inputBuffer.getBytes().length;
-			int length = inputBuffer.getBytes()[--offsetPosition] & 0xFF;
+			int offsetPosition = inputBuffer.raw().length;
+			int length = inputBuffer.raw()[--offsetPosition] & 0xFF;
 			offsetPosition -= length * (fileIds.length * 4);
 			int filesSize[] = new int[fileIds.length];
 			inputBuffer.setOffset(offsetPosition);
@@ -131,7 +131,7 @@ public class Archive implements Container {
 				int read = 0;
 				for (int fileIndex = 0; fileIndex < fileIds.length; fileIndex++) {
 					read += inputBuffer.readInt();
-					System.arraycopy(inputBuffer.getBytes(), offset, filesData[fileIndex], filesSize[fileIndex], read);
+					System.arraycopy(inputBuffer.raw(), offset, filesData[fileIndex], filesSize[fileIndex], read);
 					offset += read;
 					filesSize[fileIndex] += read;
 				}
@@ -165,7 +165,7 @@ public class Archive implements Container {
 			}
 		}
 		outputBuffer.writeByte(1);
-		return outputBuffer.flip();
+		return outputBuffer.array();
 	}
 
 	/**

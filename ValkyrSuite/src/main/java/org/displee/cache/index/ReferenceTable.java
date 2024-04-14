@@ -288,7 +288,7 @@ public class ReferenceTable implements Container {
 				}
 			}
 		}
-		return outputBuffer.flip();
+		return outputBuffer.array();
 	}
 
 	/**
@@ -736,10 +736,10 @@ public class ReferenceTable implements Container {
 				}
 				final InputBuffer inputBuffer = new InputBuffer(archiveSector.getData());
 				inputBuffer.setOffset(1);
-				final int remaining = inputBuffer.getBytes().length
+				final int remaining = inputBuffer.raw().length
 						- ((inputBuffer.readInt() & 0xFFFFFF) + inputBuffer.getOffset());
 				if (remaining >= 2) {
-					inputBuffer.setOffset(inputBuffer.getBytes().length - 2);
+					inputBuffer.setOffset(inputBuffer.raw().length - 2);
 					archive.setRevision(inputBuffer.readUnsignedShort());
 				}
 				return archive;

@@ -181,7 +181,7 @@ public class OverlayDefinition {
 		}
 
 		stream.writeByte(0);
-		return stream.flip();
+		return stream.array();
 	}
 
 }

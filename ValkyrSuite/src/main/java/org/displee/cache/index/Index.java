@@ -233,7 +233,7 @@ public class Index extends ReferenceTable {
 						requiredToRead = archiveDataSize;
 					}
 					super.origin.getMainFile().seek((long) archiveSector.getPosition() * Constants.ARCHIVE_SIZE);
-					super.origin.getMainFile().read(inputBuffer.getBytes(), 0, requiredToRead + archiveHeaderSize);
+					super.origin.getMainFile().read(inputBuffer.raw(), 0, requiredToRead + archiveHeaderSize);
 					inputBuffer.setOffset(0);
 					if (!archiveSector.read(inputBuffer)) {
 						throw new RuntimeException("Error, could not read the archive.");
@@ -248,7 +248,7 @@ public class Index extends ReferenceTable {
 						throw new RuntimeException("Error, the next position is invalid.");
 					}
 					for (int i = 0; i < requiredToRead; i++) {
-						archiveSector.setData(read++, inputBuffer.getBytes()[i + archiveHeaderSize]);
+						archiveSector.setData(read++, inputBuffer.raw()[i + archiveHeaderSize]);
 					}
 					archiveSector.setPosition(archiveSector.getNextPosition());
 					chunk++;
@@ -304,7 +304,7 @@ public class Index extends ReferenceTable {
 				outputBuffer.write24BitInt(data.length);
 				outputBuffer.write24BitInt(position);
 				randomAccessFile.seek((long) id * Constants.INDEX_SIZE);
-				randomAccessFile.write(outputBuffer.flip(), 0, Constants.INDEX_SIZE);
+				randomAccessFile.write(outputBuffer.array(), 0, Constants.INDEX_SIZE);
 				int written = 0;
 				int chunk = 0;
 				int archiveDataSize = Constants.ARCHIVE_DATA_SIZE;

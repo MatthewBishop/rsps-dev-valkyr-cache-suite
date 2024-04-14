@@ -89,7 +89,7 @@ public class FrameDefinition {
 
 		if (stream.getOffset() != data.length) {
 			System.out.println(
-					"FrameDefinition - Remaining: " + stream.getRemaining() + ", Position: " + stream.getOffset());
+					"FrameDefinition - Remaining: " + stream.remaining() + ", Position: " + stream.getOffset());
 		} else {
 			this.stepCount = stepCount;
 			this.opCodeTable = new int[stepCount];
@@ -135,7 +135,7 @@ public class FrameDefinition {
 			}
 		}
 
-		return stream.flip();
+		return stream.array();
 	}
 
 }

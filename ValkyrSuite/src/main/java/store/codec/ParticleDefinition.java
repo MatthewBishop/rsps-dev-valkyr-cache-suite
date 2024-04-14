@@ -369,7 +369,7 @@ public class ParticleDefinition implements AbstractDefinition, Cloneable {
 
 		stream.writeByte(0);
 
-		return stream.flip();
+		return stream.array();
 	}
 
 	@Override
