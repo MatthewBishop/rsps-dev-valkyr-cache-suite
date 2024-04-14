@@ -7,8 +7,8 @@ import java.io.IOException;
 import lzma.sdk.lzma.Decoder;
 import lzma.sdk.lzma.Encoder;
 import lzma.streams.LzmaEncoderWrapper;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 /**
  * A class handling LZMA compression.
@@ -74,8 +74,8 @@ public class LZMACompressor {
 	 * @param buffer             The buffer.
 	 * @param decompressedLength The decompressed length.
 	 */
-	public static byte[] decompress(InputStream buffer, int decompressedLength) {
-		OutputStream output = new OutputStream(buffer.getRemaining());
+	public static byte[] decompress(InputBuffer buffer, int decompressedLength) {
+		OutputBuffer output = new OutputBuffer(buffer.getRemaining());
 		output.writeBytes(buffer.getBytes(), buffer.getPosition(), buffer.getRemaining());
 		return decompress(output.getBytes(), decompressedLength);
 	}

@@ -5,7 +5,7 @@ package store.codec.osrs;
 
 import org.displee.CacheLibrary;
 import store.codec.AbstractDefinition;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Sep 30, 2018
@@ -55,7 +55,7 @@ public class ItemDefinition implements AbstractDefinition {
 	public int equipType = -1;
 	public int equipSlot = -1;
 
-	public ItemDefinition(int id, InputStream buffer) {
+	public ItemDefinition(int id, InputBuffer buffer) {
 		this.id = id;
 		decode(buffer);
 		applyEquipData();
@@ -65,7 +65,7 @@ public class ItemDefinition implements AbstractDefinition {
 	 * @see com.alex.definition.AbstractDefinition#decode(com.alex.io.InputStream)
 	 */
 	@Override
-	public void decode(InputStream buffer) {
+	public void decode(InputBuffer buffer) {
 		while (true) {
 			int opcode = buffer.readUnsignedByte();
 			if (opcode == 0)

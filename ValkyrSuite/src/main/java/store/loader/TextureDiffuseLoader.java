@@ -8,7 +8,7 @@ import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import store.codec.image.texture.TextureDefinition;
 import store.codec.util.Utils;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Dec 9, 2018
@@ -48,7 +48,7 @@ public class TextureDiffuseLoader implements DefinitionLoader {
 				try {
 					byte[] data = index.getArchive(0).getFile(id).getData();
 					if (data != null) {
-						definition.decode(new InputStream(data));
+						definition.decode(new InputBuffer(data));
 					}
 				} catch (Exception e) {
 					if (suite.Constants.settings.debug)

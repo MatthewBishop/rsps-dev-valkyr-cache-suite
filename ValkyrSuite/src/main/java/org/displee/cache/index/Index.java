@@ -8,8 +8,8 @@ import org.displee.CacheLibrary;
 import org.displee.CacheLibraryMode;
 import org.displee.cache.index.archive.Archive;
 import org.displee.cache.index.archive.ArchiveSector;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import org.displee.progress.ProgressListener;
 import org.displee.utilities.Compression;
 import org.displee.utilities.Compression.CompressionType;
@@ -74,7 +74,7 @@ public class Index extends ReferenceTable {
 			byte[] archiveSectorData = archiveSector.getData();
 			crc = HashGenerator.getCRCHash(archiveSectorData);
 			whirlpool = Whirlpool.getHash(archiveSectorData, 0, archiveSectorData.length);
-			super.read(new InputStream(Compression.decompress(archiveSector, null)));
+			super.read(new InputBuffer(Compression.decompress(archiveSector, null)));
 			type = archiveSector.getCompression();
 		} else {
 			System.out.println("Archive sector is null for index " + id);
@@ -144,7 +144,7 @@ public class Index extends ReferenceTable {
 					listener.notify((i / updateCount) * .80, "Repacking archive " + archive.getId() + "...");
 					log.info("Repacking archive {}...", archive.getId());
 				}
-				final byte[] uncompressed = archive.write(new OutputStream(0));
+				final byte[] uncompressed = archive.write(new OutputBuffer(0));
 				final byte[] compressed = Compression.compress(uncompressed,
 						super.id == 7 ? CompressionType.NONE : CompressionType.GZIP, keys, archive.getRevision());
 				archive.setCRC(HashGenerator.getCRCHash(compressed, 0, compressed.length - 2));
@@ -174,7 +174,7 @@ public class Index extends ReferenceTable {
 		}
 		if (updateChecksumTable || super.needUpdate) {
 			super.revision++;
-			final byte[] indexData = Compression.compress(super.write(new OutputStream()), type, null, -1);
+			final byte[] indexData = Compression.compress(super.write(new OutputBuffer()), type, null, -1);
 			byte[] clonedData = indexData.clone();
 			crc = HashGenerator.getCRCHash(clonedData);
 			whirlpool = Whirlpool.getHash(clonedData, 0, clonedData.length);
@@ -207,9 +207,9 @@ public class Index extends ReferenceTable {
 				final byte[] buffer = new byte[Constants.ARCHIVE_SIZE];
 				randomAccessFile.seek((long) id * Constants.INDEX_SIZE);
 				randomAccessFile.read(buffer, 0, Constants.INDEX_SIZE);
-				final InputStream inputStream = new InputStream(buffer);
-				final ArchiveSector archiveSector = new ArchiveSector(type, inputStream.read24BitInt(),
-						inputStream.read24BitInt());
+				final InputBuffer inputBuffer = new InputBuffer(buffer);
+				final ArchiveSector archiveSector = new ArchiveSector(type, inputBuffer.read24BitInt(),
+						inputBuffer.read24BitInt());
 				if (archiveSector.getSize() < 0) {
 					return null;
 				} else if (archiveSector.getPosition() <= 0 || archiveSector
@@ -233,9 +233,9 @@ public class Index extends ReferenceTable {
 						requiredToRead = archiveDataSize;
 					}
 					super.origin.getMainFile().seek((long) archiveSector.getPosition() * Constants.ARCHIVE_SIZE);
-					super.origin.getMainFile().read(inputStream.getBytes(), 0, requiredToRead + archiveHeaderSize);
-					inputStream.setPosition(0);
-					if (!archiveSector.read(inputStream)) {
+					super.origin.getMainFile().read(inputBuffer.getBytes(), 0, requiredToRead + archiveHeaderSize);
+					inputBuffer.setPosition(0);
+					if (!archiveSector.read(inputBuffer)) {
 						throw new RuntimeException("Error, could not read the archive.");
 					} else if (!isIndexValid(archiveSector.getIndex()) || id != archiveSector.getId()
 							|| chunk != archiveSector.getChunk()) {
@@ -248,7 +248,7 @@ public class Index extends ReferenceTable {
 						throw new RuntimeException("Error, the next position is invalid.");
 					}
 					for (int i = 0; i < requiredToRead; i++) {
-						archiveSector.setData(read++, inputStream.getBytes()[i + archiveHeaderSize]);
+						archiveSector.setData(read++, inputBuffer.getBytes()[i + archiveHeaderSize]);
 					}
 					archiveSector.setPosition(archiveSector.getNextPosition());
 					chunk++;
@@ -287,9 +287,9 @@ public class Index extends ReferenceTable {
 					archiveSector = readArchiveSector(id);
 					randomAccessFile.seek((long) id * Constants.INDEX_SIZE);
 					randomAccessFile.read(buffer, 0, Constants.INDEX_SIZE);
-					final InputStream inputStream = new InputStream(buffer);
-					inputStream.setPosition(3);
-					position = inputStream.read24BitInt();
+					final InputBuffer inputBuffer = new InputBuffer(buffer);
+					inputBuffer.setPosition(3);
+					position = inputBuffer.read24BitInt();
 					if (position <= 0 || position > super.origin.getMainFile().length() / Constants.ARCHIVE_SIZE) {
 						return false;
 					}
@@ -300,11 +300,11 @@ public class Index extends ReferenceTable {
 						position = 1;
 					}
 				}
-				final OutputStream outputStream = new OutputStream();
-				outputStream.write24BitInt(data.length);
-				outputStream.write24BitInt(position);
+				final OutputBuffer outputBuffer = new OutputBuffer();
+				outputBuffer.write24BitInt(data.length);
+				outputBuffer.write24BitInt(position);
 				randomAccessFile.seek((long) id * Constants.INDEX_SIZE);
-				randomAccessFile.write(outputStream.flip(), 0, Constants.INDEX_SIZE);
+				randomAccessFile.write(outputBuffer.flip(), 0, Constants.INDEX_SIZE);
 				int written = 0;
 				int chunk = 0;
 				int archiveDataSize = Constants.ARCHIVE_DATA_SIZE;
@@ -318,7 +318,7 @@ public class Index extends ReferenceTable {
 					if (overWrite) {
 						super.origin.getMainFile().seek((long) position * Constants.ARCHIVE_SIZE);
 						super.origin.getMainFile().read(buffer, 0, archiveHeaderSize);
-						archiveSector.read(new InputStream(buffer));
+						archiveSector.read(new InputBuffer(buffer));
 						currentPosition = archiveSector.getNextPosition();
 						if (archiveSector.getId() != id || chunk != archiveSector.getChunk()
 								|| !isIndexValid(archiveSector.getIndex())) {
@@ -350,8 +350,8 @@ public class Index extends ReferenceTable {
 					archiveSector.setChunk(chunk);
 					archiveSector.setPosition(currentPosition);
 					super.origin.getMainFile().seek((long) position * Constants.ARCHIVE_SIZE);
-					archiveSector.write(new OutputStream(archiveHeaderSize));
-					super.origin.getMainFile().write(archiveSector.write(new OutputStream(archiveHeaderSize)), 0,
+					archiveSector.write(new OutputBuffer(archiveHeaderSize));
+					super.origin.getMainFile().write(archiveSector.write(new OutputBuffer(archiveHeaderSize)), 0,
 							archiveHeaderSize);
 					int length = data.length - written;
 					if (length > archiveDataSize) {

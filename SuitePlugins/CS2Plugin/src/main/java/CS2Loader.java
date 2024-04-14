@@ -3,7 +3,7 @@ import script.CS2Disassembler;
 import script.CS2Script;
 import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 import store.plugin.extension.LoaderExtensionBase;
 
 import java.io.File;
@@ -27,7 +27,7 @@ public class CS2Loader extends LoaderExtensionBase {
                 if (data == null) continue;
                 CS2Script script = new CS2Script();
                 script.id = archive;
-                script.decode(new InputStream(data));
+                script.decode(new InputBuffer(data));
                 definitions.put(archive, script);
                 if (DUMP_CS2) {
                     String output = disassembler.disassemble(script);

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.displee.CacheLibrary;
 import store.codec.AbstractDefinition;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Jan 10, 2019
@@ -31,7 +31,7 @@ public class TextureDefinition implements AbstractDefinition, Cloneable {
 	 * @see com.alex.definition.AbstractDefinition#decode(com.alex.io.InputStream)
 	 */
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 
 	}
 

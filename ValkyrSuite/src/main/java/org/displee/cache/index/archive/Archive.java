@@ -6,8 +6,8 @@ import java.util.Comparator;
 
 import org.displee.cache.Container;
 import org.displee.cache.index.archive.file.File;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import org.displee.utilities.Constants;
 import org.displee.utilities.Miscellaneous;
 
@@ -104,19 +104,19 @@ public class Archive implements Container {
 	}
 
 	@Override
-	public boolean read(InputStream inputStream) {
+	public boolean read(InputBuffer inputBuffer) {
 		if (fileIds.length == 1) {
-			files[0].setData(inputStream.getBytes());
+			files[0].setData(inputBuffer.getBytes());
 		} else {
-			int offsetPosition = inputStream.getBytes().length;
-			int length = inputStream.getBytes()[--offsetPosition] & 0xFF;
+			int offsetPosition = inputBuffer.getBytes().length;
+			int length = inputBuffer.getBytes()[--offsetPosition] & 0xFF;
 			offsetPosition -= length * (fileIds.length * 4);
 			int filesSize[] = new int[fileIds.length];
-			inputStream.setPosition(offsetPosition);
+			inputBuffer.setPosition(offsetPosition);
 			for (int i = 0; i < length; i++) {
 				int offset = 0;
 				for (int fileIndex = 0; fileIndex < fileIds.length; fileIndex++) {
-					offset += inputStream.readInt();
+					offset += inputBuffer.readInt();
 					filesSize[fileIndex] += offset;
 				}
 			}
@@ -125,13 +125,13 @@ public class Archive implements Container {
 				filesData[i] = new byte[filesSize[i]];
 				filesSize[i] = 0;
 			}
-			inputStream.setPosition(offsetPosition);
+			inputBuffer.setPosition(offsetPosition);
 			int offset = 0;
 			for (int i = 0; i < length; i++) {
 				int read = 0;
 				for (int fileIndex = 0; fileIndex < fileIds.length; fileIndex++) {
-					read += inputStream.readInt();
-					System.arraycopy(inputStream.getBytes(), offset, filesData[fileIndex], filesSize[fileIndex], read);
+					read += inputBuffer.readInt();
+					System.arraycopy(inputBuffer.getBytes(), offset, filesData[fileIndex], filesSize[fileIndex], read);
 					offset += read;
 					filesSize[fileIndex] += read;
 				}
@@ -144,28 +144,28 @@ public class Archive implements Container {
 	}
 
 	@Override
-	public byte[] write(OutputStream outputStream) {
+	public byte[] write(OutputBuffer outputBuffer) {
 		if (files.length == 1) {
 			return files[0].getData();
 		} else {
 			for (int i = 0; i < fileIds.length; i++) {
 				final File file = getFile(fileIds[i]);
 				if (file != null && file.getData() != null) {
-					outputStream.writeBytes(file.getData());
+					outputBuffer.writeBytes(file.getData());
 				}
 			}
 			for (int i = 0; i < files.length; i++) {
 				final File file = getFile(fileIds[i]);
 				if (file != null && file.getData() != null) {
-					outputStream.writeInt(file.getData().length
+					outputBuffer.writeInt(file.getData().length
 							- ((i == 0 || getFile(fileIds[i - 1]) == null || getFile(fileIds[i - 1]).getData() == null)
 									? 0
 									: getFile(fileIds[i - 1]).getData().length));
 				}
 			}
 		}
-		outputStream.writeByte(1);
-		return outputStream.flip();
+		outputBuffer.writeByte(1);
+		return outputBuffer.flip();
 	}
 
 	/**

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.Archive;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread
@@ -48,7 +48,7 @@ public abstract class LoaderExtensionBase {
 		return archive.getFile(name).getData();
 	}
 
-	protected void readConfig(InputStream buffer, ConfigExtensionBase definition) {
+	protected void readConfig(InputBuffer buffer, ConfigExtensionBase definition) {
 		for (;;) {
 			int opcode = buffer.readUnsignedByte();
 			if (opcode == 0)

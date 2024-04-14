@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 public class ComponentDefinition {
 
@@ -243,7 +243,7 @@ public class ComponentDefinition {
 				if (data != null) {
 					ComponentDefinition defs = icomponentsdefs[id][i] = new ComponentDefinition();
 					defs.ihash = i + (id << 16);
-					defs.decode(new InputStream(data), i, id);
+					defs.decode(new InputBuffer(data), i, id);
 				}
 			}
 		}
@@ -258,7 +258,7 @@ public class ComponentDefinition {
 	 */
 	public byte[] encode() {
 		/*outputstream*/
-		OutputStream out = new OutputStream();
+		OutputBuffer out = new OutputBuffer();
 		out.writeByte(newInt);
 		out.writeByte(this.type);
 		if ((type & 0x80 ^ 0xffffffff) != -1) {// if(type != 0){
@@ -507,7 +507,7 @@ public class ComponentDefinition {
 	}
 
 	@SuppressWarnings("unchecked")
-	final void decode(InputStream stream, int id, int interfaceId) {
+	final void decode(InputBuffer stream, int id, int interfaceId) {
 		newInt = (byte) stream.readUnsignedByte();
 		if (newInt == 255) {
 			newInt = -1;
@@ -802,7 +802,7 @@ public class ComponentDefinition {
 		anIntArray4805 = decodeScripts3(stream);
 	}
 
-	private final Object[] decodeScript(InputStream buffer) {
+	private final Object[] decodeScript(InputBuffer buffer) {
 		int length = buffer.readUnsignedByte();
 		if (length == 0) {
 			return null;
@@ -821,7 +821,7 @@ public class ComponentDefinition {
 		return objects;
 	}
 
-	private void encodeScript(Object[] obj, OutputStream out) {
+	private void encodeScript(Object[] obj, OutputBuffer out) {
 		int length;
 		if (obj == null)
 			length = 0;
@@ -848,7 +848,7 @@ public class ComponentDefinition {
 	 * @param arr
 	 * @param out
 	 */
-	private void encodeScripts3(int[] arr, OutputStream out) {
+	private void encodeScripts3(int[] arr, OutputBuffer out) {
 		int length;
 		if (arr == null)
 			length = 0;
@@ -860,7 +860,7 @@ public class ComponentDefinition {
 		}
 	}
 
-	private final int[] decodeScripts3(InputStream buffer) {
+	private final int[] decodeScripts3(InputBuffer buffer) {
 		int length = buffer.readUnsignedByte();
 		if (length == 0) {
 			return null;

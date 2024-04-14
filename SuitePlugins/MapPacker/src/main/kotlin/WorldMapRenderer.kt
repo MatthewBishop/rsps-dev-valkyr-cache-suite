@@ -1,7 +1,7 @@
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.canvas.Canvas
 import org.displee.CacheLibrary
-import org.displee.io.impl.InputStream
+import com.displee.io.impl.InputBuffer
 import util.HightCalcuation
 import util.JagexColorPalette
 import utility.XTEASManager
@@ -162,20 +162,20 @@ class WorldMapRenderer(view: Canvas) : Runnable {
 
             val mapData: ByteArray? = library.getIndex(5).getArchive("m" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8))?.data
             mapData?.let {
-                val mapBuffer = InputStream(it)
+                val mapBuffer = InputBuffer(it)
                 decodeTerrainLayer(mapBuffer)
             }
 
             val landscapeData: ByteArray? = library.getIndex(5).getArchive("l" + (regionX.shr(3) / 8) + "_" + (regionY.shr(3) / 8), xteas)?.data
             landscapeData?.let {
-                val landscapeBuffer = InputStream(it)
+                val landscapeBuffer = InputBuffer(it)
                 decodeObjectLayer(landscapeBuffer)
             }
 
         }
 
         //Decodes the mx_y map layer
-        private fun decodeTerrainLayer(inputStream: InputStream) {
+        private fun decodeTerrainLayer(inputStream: InputBuffer) {
             inputStream.apply {
                 for (plane in 0 until 4) {
                     for (x in 0 until 64) {
@@ -234,7 +234,7 @@ class WorldMapRenderer(view: Canvas) : Runnable {
         }
 
         //Decodes the lx_y object layer
-        private fun decodeObjectLayer(inputStream: InputStream) {
+        private fun decodeObjectLayer(inputStream: InputBuffer) {
             inputStream.apply {
                 var objectId = -1
                 var objectIncrement: Int = -1

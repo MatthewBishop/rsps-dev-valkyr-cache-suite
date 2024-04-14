@@ -1,6 +1,6 @@
 import org.displee.CacheLibrary
-import org.displee.io.impl.InputStream
-import org.displee.io.impl.OutputStream
+import com.displee.io.impl.InputBuffer
+import com.displee.io.impl.OutputBuffer
 
 /**
  *
@@ -21,7 +21,7 @@ class UnderlayConfig  {
     var lightness = 0
     var hueMultiplier = 0
 
-    fun decode(opcode: Int, buffer: InputStream) {
+    fun decode(opcode: Int, buffer: InputBuffer) {
         when(opcode){
             1 -> {
                 color = buffer.read24BitInt()
@@ -34,7 +34,7 @@ class UnderlayConfig  {
         }
     }
 
-    fun encode(buffer: OutputStream?): OutputStream? {
+    fun encode(buffer: OutputBuffer?): OutputBuffer? {
         buffer?.apply {
             buffer.writeByte(1)
             buffer.write24BitInt(color)

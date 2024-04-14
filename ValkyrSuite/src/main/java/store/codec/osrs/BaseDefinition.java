@@ -3,8 +3,8 @@
  */
 package store.codec.osrs;
 
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 /**
  * @author ReverendDread Sep 6, 2018
@@ -18,7 +18,7 @@ public class BaseDefinition {
 
 	public BaseDefinition(int id, byte[] data) {
 		this.id = id;
-		InputStream stream = new InputStream(data);
+		InputBuffer stream = new InputBuffer(data);
 		count = stream.readUnsignedByte();
 		transformations = new int[count];
 		skinList = new int[count][];
@@ -33,7 +33,7 @@ public class BaseDefinition {
 	}
 
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 		int count = transformations.length;
 		stream.writeByte(transformations.length);
 		for (int opcode = 0; opcode < count; opcode++) {

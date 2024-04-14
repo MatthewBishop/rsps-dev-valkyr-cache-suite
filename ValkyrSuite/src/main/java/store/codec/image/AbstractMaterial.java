@@ -1,6 +1,6 @@
 package store.codec.image;
 
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 public abstract class AbstractMaterial {
 
@@ -21,7 +21,7 @@ public abstract class AbstractMaterial {
 		return -1;
 	}
 
-	public void decodeSprite(int visable, InputStream buffer) {
+	public void decodeSprite(int visable, InputBuffer buffer) {
 
 	}
 

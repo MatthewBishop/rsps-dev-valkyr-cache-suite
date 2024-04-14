@@ -3,8 +3,8 @@
  */
 package store.codec.osrs;
 
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 /**
  * @author ReverendDread Sep 6, 2018
@@ -27,8 +27,8 @@ public class FrameDefinition {
 
 	public FrameDefinition(byte[] data, BaseDefinition skin) {
 		this.skin = skin;
-		InputStream settings = new InputStream(data);
-		InputStream stream = new InputStream(data);
+		InputBuffer settings = new InputBuffer(data);
+		InputBuffer stream = new InputBuffer(data);
 		settings.skip(2);
 		animationCount = settings.readUnsignedByte();
 		int var10 = -1;
@@ -107,7 +107,7 @@ public class FrameDefinition {
 	}
 
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 
 		// Write anon data
 		stream.writeByte(0);

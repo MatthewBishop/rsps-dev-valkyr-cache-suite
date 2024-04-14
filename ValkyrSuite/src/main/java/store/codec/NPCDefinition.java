@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.displee.CacheLibrary;
 import store.codec.util.Utils;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 @SuppressWarnings("unused")
 public class NPCDefinition implements AbstractDefinition, Cloneable {
@@ -160,7 +160,7 @@ public class NPCDefinition implements AbstractDefinition, Cloneable {
 	}
 
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		while (true) {
 			int opcode = stream.readUnsignedByte();
 			if (opcode == 0)
@@ -482,7 +482,7 @@ public class NPCDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 
 		int data;
 		if (this.modelIds != null) {

@@ -15,8 +15,8 @@ import misc.RsMesh;
 import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.Archive;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import store.plugin.extension.ConfigExtensionBase;
@@ -147,7 +147,7 @@ public class ConfigEditor extends FXController {
                         byte[] data = Files.readAllBytes(file.toPath());
                         ConfigExtensionBase newItem = PluginManager.get().getConfigForType(getInfo().getType()).getClass().newInstance();
                         newItem.id = StringUtilities.stripId(file.getName());
-                        InputStream buffer = new InputStream(data);
+                        InputBuffer buffer = new InputBuffer(data);
                         for (;;) {
                             int opcode = buffer.readUnsignedByte();
                             if (opcode == 0)
@@ -174,7 +174,7 @@ public class ConfigEditor extends FXController {
             ConfigExtensionBase selectedItem = listView.getSelectionModel().getSelectedItem();
             File file = RetentionFileChooser.showSaveDialog("Save as...", Main.getPrimaryStage(), selectedItem.id + "", FilterMode.DAT);
             try {
-                OutputStream data = selectedItem.encode(new OutputStream());
+                OutputBuffer data = selectedItem.encode(new OutputBuffer());
                 DataOutputStream dos = new DataOutputStream(new FileOutputStream(file));
                 dos.write(data.flip());
                 dos.close();
@@ -197,7 +197,7 @@ public class ConfigEditor extends FXController {
                             selected.copy(replacing);
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                         } else {
-                            OutputStream buffer = replacing.encode(new OutputStream());
+                            OutputBuffer buffer = replacing.encode(new OutputBuffer());
                             CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).addFile(selected.id, buffer.flip());
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                             PluginManager.get().getLoaderForType(getInfo().getType()).reload();
@@ -218,7 +218,7 @@ public class ConfigEditor extends FXController {
                     byte[] data = Files.readAllBytes(file.toPath());
                     ConfigExtensionBase newObject = PluginManager.get().getConfigForType(getInfo().getType()).getClass().newInstance();
                     newObject.id = id;
-                    InputStream buffer = new InputStream(data);
+                    InputBuffer buffer = new InputBuffer(data);
                     for (;;) {
                         int opcode = buffer.readUnsignedByte();
                         if (opcode == 0)
@@ -247,7 +247,7 @@ public class ConfigEditor extends FXController {
     }
 
     private void pack317Config() {
-        final OutputStream[] streams = editing.encodeConfig317(getInfo().getFileName());
+        final OutputBuffer[] streams = editing.encodeConfig317(getInfo().getFileName());
 
         if (streams != null) {
             CacheLibrary.get().getIndex(0).getArchive(2).addFile(getInfo().getFileName() + ".dat", streams[0].buffer);
@@ -281,7 +281,7 @@ public class ConfigEditor extends FXController {
                             if (getInfo().is317()) {
                                 pack317Config();
                             } else {
-                                OutputStream encoded = editing.encode(new OutputStream());
+                                OutputBuffer encoded = editing.encode(new OutputBuffer());
                                 CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).addFile(editing.id, encoded.flip());
                             }
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);

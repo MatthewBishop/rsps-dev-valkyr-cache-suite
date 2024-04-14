@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import store.codec.IdentityKit;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Dec 3, 2018
@@ -33,7 +33,7 @@ public class IdkConverter {
 			IdentityKit kit = new IdentityKit(index);
 			byte[] data = old_cache.getIndex(2).getArchive(3).getFile(index).getData();
 			if (data != null) {
-				kit.decode(new InputStream(data));
+				kit.decode(new InputBuffer(data));
 				for (int model = 0; model < kit.bodyModels.length; model++) {
 					modelsToReplace.add(kit.bodyModels[model]);
 				}

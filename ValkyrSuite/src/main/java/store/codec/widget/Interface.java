@@ -10,7 +10,7 @@ import javax.swing.JComponent;
 
 import org.displee.CacheLibrary;
 import store.codec.util.Utils;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 public class Interface {
 	public int id;
@@ -70,9 +70,9 @@ public class Interface {
 
 				System.out.println("Interface: " + this.id + " - ComponentId: " + componentId);
 				if (data[0] != -1) {
-					this.components[componentId].decodeNoscriptsFormat(new InputStream(data));
+					this.components[componentId].decodeNoscriptsFormat(new InputBuffer(data));
 				} else {
-					this.components[componentId].decodeScriptsFormat(new InputStream(data));
+					this.components[componentId].decodeScriptsFormat(new InputBuffer(data));
 				}
 			}
 

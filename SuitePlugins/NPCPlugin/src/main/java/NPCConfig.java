@@ -5,8 +5,8 @@ import java.util.Objects;
 
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import suite.annotation.OrderType;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
@@ -18,7 +18,7 @@ import store.utilities.ReflectionUtils;
 public class NPCConfig extends ConfigExtensionBase {
 
 	@Override
-	public void decode(int opcode, InputStream buffer) {
+	public void decode(int opcode, InputBuffer buffer) {
 		int length;
 		int index;
 		if (opcode == 1) {
@@ -170,7 +170,7 @@ public class NPCConfig extends ConfigExtensionBase {
 	}
 
 	@Override
-	public OutputStream encode(OutputStream buffer) {
+	public OutputBuffer encode(OutputBuffer buffer) {
 		
 		if (models != null) {
 			buffer.writeByte(1);

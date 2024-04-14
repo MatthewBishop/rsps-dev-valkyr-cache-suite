@@ -1,7 +1,7 @@
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
 import suite.annotation.OrderType;
@@ -17,7 +17,7 @@ public class InvConfig extends ConfigExtensionBase {
     public int size;
 
     @Override
-    public void decode(int opcode, InputStream buffer) {
+    public void decode(int opcode, InputBuffer buffer) {
         if (opcode == 2)
         {
             size = buffer.readUnsignedShort();
@@ -25,7 +25,7 @@ public class InvConfig extends ConfigExtensionBase {
     }
 
     @Override
-    public OutputStream encode(OutputStream buffer) {
+    public OutputBuffer encode(OutputBuffer buffer) {
         buffer.writeByte(2);
         buffer.writeShort(size);
         return buffer;

@@ -4,7 +4,7 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Jan 14, 2019
@@ -15,7 +15,7 @@ public class FluDefinition implements AbstractDefinition {
 	 * @see com.alex.definition.AbstractDefinition#decode(com.alex.io.InputStream)
 	 */
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		// TODO Auto-generated method stub
 
 	}

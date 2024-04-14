@@ -4,7 +4,7 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Feb 2, 2019
@@ -21,7 +21,7 @@ public class FontMetrics implements AbstractDefinition, Cloneable {
 	 * @see com.alex.definition.AbstractDefinition#decode(com.alex.io.InputStream)
 	 */
 	@Override
-	public void decode(InputStream buffer) {
+	public void decode(InputBuffer buffer) {
 		int i = buffer.readUnsignedByte();
 		if (i != 0)
 			throw new RuntimeException("Invalid header");

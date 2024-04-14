@@ -1,11 +1,11 @@
-package org.displee.io;
+package com.displee.io;
 
 /**
  * A class representing the base for both I/O implementations.
  *
  * @author Displee
  */
-public abstract class Stream {
+public abstract class Buffer {
 
 	/**
 	 * The default capacity.
@@ -30,7 +30,7 @@ public abstract class Stream {
 	/**
 	 * Construct a new {@code Stream} {@code Object}.
 	 */
-	public Stream() {
+	public Buffer() {
 		this(DEFAULT_CAPACITY);
 	}
 
@@ -39,7 +39,7 @@ public abstract class Stream {
 	 *
 	 * @param capacity The capacity.
 	 */
-	public Stream(int capacity) {
+	public Buffer(int capacity) {
 		try {
 			if (capacity < 0 || capacity >= Integer.MAX_VALUE) {
 				throw new RuntimeException("Illegal capacity");
@@ -55,7 +55,7 @@ public abstract class Stream {
 	 *
 	 * @param bytes The bytes.
 	 */
-	public Stream(byte[] bytes) {
+	public Buffer(byte[] bytes) {
 		this.buffer = bytes;
 	}
 
@@ -231,7 +231,7 @@ public abstract class Stream {
 		return buff;
 	}
 
-	public Stream getDataTrimmedStream() {
+	public Buffer getDataTrimmedStream() {
 		byte[] buff = new byte[getPosition()];
 		for (int index = 0; index < buff.length; index++) {
 			buff[index] = buffer[index];

@@ -1,8 +1,8 @@
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
 import org.apache.commons.lang3.ArrayUtils;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import suite.annotation.OrderType;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class SequenceConfig extends ConfigExtensionBase {
 
 	@Override
-	public void decode(int opcode, InputStream buffer) {
+	public void decode(int opcode, InputBuffer buffer) {
 		int var3;
 		int var4;
 		if (opcode == 1) {
@@ -119,7 +119,7 @@ public class SequenceConfig extends ConfigExtensionBase {
 	}
 
 	@Override
-	public OutputStream encode(OutputStream buffer) {
+	public OutputBuffer encode(OutputBuffer buffer) {
 		
 		if (frameLenghts != null && frameFileIds != null) {
 			buffer.writeByte(1);

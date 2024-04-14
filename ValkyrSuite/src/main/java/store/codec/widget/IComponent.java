@@ -1,6 +1,6 @@
 package store.codec.widget;
 
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 public class IComponent {
 
@@ -175,7 +175,7 @@ public class IComponent {
 	public int anInt2484 = 0;
 	public boolean aBoolean4782;
 
-	public void decodeScriptsFormat(InputStream stream) {
+	public void decodeScriptsFormat(InputBuffer stream) {
 		this.useScripts = true;
 		int newInt = stream.readUnsignedByte();
 		if (newInt == 255) {
@@ -523,7 +523,7 @@ public class IComponent {
 
 	}
 
-	public Object[] decodeScript(InputStream stream) {
+	public Object[] decodeScript(InputBuffer stream) {
 		int size = stream.readUnsignedByte();
 		Object[] objects = new Object[size];
 
@@ -540,7 +540,7 @@ public class IComponent {
 		return objects;
 	}
 
-	public int[] method2465(InputStream stream) {
+	public int[] method2465(InputBuffer stream) {
 		int size = stream.readUnsignedByte();
 		if (size == 0) {
 			return null;
@@ -555,7 +555,7 @@ public class IComponent {
 		}
 	}
 
-	public void decodeNoscriptsFormat(InputStream stream) {
+	public void decodeNoscriptsFormat(InputBuffer stream) {
 		this.useScripts = false;
 		this.type = stream.readUnsignedByte();
 		this.anInt2324 = stream.readUnsignedByte();

@@ -1,8 +1,8 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 public class SpotDefinition implements AbstractDefinition, Cloneable {
 
@@ -36,7 +36,7 @@ public class SpotDefinition implements AbstractDefinition, Cloneable {
 	}
 
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		try {
 			while (true) {
 
@@ -104,7 +104,7 @@ public class SpotDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 
 		if (this.modelId != -1) {
 			stream.writeByte(1);

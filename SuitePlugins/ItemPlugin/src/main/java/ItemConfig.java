@@ -6,8 +6,8 @@ import com.google.common.collect.Maps;
 import javafx.util.Pair;
 import org.apache.commons.lang3.ArrayUtils;
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import suite.annotation.MeshIdentifier;
@@ -30,7 +30,7 @@ import store.utilities.ReflectionUtils;
 public class ItemConfig extends ConfigExtensionBase {
 
 	@Override
-	public void decode(int opcode, InputStream buffer) {
+	public void decode(int opcode, InputBuffer buffer) {
 		if (CacheLibrary.get().is317()) {
 			read317(opcode, buffer);
 			return;
@@ -182,7 +182,7 @@ public class ItemConfig extends ConfigExtensionBase {
 		ArrayUtils.add(previousOpcodes, opcode);
 	}
 
-	private void read317(int opcode, InputStream buffer) {
+	private void read317(int opcode, InputBuffer buffer) {
 		if (opcode == 1) {
 			inventoryModel = buffer.readUnsignedShort();
 		} else if (opcode == 2) {
@@ -329,11 +329,11 @@ public class ItemConfig extends ConfigExtensionBase {
 	}
 
 	@Override
-	public OutputStream[] encodeConfig317(String fileName) {
+	public OutputBuffer[] encodeConfig317(String fileName) {
 		Map<Integer, ConfigExtensionBase> defs = PluginManager.get().getLoaderForType(PluginType.ITEM).getDefinitions();
 
-		OutputStream dat = new OutputStream();
-		OutputStream idx = new OutputStream();
+		OutputBuffer dat = new OutputBuffer();
+		OutputBuffer idx = new OutputBuffer();
 
 		idx.writeShort(defs.size());
 		dat.writeShort(defs.size());
@@ -353,11 +353,11 @@ public class ItemConfig extends ConfigExtensionBase {
 			idx.writeShort(end - start);
 		}
 
-		return new OutputStream[] { dat, idx };
+		return new OutputBuffer[] { dat, idx };
 	}
 
 	@Override
-	public OutputStream encode(OutputStream buffer) {
+	public OutputBuffer encode(OutputBuffer buffer) {
 
 		if (inventoryModel > -1) {
 			buffer.writeByte(1);

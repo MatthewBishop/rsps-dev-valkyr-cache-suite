@@ -1,7 +1,7 @@
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
 import suite.annotation.OrderType;
@@ -30,7 +30,7 @@ public class MapElementConfig extends ConfigExtensionBase {
     public Map<Integer, Object> params = null;
 
     @Override
-    public void decode(int opcode, InputStream buffer) {
+    public void decode(int opcode, InputBuffer buffer) {
         {
             if (opcode == 1) {
                 sprite1 = buffer.readBigSmart();
@@ -114,7 +114,7 @@ public class MapElementConfig extends ConfigExtensionBase {
 
 
     @Override
-    public OutputStream encode(OutputStream buffer) {
+    public OutputBuffer encode(OutputBuffer buffer) {
         if (sprite1 >= 0) {
             buffer.writeByte(1);
             buffer.writeBigSmart(sprite1);

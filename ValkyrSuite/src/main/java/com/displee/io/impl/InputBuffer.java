@@ -1,6 +1,6 @@
-package org.displee.io.impl;
+package com.displee.io.impl;
 
-import org.displee.io.Stream;
+import com.displee.io.Buffer;
 import org.displee.utilities.Miscellaneous;
 
 /**
@@ -8,12 +8,12 @@ import org.displee.utilities.Miscellaneous;
  * 
  * @author Apache Ah64
  */
-public class InputStream extends Stream {
+public class InputBuffer extends Buffer {
 
 	/**
 	 * Construct a new {@code InputStream} {@code Object}.
 	 */
-	public InputStream() {
+	public InputBuffer() {
 		super();
 	}
 
@@ -22,7 +22,7 @@ public class InputStream extends Stream {
 	 * 
 	 * @param capacity The capacity.
 	 */
-	public InputStream(int capacity) {
+	public InputBuffer(int capacity) {
 		super((short) capacity);
 	}
 
@@ -31,7 +31,7 @@ public class InputStream extends Stream {
 	 * 
 	 * @param bytes The bytes.
 	 */
-	public InputStream(byte[] bytes) {
+	public InputBuffer(byte[] bytes) {
 		super(bytes);
 	}
 

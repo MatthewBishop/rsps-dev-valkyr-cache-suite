@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Oct 6, 2018
@@ -33,7 +33,7 @@ public class ItemConverter {
 			data = osrs.getIndex(2).getArchive(10).getFile(index).getData();
 //			cache.getIndexes()[Indices.ITEMS.getIndex()].putFile(Utils.getConfigArchive((index + 30_000), 8), 
 //					Utils.getConfigFile((index + 30_000), 8), Constants.GZIP_COMPRESSION, data, null, false, false, -1, -1);
-			ItemDefinition osrs_definition = new ItemDefinition(index + offset, new InputStream(data));
+			ItemDefinition osrs_definition = new ItemDefinition(index + offset, new InputBuffer(data));
 			store.codec.ItemDefinition definition = osrs_definition.to718Item(30_000);
 			definition.save(cache);
 			progress = ((double) index / (double) size * 100D);

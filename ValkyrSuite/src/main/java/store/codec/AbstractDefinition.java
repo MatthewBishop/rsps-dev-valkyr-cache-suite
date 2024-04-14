@@ -1,7 +1,7 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * 
@@ -13,9 +13,9 @@ public interface AbstractDefinition {
 	/**
 	 * Decodes a definition.
 	 * 
-	 * @param stream data {@link InputStream} being read from.
+	 * @param stream data {@link InputBuffer} being read from.
 	 */
-	public void decode(final InputStream stream);
+	public void decode(final InputBuffer stream);
 
 	/**
 	 * Encodes data into a byte array ready to be saved.

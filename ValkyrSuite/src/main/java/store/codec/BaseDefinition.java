@@ -1,8 +1,8 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 public class BaseDefinition implements AbstractDefinition, Cloneable {
 
@@ -18,7 +18,7 @@ public class BaseDefinition implements AbstractDefinition, Cloneable {
 	}
 
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		count = stream.readUnsignedByte();
 		transformations = new int[count];
 		skin_list = new int[count][];
@@ -43,7 +43,7 @@ public class BaseDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 		int count = transformations.length;
 		stream.writeByte(count);
 		for (int opcode = 0; opcode < count; opcode++)

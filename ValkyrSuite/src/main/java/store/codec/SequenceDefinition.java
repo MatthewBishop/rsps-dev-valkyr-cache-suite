@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.displee.CacheLibrary;
 import store.codec.util.Utils;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 public class SequenceDefinition implements AbstractDefinition, Cloneable {
 
@@ -35,7 +35,7 @@ public class SequenceDefinition implements AbstractDefinition, Cloneable {
 	public Map<Object, Long> params = null;
 
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		while (true) {
 
 			int opcode = stream.readUnsignedByte();
@@ -141,7 +141,7 @@ public class SequenceDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 		return null;
 	}
 

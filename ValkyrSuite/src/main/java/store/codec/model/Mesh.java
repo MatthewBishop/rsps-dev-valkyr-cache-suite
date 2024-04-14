@@ -7,9 +7,9 @@ import lombok.Setter;
 import misc.EffectiveVertex;
 import misc.FaceBillboard;
 import org.displee.CacheLibrary;
-import org.displee.io.Stream;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.Buffer;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
 import suite.annotation.OrderType;
@@ -330,7 +330,7 @@ public class Mesh extends ConfigExtensionBase {
 	 */
 	public void decode317(byte[] data) {
 
-		InputStream buffer = new InputStream(data);
+		InputBuffer buffer = new InputBuffer(data);
 		buffer.setPosition(data.length - 18);
 		MeshHeader header = new MeshHeader();
 		header.setData(data);
@@ -445,19 +445,19 @@ public class Mesh extends ConfigExtensionBase {
 		}
 
 		faceColors = new short[numFaces];
-		InputStream directions = new InputStream(header.getData());
+		InputBuffer directions = new InputBuffer(header.getData());
 		directions.setPosition(header.getVertexDirectionOffset());
 
-		InputStream verticesXBuffer = new InputStream(header.getData());
+		InputBuffer verticesXBuffer = new InputBuffer(header.getData());
 		verticesXBuffer.setPosition(header.getXDataOffset());
 
-		InputStream verticesYBuffer = new InputStream(header.getData());
+		InputBuffer verticesYBuffer = new InputBuffer(header.getData());
 		verticesYBuffer.setPosition(header.getYDataOffset());
 
-		InputStream verticesZBuffer = new InputStream(header.getData());
+		InputBuffer verticesZBuffer = new InputBuffer(header.getData());
 		verticesZBuffer.setPosition(header.getZDataOffset());
 
-		InputStream bones = new InputStream(header.getData());
+		InputBuffer bones = new InputBuffer(header.getData());
 		bones.setPosition(header.getVertexSkinOffset());
 
 		int baseX = 0;
@@ -493,16 +493,16 @@ public class Mesh extends ConfigExtensionBase {
 			}
 		}
 
-		InputStream colours = directions;
+		InputBuffer colours = directions;
 		colours.setPosition(header.getColourDataOffset());
 
-		InputStream points = verticesXBuffer;
+		InputBuffer points = verticesXBuffer;
 		points.setPosition(header.getTexturePointerOffset());
 
-		InputStream priorities = verticesYBuffer;
+		InputBuffer priorities = verticesYBuffer;
 		priorities.setPosition(header.getFacePriorityOffset());
 
-		InputStream alphas = verticesZBuffer;
+		InputBuffer alphas = verticesZBuffer;
 		alphas.setPosition(header.getFaceAlphaOffset());
 
 		bones.setPosition(header.getFaceBoneOffset());
@@ -523,10 +523,10 @@ public class Mesh extends ConfigExtensionBase {
 			}
 		}
 
-		InputStream faceData = directions;
+		InputBuffer faceData = directions;
 		faceData.setPosition(header.getFaceDataOffset());
 
-		InputStream types = verticesXBuffer;
+		InputBuffer types = verticesXBuffer;
 		types.setPosition(header.getFaceTypeOffset());
 
 		short faceX = 0;
@@ -578,7 +578,7 @@ public class Mesh extends ConfigExtensionBase {
 			}
 		}
 
-		InputStream maps = directions;
+		InputBuffer maps = directions;
 		maps.setPosition(header.getUvMapFaceOffset());
 
 		for (int index = 0; index < numTextures; index++) {
@@ -616,13 +616,13 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param data
 	 */
 	public void decodeRS2(byte[] data) {
-		InputStream first = new InputStream(data);
-		InputStream second = new InputStream(data);
-		InputStream third = new InputStream(data);
-		InputStream fourth = new InputStream(data);
-		InputStream fifth = new InputStream(data);
-		InputStream sixth = new InputStream(data);
-		InputStream seventh = new InputStream(data);
+		InputBuffer first = new InputBuffer(data);
+		InputBuffer second = new InputBuffer(data);
+		InputBuffer third = new InputBuffer(data);
+		InputBuffer fourth = new InputBuffer(data);
+		InputBuffer fifth = new InputBuffer(data);
+		InputBuffer sixth = new InputBuffer(data);
+		InputBuffer seventh = new InputBuffer(data);
 
 		first.skip(data.length - 23);
 		numVertices = first.readUnsignedShort();
@@ -921,13 +921,13 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param data
 	 */
 	public void decodeRS3(byte[] data) {
-		InputStream first = new InputStream(data);
-		InputStream second = new InputStream(data);
-		InputStream third = new InputStream(data);
-		InputStream fourth = new InputStream(data);
-		InputStream fifth = new InputStream(data);
-		InputStream sixth = new InputStream(data);
-		InputStream seventh = new InputStream(data);
+		InputBuffer first = new InputBuffer(data);
+		InputBuffer second = new InputBuffer(data);
+		InputBuffer third = new InputBuffer(data);
+		InputBuffer fourth = new InputBuffer(data);
+		InputBuffer fifth = new InputBuffer(data);
+		InputBuffer sixth = new InputBuffer(data);
+		InputBuffer seventh = new InputBuffer(data);
 		int var9 = first.readUnsignedByte();
 		if(var9 != 1) {
 		} else {
@@ -1065,7 +1065,7 @@ public class Mesh extends ConfigExtensionBase {
 			int baseZ;
 
 			if(hasTextureUV) {
-				InputStream uvBuffer = new InputStream(data);
+				InputBuffer uvBuffer = new InputBuffer(data);
 				uvBuffer.setPosition(data.length - 26);
 				uvBuffer.setPosition(data[uvBuffer.getPosition() - 1]);
 				this.textureUVCoordCount = uvBuffer.readUnsignedShort();
@@ -1351,7 +1351,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param var2 The second stream.
 	 * @param var3 The third stream.
 	 */
-	public void decodeIndices(InputStream var1, InputStream var2, InputStream var3) {
+	public void decodeIndices(InputBuffer var1, InputBuffer var2, InputBuffer var3) {
 		short var4 = 0;
 		short var5 = 0;
 		short var6 = 0;
@@ -1433,7 +1433,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param var5 The fifth stream.
 	 * @param var6 The sixth stream.
 	 */
-	public void decodeMapping(InputStream var1, InputStream var2, InputStream var3, InputStream var4, InputStream var5, InputStream var6) {
+	public void decodeMapping(InputBuffer var1, InputBuffer var2, InputBuffer var3, InputBuffer var4, InputBuffer var5, InputBuffer var6) {
 		for(int var7 = 0; var7 < this.numTextures; ++var7) {
 			int var8 = this.faceMappings[var7] & 255;
 			if(var8 == 0) {
@@ -1522,7 +1522,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param var1 The first stream.
 	 * @param var2 The second stream.
 	 */
-	public void decodeIndicesRS2(InputStream var1, InputStream var2) {
+	public void decodeIndicesRS2(InputBuffer var1, InputBuffer var2) {
 		short var4 = 0;
 		short var5 = 0;
 		short var6 = 0;
@@ -1991,40 +1991,40 @@ public class Mesh extends ConfigExtensionBase {
 	}
 
 	@Override
-	public void decode(int opcode, InputStream buffer) {
+	public void decode(int opcode, InputBuffer buffer) {
 		decode(CacheLibrary.get());
 	}
 
 	@Override
-	public OutputStream encode(OutputStream master) {
+	public OutputBuffer encode(OutputBuffer master) {
 		return null;
 	}
 
 	public byte[] encode317() {
 		/* create the master buffer */
-		OutputStream master = new OutputStream(0);
+		OutputBuffer master = new OutputBuffer(0);
 
 		/* create the temporary buffers */
-		OutputStream vertex_flags_buffer = new OutputStream(0);
-		OutputStream face_types_buffer = new OutputStream(0);
-		OutputStream face_index_types_buffer = new OutputStream(0);
-		OutputStream face_priorities_buffer = new OutputStream(0);
-		OutputStream face_skins_buffer = new OutputStream(0);
-		OutputStream vertex_skins_buffer = new OutputStream(0);
-		OutputStream face_alphas_buffer = new OutputStream(0);
-		OutputStream face_indices_buffer = new OutputStream(0);
-		OutputStream face_colors_buffer = new OutputStream(0);
-		OutputStream vertex_x_buffer = new OutputStream(0);
-		OutputStream vertex_y_buffer = new OutputStream(0);
-		OutputStream vertex_z_buffer = new OutputStream(0);
-		OutputStream simple_textures_buffer = new OutputStream(0);
-		OutputStream complex_textures_buffer = new OutputStream(0);
-		OutputStream texture_scale_buffer = new OutputStream(0);
-		OutputStream texture_rotation_buffer = new OutputStream(0);
-		OutputStream texture_direction_buffer = new OutputStream(0);
-		OutputStream texture_translation_buffer = new OutputStream(0);
-		OutputStream particle_effects_buffer = new OutputStream(0);
-		OutputStream footer_buffer = new OutputStream(0);
+		OutputBuffer vertex_flags_buffer = new OutputBuffer(0);
+		OutputBuffer face_types_buffer = new OutputBuffer(0);
+		OutputBuffer face_index_types_buffer = new OutputBuffer(0);
+		OutputBuffer face_priorities_buffer = new OutputBuffer(0);
+		OutputBuffer face_skins_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_skins_buffer = new OutputBuffer(0);
+		OutputBuffer face_alphas_buffer = new OutputBuffer(0);
+		OutputBuffer face_indices_buffer = new OutputBuffer(0);
+		OutputBuffer face_colors_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_x_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_y_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_z_buffer = new OutputBuffer(0);
+		OutputBuffer simple_textures_buffer = new OutputBuffer(0);
+		OutputBuffer complex_textures_buffer = new OutputBuffer(0);
+		OutputBuffer texture_scale_buffer = new OutputBuffer(0);
+		OutputBuffer texture_rotation_buffer = new OutputBuffer(0);
+		OutputBuffer texture_direction_buffer = new OutputBuffer(0);
+		OutputBuffer texture_translation_buffer = new OutputBuffer(0);
+		OutputBuffer particle_effects_buffer = new OutputBuffer(0);
+		OutputBuffer footer_buffer = new OutputBuffer(0);
 
 		/* create the vertices variables */
 		boolean hasVertexSkins = vertexSkins != null;
@@ -2120,10 +2120,10 @@ public class Mesh extends ConfigExtensionBase {
 			footer_buffer.writeShort(face_skins_buffer.length());
 		}
 
-		OutputStream[] buffers = new OutputStream[] { vertex_flags_buffer, face_index_types_buffer, face_priorities_buffer, face_skins_buffer, face_types_buffer, vertex_skins_buffer, face_alphas_buffer, face_indices_buffer, face_colors_buffer, simple_textures_buffer, vertex_x_buffer, vertex_y_buffer, vertex_z_buffer, complex_textures_buffer, texture_scale_buffer, texture_rotation_buffer,
+		OutputBuffer[] buffers = new OutputBuffer[] { vertex_flags_buffer, face_index_types_buffer, face_priorities_buffer, face_skins_buffer, face_types_buffer, vertex_skins_buffer, face_alphas_buffer, face_indices_buffer, face_colors_buffer, simple_textures_buffer, vertex_x_buffer, vertex_y_buffer, vertex_z_buffer, complex_textures_buffer, texture_scale_buffer, texture_rotation_buffer,
 				texture_direction_buffer, texture_translation_buffer, particle_effects_buffer, footer_buffer };
 		for (int i = 0; i < buffers.length; i++) {
-			Stream buffer = buffers[i];
+			Buffer buffer = buffers[i];
 			master.writeBytes(buffer.getDataTrimmed());
 		}
 		return master.getDataTrimmed();
@@ -2145,7 +2145,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param translation
 	 *            the translation buffer.
 	 */
-	public void encodeMapping(OutputStream simple, OutputStream complex, OutputStream scale, OutputStream rotation, OutputStream direction, OutputStream translation) {
+	public void encodeMapping(OutputBuffer simple, OutputBuffer complex, OutputBuffer scale, OutputBuffer rotation, OutputBuffer direction, OutputBuffer translation) {
 		for (int face = 0; face < numTextures; face++) {
 			int type = faceMappings[face] & 0xff;
 			if (type == 0) {
@@ -2250,7 +2250,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param tbuffer
 	 *            the indices compression type buffer.
 	 */
-	public void encodeIndices(OutputStream ibuffer, OutputStream tbuffer) {
+	public void encodeIndices(OutputBuffer ibuffer, OutputBuffer tbuffer) {
 		int lasta = 0;
 		int lastb = 0;
 		int lastc = 0;
@@ -2291,33 +2291,33 @@ public class Mesh extends ConfigExtensionBase {
 	public byte[] encodeRS2() {
 
 		/* create the master buffer */
-		OutputStream master = new OutputStream(0);
+		OutputBuffer master = new OutputBuffer(0);
 
 		/* create the temporary buffers */
-		OutputStream face_mappings_buffer = new OutputStream(0);
-		OutputStream vertex_flags_buffer = new OutputStream(0);
-		OutputStream face_types_buffer = new OutputStream(0);
-		OutputStream face_index_types_buffer = new OutputStream(0);
-		OutputStream face_priorities_buffer = new OutputStream(0);
-		OutputStream face_skins_buffer = new OutputStream(0);
-		OutputStream vertex_skins_buffer = new OutputStream(0);
-		OutputStream face_alphas_buffer = new OutputStream(0);
-		OutputStream face_indices_buffer = new OutputStream(0);
-		OutputStream face_materials_buffer = new OutputStream(0);
-		OutputStream face_textures_buffer = new OutputStream(0);
-		OutputStream face_colors_buffer = new OutputStream(0);
-		OutputStream vertex_x_buffer = new OutputStream(0);
-		OutputStream vertex_y_buffer = new OutputStream(0);
-		OutputStream vertex_z_buffer = new OutputStream(0);
-		OutputStream simple_textures_buffer = new OutputStream(0);
-		OutputStream complex_textures_buffer = new OutputStream(0);
-		OutputStream texture_scale_buffer = new OutputStream(0);
-		OutputStream texture_rotation_buffer = new OutputStream(0);
-		OutputStream texture_direction_buffer = new OutputStream(0);
-		OutputStream texture_translation_buffer = new OutputStream(0);
-		OutputStream particle_effects_buffer = new OutputStream(0);
-		OutputStream footer_buffer = new OutputStream(0);
-		OutputStream[] buffers = new OutputStream[] { face_mappings_buffer, vertex_flags_buffer, face_types_buffer, face_index_types_buffer, face_priorities_buffer, face_skins_buffer, vertex_skins_buffer, face_alphas_buffer, face_indices_buffer, face_materials_buffer, face_textures_buffer, face_colors_buffer, vertex_x_buffer, vertex_y_buffer, vertex_z_buffer, simple_textures_buffer, complex_textures_buffer, texture_scale_buffer, texture_rotation_buffer,
+		OutputBuffer face_mappings_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_flags_buffer = new OutputBuffer(0);
+		OutputBuffer face_types_buffer = new OutputBuffer(0);
+		OutputBuffer face_index_types_buffer = new OutputBuffer(0);
+		OutputBuffer face_priorities_buffer = new OutputBuffer(0);
+		OutputBuffer face_skins_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_skins_buffer = new OutputBuffer(0);
+		OutputBuffer face_alphas_buffer = new OutputBuffer(0);
+		OutputBuffer face_indices_buffer = new OutputBuffer(0);
+		OutputBuffer face_materials_buffer = new OutputBuffer(0);
+		OutputBuffer face_textures_buffer = new OutputBuffer(0);
+		OutputBuffer face_colors_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_x_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_y_buffer = new OutputBuffer(0);
+		OutputBuffer vertex_z_buffer = new OutputBuffer(0);
+		OutputBuffer simple_textures_buffer = new OutputBuffer(0);
+		OutputBuffer complex_textures_buffer = new OutputBuffer(0);
+		OutputBuffer texture_scale_buffer = new OutputBuffer(0);
+		OutputBuffer texture_rotation_buffer = new OutputBuffer(0);
+		OutputBuffer texture_direction_buffer = new OutputBuffer(0);
+		OutputBuffer texture_translation_buffer = new OutputBuffer(0);
+		OutputBuffer particle_effects_buffer = new OutputBuffer(0);
+		OutputBuffer footer_buffer = new OutputBuffer(0);
+		OutputBuffer[] buffers = new OutputBuffer[] { face_mappings_buffer, vertex_flags_buffer, face_types_buffer, face_index_types_buffer, face_priorities_buffer, face_skins_buffer, vertex_skins_buffer, face_alphas_buffer, face_indices_buffer, face_materials_buffer, face_textures_buffer, face_colors_buffer, vertex_x_buffer, vertex_y_buffer, vertex_z_buffer, simple_textures_buffer, complex_textures_buffer, texture_scale_buffer, texture_rotation_buffer,
 				texture_direction_buffer, texture_translation_buffer, particle_effects_buffer, footer_buffer };
 
 		/* serialize the face mapping types */
@@ -2509,7 +2509,7 @@ public class Mesh extends ConfigExtensionBase {
 			footer_buffer.writeShort(face_skins_buffer.length());
 		}
 		for (int i = 0; i < buffers.length; i++) {
-			OutputStream buffer = buffers[i];
+			OutputBuffer buffer = buffers[i];
 			master.writeBytes(buffer.getDataTrimmed());
 		}
 		master.writeByte(255);
@@ -2533,7 +2533,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param translation
 	 *            the translation buffer.
 	 */
-	public void encodeMappingRS2(OutputStream simple, OutputStream complex, OutputStream scale, OutputStream rotation, OutputStream direction, OutputStream translation) {
+	public void encodeMappingRS2(OutputBuffer simple, OutputBuffer complex, OutputBuffer scale, OutputBuffer rotation, OutputBuffer direction, OutputBuffer translation) {
 		for (int face = 0; face < numTextures; face++) {
 			int type = faceMappings[face] & 0xff;
 			if (type == 0) {
@@ -2640,7 +2640,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param tbuffer
 	 *            the indices compression type buffer.
 	 */
-	public void encodeIndicesRS2(OutputStream ibuffer, OutputStream tbuffer) {
+	public void encodeIndicesRS2(OutputBuffer ibuffer, OutputBuffer tbuffer) {
 		int lasta = 0;
 		int lastb = 0;
 		int lastc = 0;

@@ -6,7 +6,7 @@ package store.codec.osrs;
 import java.util.LinkedList;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Sep 8, 2018
@@ -59,7 +59,7 @@ public class FrameSet {
 		boolean exists = true;
 		for (int index = 0; index < frameData.length; index++) {
 			byte[] data = frameData[index];
-			InputStream stream = new InputStream(data);
+			InputBuffer stream = new InputBuffer(data);
 			int id = stream.readUnsignedShort();
 			exists &= cache.getIndex(1).getArchive(id).getFile(0) != null;
 		}
@@ -77,7 +77,7 @@ public class FrameSet {
 		frameFiles = cache.getIndex(0).getArchive(archive).getFileIds();
 		for (int index = 0; index < frameFiles.length; index++) {
 			byte[] data = frameData[index];
-			InputStream stream = new InputStream(data);
+			InputBuffer stream = new InputBuffer(data);
 			int id = stream.readUnsignedShort();
 			BaseDefinition type = null;
 			for (BaseDefinition baseDefinition = list.peek(); baseDefinition != null; baseDefinition = list.poll()) {

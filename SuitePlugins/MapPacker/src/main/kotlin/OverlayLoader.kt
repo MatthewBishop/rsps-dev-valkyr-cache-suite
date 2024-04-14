@@ -1,5 +1,5 @@
 import org.displee.CacheLibrary
-import org.displee.io.impl.InputStream
+import com.displee.io.impl.InputBuffer
 import store.plugin.PluginType
 import suite.annotation.LoaderDescriptor
 import suite.controller.Selection
@@ -24,7 +24,7 @@ class OverlayLoader {
                 val file = index.getArchive(archive).getFile(id)
                 file?.apply {
                     val definition = OverlayConfig()
-                    val buffer = InputStream(file.data)
+                    val buffer = InputBuffer(file.data)
                     buffer.buffer?.apply {
                         while (true) {
                             val opcode = buffer.readUnsignedByte()

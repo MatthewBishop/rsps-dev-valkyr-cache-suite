@@ -2,7 +2,7 @@ package org.displee.utilities;
 
 import java.nio.ByteBuffer;
 
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.OutputBuffer;
 
 /**
  * Copyright (c) 2014 RSE Studios
@@ -82,7 +82,7 @@ public final class XTEACryption {
 	 * @param key    The key.
 	 * @throws IllegalArgumentException if the key is not exactly 4 elements long.
 	 */
-	public static void decipher(OutputStream buffer, int start, int end, int[] key) {
+	public static void decipher(OutputBuffer buffer, int start, int end, int[] key) {
 		if (key.length != 4)
 			throw new IllegalArgumentException();
 
@@ -135,7 +135,7 @@ public final class XTEACryption {
 	 * @param key    The key.
 	 * @throws IllegalArgumentException if the key is not exactly 4 elements long.
 	 */
-	public static void encipher(OutputStream buffer, int start, int end, int[] key) {
+	public static void encipher(OutputBuffer buffer, int start, int end, int[] key) {
 		if (key.length != 4)
 			throw new IllegalArgumentException();
 

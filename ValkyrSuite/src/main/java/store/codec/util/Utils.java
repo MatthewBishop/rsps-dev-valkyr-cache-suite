@@ -3,7 +3,7 @@ package store.codec.util;
 import java.math.BigInteger;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.OutputBuffer;
 
 public final class Utils {
 
@@ -12,7 +12,7 @@ public final class Utils {
 	}
 
 	public static byte[] getArchivePacketData(int indexId, int archiveId, byte[] archive) {
-		OutputStream stream = new OutputStream(archive.length + 4);
+		OutputBuffer stream = new OutputBuffer(archive.length + 4);
 		stream.writeByte(indexId);
 		stream.writeShort(archiveId);
 		stream.writeByte(0);

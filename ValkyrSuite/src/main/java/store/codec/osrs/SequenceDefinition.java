@@ -3,7 +3,7 @@
  */
 package store.codec.osrs;
 
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Sep 8, 2018
@@ -37,7 +37,7 @@ public class SequenceDefinition {
 	public int[] baseFiles;
 
 	public SequenceDefinition(int id, byte[] data) {
-		InputStream buffer = new InputStream(data);
+		InputBuffer buffer = new InputBuffer(data);
 		for (;;) {
 			int opcode = buffer.readUnsignedByte();
 			if (opcode == 0)
@@ -46,7 +46,7 @@ public class SequenceDefinition {
 		}
 	}
 
-	void decode(InputStream buffer, int opcode) {
+	void decode(InputBuffer buffer, int opcode) {
 		int count;
 		if (1 == opcode) {
 			count = buffer.readUnsignedShort();

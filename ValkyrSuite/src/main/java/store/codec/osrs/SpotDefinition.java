@@ -5,7 +5,7 @@ package store.codec.osrs;
 
 import org.displee.CacheLibrary;
 import store.codec.AbstractDefinition;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Sep 18, 2018
@@ -45,7 +45,7 @@ public class SpotDefinition implements AbstractDefinition {
 	 * @see com.alex.definition.AbstractDefinition#decode(com.alex.io.InputStream)
 	 */
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		// TODO Auto-generated method stub
 	}
 

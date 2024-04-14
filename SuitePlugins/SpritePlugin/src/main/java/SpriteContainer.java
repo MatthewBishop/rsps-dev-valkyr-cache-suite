@@ -18,8 +18,8 @@ import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.Archive;
 import org.displee.cache.index.archive.file.File;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import suite.annotation.OrderType;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
@@ -46,7 +46,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 	}
 	
 	public SpriteContainer(int id, byte[] data) {
-		decode(-1, new InputStream(data));
+		decode(-1, new InputBuffer(data));
 		PluginManager.get().getLoaderForType(PluginType.SPRITE).getDefinitions().put(id, this); //replace with loaded version
 	}
 
@@ -170,9 +170,9 @@ public class SpriteContainer extends ConfigExtensionBase {
 	}
 
 	public int convertToMediumInt(int rgb) {
-		OutputStream out = new OutputStream(4);
+		OutputBuffer out = new OutputBuffer(4);
 		out.writeInt(rgb);
-		InputStream stream = new InputStream(out.getBytes());
+		InputBuffer stream = new InputBuffer(out.getBytes());
 		stream.setPosition(1);
 		rgb = stream.read24BitInt();
 		return rgb;
@@ -201,7 +201,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 	}
 
 	@Override
-	public void decode(int opcode, InputStream buffer) {
+	public void decode(int opcode, InputBuffer buffer) {
 		buffer.setPosition(buffer.buffer.length - 2);
 		int count = buffer.readUnsignedShort();
 		this.pixelsIndexes = new int[count][];
@@ -304,7 +304,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 	}
 
 	@Override
-	public OutputStream encode(OutputStream buffer) {
+	public OutputBuffer encode(OutputBuffer buffer) {
 		
 		this.biggestHeight = 0;
 		this.biggestWidth = 0;

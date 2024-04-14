@@ -1,7 +1,7 @@
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
 import suite.annotation.OrderType;
@@ -22,7 +22,7 @@ public class StructConfig extends ConfigExtensionBase {
     public Map<Integer, Object> params;
 
     @Override
-    public void decode(int opcode, InputStream buffer) {
+    public void decode(int opcode, InputBuffer buffer) {
         if (opcode == 249) {
             int length = buffer.readUnsignedByte();
 
@@ -45,7 +45,7 @@ public class StructConfig extends ConfigExtensionBase {
     }
 
     @Override
-    public OutputStream encode(OutputStream buffer) {
+    public OutputBuffer encode(OutputBuffer buffer) {
         if (Objects.nonNull(params)) {
             buffer.writeByte(249);
             buffer.writeByte(params.size());

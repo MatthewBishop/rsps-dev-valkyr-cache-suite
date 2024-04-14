@@ -1,7 +1,7 @@
 import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.file.File;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 import store.plugin.PluginType;
 import store.plugin.extension.LoaderExtensionBase;
 import suite.annotation.LoaderDescriptor;
@@ -24,7 +24,7 @@ public class TextureLoader extends LoaderExtensionBase {
             if (file == null || file.getData() == null)
                 continue;
             TextureConfig def = new TextureConfig();
-            InputStream buffer = new InputStream(file.getData());
+            InputBuffer buffer = new InputBuffer(file.getData());
             def.setId(id);
             def.decode(-1, buffer);
             definitions.put(def.id, def);

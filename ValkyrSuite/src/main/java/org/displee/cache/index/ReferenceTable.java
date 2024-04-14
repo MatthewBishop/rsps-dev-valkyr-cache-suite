@@ -12,8 +12,8 @@ import org.displee.cache.Container;
 import org.displee.cache.index.archive.Archive;
 import org.displee.cache.index.archive.ArchiveSector;
 import org.displee.cache.index.archive.file.File;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import org.displee.utilities.Compression;
 import org.displee.utilities.Constants;
 import org.displee.utilities.Miscellaneous;
@@ -99,21 +99,21 @@ public class ReferenceTable implements Container {
 	}
 
 	@Override
-	public boolean read(InputStream inputStream) {
-		version = inputStream.readByte() & 0xFF;
+	public boolean read(InputBuffer inputBuffer) {
+		version = inputBuffer.readByte() & 0xFF;
 		if (version < 5 || version > 7) {
 			throw new RuntimeException("Unknown version=" + version);
 		}
-		revision = version >= 6 ? inputStream.readInt() : 0;
-		final int flag = inputStream.readByte();
+		revision = version >= 6 ? inputBuffer.readInt() : 0;
+		final int flag = inputBuffer.readByte();
 		named = (flag & 0x1) != 0;
 		whirlpool = (flag & 0x2) != 0;
 		flag4 = (flag & 0x4) != 0;
 		flag8 = (flag & 0x8) != 0;
-		archiveIds = new int[version >= 7 ? inputStream.readBigSmart() : inputStream.readUnsignedShort()];
+		archiveIds = new int[version >= 7 ? inputBuffer.readBigSmart() : inputBuffer.readUnsignedShort()];
 		int lastArchiveId = 0;
 		for (int i = 0; i < archiveIds.length; i++) {
-			archiveIds[i] = (version >= 7 ? inputStream.readBigSmart() : inputStream.readUnsignedShort())
+			archiveIds[i] = (version >= 7 ? inputBuffer.readBigSmart() : inputBuffer.readUnsignedShort())
 					+ (i == 0 ? 0 : archiveIds[i - 1]);
 			if (archiveIds[i] > lastArchiveId) {
 				lastArchiveId = archiveIds[i];
@@ -125,52 +125,52 @@ public class ReferenceTable implements Container {
 		}
 		if (named) {
 			for (int i = 0; i < archives.length; i++) {
-				archives[i].setName(inputStream.readInt());
+				archives[i].setName(inputBuffer.readInt());
 				archiveNames.add(archives[i].getName());
 			}
 		}
 		if (origin.isRS3()) {
 			for (int i = 0; i < archives.length; i++) {
-				archives[i].setCRC(inputStream.readInt());
+				archives[i].setCRC(inputBuffer.readInt());
 			}
 			if (flag8) {
 				for (int i = 0; i < archives.length; i++) {
-					archives[i].setFlag8Value(inputStream.readInt());
+					archives[i].setFlag8Value(inputBuffer.readInt());
 				}
 			}
 			if (whirlpool) {
 				for (int i = 0; i < archives.length; i++) {
-					inputStream.readBytes(archives[i].getWhirlpool(), 0, Constants.WHIRLPOOL_SIZE);
+					inputBuffer.readBytes(archives[i].getWhirlpool(), 0, Constants.WHIRLPOOL_SIZE);
 				}
 			}
 			if (flag4) {// flag 4
 				for (int i = 0; i < archives.length; i++) {
-					archives[i].setFlag4Value1(inputStream.readInt());
-					archives[i].setFlag4Value2(inputStream.readInt());
+					archives[i].setFlag4Value1(inputBuffer.readInt());
+					archives[i].setFlag4Value2(inputBuffer.readInt());
 				}
 			}
 		} else {
 			if (whirlpool) {
 				for (int i = 0; i < archives.length; i++) {
-					inputStream.readBytes(archives[i].getWhirlpool(), 0, Constants.WHIRLPOOL_SIZE);
+					inputBuffer.readBytes(archives[i].getWhirlpool(), 0, Constants.WHIRLPOOL_SIZE);
 				}
 			}
 			for (int i = 0; i < archives.length; i++) {
-				archives[i].setCRC(inputStream.readInt());
+				archives[i].setCRC(inputBuffer.readInt());
 			}
 		}
 		for (int i = 0; i < archives.length; i++) {
-			archives[i].setRevision(inputStream.readInt());
+			archives[i].setRevision(inputBuffer.readInt());
 		}
 		for (int i = 0; i < archives.length; i++) {
-			archives[i].setFileIds(version >= 7 ? inputStream.readBigSmart() : inputStream.readUnsignedShort());
+			archives[i].setFileIds(version >= 7 ? inputBuffer.readBigSmart() : inputBuffer.readUnsignedShort());
 		}
 		for (int i = 0; i < archives.length; i++) {
 			int lastFileId = -1;
 			final Archive archive = archives[i];
 			for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
-				archive.getFileIds()[fileIndex] = (version >= 7 ? inputStream.readBigSmart()
-						: inputStream.readUnsignedShort()) + (fileIndex == 0 ? 0 : archive.getFileIds()[fileIndex - 1]);
+				archive.getFileIds()[fileIndex] = (version >= 7 ? inputBuffer.readBigSmart()
+						: inputBuffer.readUnsignedShort()) + (fileIndex == 0 ? 0 : archive.getFileIds()[fileIndex - 1]);
 				if (archive.getFileIds()[fileIndex] > lastFileId) {
 					lastFileId = archive.getFileIds()[fileIndex];
 				}
@@ -184,7 +184,7 @@ public class ReferenceTable implements Container {
 			for (int i = 0; i < archives.length; i++) {
 				final Archive archive = archives[i];
 				for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
-					archive.getFile(archive.getFileIds()[fileIndex]).setName(inputStream.readInt());
+					archive.getFile(archive.getFileIds()[fileIndex]).setName(inputBuffer.readInt());
 				}
 			}
 		}
@@ -192,10 +192,10 @@ public class ReferenceTable implements Container {
 	}
 
 	@Override
-	public byte[] write(OutputStream outputStream) {
-		outputStream.writeByte(version);
+	public byte[] write(OutputBuffer outputBuffer) {
+		outputBuffer.writeByte(version);
 		if (version >= 6) {
-			outputStream.writeInt(revision);
+			outputBuffer.writeInt(revision);
 		}
 		int flag = 0x0;
 		if (named) {
@@ -210,72 +210,72 @@ public class ReferenceTable implements Container {
 		if (flag8) {
 			flag |= 0x8;
 		}
-		outputStream.writeByte(flag);
+		outputBuffer.writeByte(flag);
 		if (version >= 7) {
-			outputStream.writeBigSmart(archives.length);
+			outputBuffer.writeBigSmart(archives.length);
 		} else {
-			outputStream.writeShort(archives.length);
+			outputBuffer.writeShort(archives.length);
 		}
 		for (int i = 0; i < archives.length; i++) {
 			if (version >= 7) {
-				outputStream.writeBigSmart(archiveIds[i] - (i == 0 ? 0 : archiveIds[i - 1]));
+				outputBuffer.writeBigSmart(archiveIds[i] - (i == 0 ? 0 : archiveIds[i - 1]));
 			} else {
-				outputStream.writeShort(archiveIds[i] - (i == 0 ? 0 : archiveIds[i - 1]));
+				outputBuffer.writeShort(archiveIds[i] - (i == 0 ? 0 : archiveIds[i - 1]));
 			}
 		}
 		if (named) {
 			for (int i = 0; i < archives.length; i++) {
-				outputStream.writeInt(archives[i].getName());
+				outputBuffer.writeInt(archives[i].getName());
 			}
 		}
 		if (origin.isRS3()) {
 			for (int i = 0; i < archives.length; i++) {
-				outputStream.writeInt(archives[i].getCRC());
+				outputBuffer.writeInt(archives[i].getCRC());
 			}
 			if (flag8) {
 				for (int i = 0; i < archives.length; i++) {
-					outputStream.writeInt(archives[i].getFlag8Value());
+					outputBuffer.writeInt(archives[i].getFlag8Value());
 				}
 			}
 			if (whirlpool) {
 				for (int i = 0; i < archives.length; i++) {
-					outputStream.writeBytes(archives[i].getWhirlpool());
+					outputBuffer.writeBytes(archives[i].getWhirlpool());
 				}
 			}
 			if (flag4) {
 				for (int i = 0; i < archives.length; i++) {
-					outputStream.writeInt(archives[i].getFlag4Value1());
-					outputStream.writeInt(archives[i].getFlag4Value2());
+					outputBuffer.writeInt(archives[i].getFlag4Value1());
+					outputBuffer.writeInt(archives[i].getFlag4Value2());
 				}
 			}
 		} else {
 			if (whirlpool) {
 				for (int i = 0; i < archives.length; i++) {
-					outputStream.writeBytes(archives[i].getWhirlpool());
+					outputBuffer.writeBytes(archives[i].getWhirlpool());
 				}
 			}
 			for (int i = 0; i < archives.length; i++) {
-				outputStream.writeInt(archives[i].getCRC());
+				outputBuffer.writeInt(archives[i].getCRC());
 			}
 		}
 		for (int i = 0; i < archives.length; i++) {
-			outputStream.writeInt(archives[i].getRevision());
+			outputBuffer.writeInt(archives[i].getRevision());
 		}
 		for (int i = 0; i < archives.length; i++) {
 			if (version >= 7) {
-				outputStream.writeBigSmart(archives[i].getFileIds().length);
+				outputBuffer.writeBigSmart(archives[i].getFileIds().length);
 			} else {
-				outputStream.writeShort(archives[i].getFileIds().length);
+				outputBuffer.writeShort(archives[i].getFileIds().length);
 			}
 		}
 		for (int i = 0; i < archives.length; i++) {
 			final Archive archive = archives[i];
 			for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
 				if (version >= 7) {
-					outputStream.writeBigSmart(archive.getFileIds()[fileIndex]
+					outputBuffer.writeBigSmart(archive.getFileIds()[fileIndex]
 							- (fileIndex == 0 ? 0 : archive.getFileIds()[fileIndex - 1]));
 				} else {
-					outputStream.writeShort(archive.getFileIds()[fileIndex]
+					outputBuffer.writeShort(archive.getFileIds()[fileIndex]
 							- (fileIndex == 0 ? 0 : archive.getFileIds()[fileIndex - 1]));
 				}
 			}
@@ -284,11 +284,11 @@ public class ReferenceTable implements Container {
 			for (int i = 0; i < archives.length; i++) {
 				final Archive archive = archives[i];
 				for (int fileIndex = 0; fileIndex < archive.getFileIds().length; fileIndex++) {
-					outputStream.writeInt(archive.getFile(archive.getFileIds()[fileIndex]).getName());
+					outputBuffer.writeInt(archive.getFile(archive.getFileIds()[fileIndex]).getName());
 				}
 			}
 		}
-		return outputStream.flip();
+		return outputBuffer.flip();
 	}
 
 	/**
@@ -729,18 +729,18 @@ public class ReferenceTable implements Container {
 					archive.reset();
 					return archive;
 				}
-				archive.read(new InputStream(Compression.decompress(archiveSector, xtea)));
+				archive.read(new InputBuffer(Compression.decompress(archiveSector, xtea)));
 				if (this.id == 5 && !archive.containsData()) {// reset map data if archive has no data
 					archive.setIsRead(false);
 					return archive;
 				}
-				final InputStream inputStream = new InputStream(archiveSector.getData());
-				inputStream.setPosition(1);
-				final int remaining = inputStream.getBytes().length
-						- ((inputStream.readInt() & 0xFFFFFF) + inputStream.getPosition());
+				final InputBuffer inputBuffer = new InputBuffer(archiveSector.getData());
+				inputBuffer.setPosition(1);
+				final int remaining = inputBuffer.getBytes().length
+						- ((inputBuffer.readInt() & 0xFFFFFF) + inputBuffer.getPosition());
 				if (remaining >= 2) {
-					inputStream.setPosition(inputStream.getBytes().length - 2);
-					archive.setRevision(inputStream.readUnsignedShort());
+					inputBuffer.setPosition(inputBuffer.getBytes().length - 2);
+					archive.setRevision(inputBuffer.readUnsignedShort());
 				}
 				return archive;
 			}

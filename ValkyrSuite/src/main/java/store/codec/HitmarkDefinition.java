@@ -4,8 +4,8 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 /**
  * @author ReverendDread Jan 14, 2019
@@ -47,7 +47,7 @@ public class HitmarkDefinition implements AbstractDefinition, Cloneable {
 	 * @see com.alex.definition.AbstractDefinition#decode(com.alex.io.InputStream)
 	 */
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		while (true) {
 
 			int opcode = stream.readUnsignedByte();
@@ -92,7 +92,7 @@ public class HitmarkDefinition implements AbstractDefinition, Cloneable {
 	@Override
 	public byte[] encode() {
 
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 
 		if (fontId != -1) {
 			stream.writeByte(1);

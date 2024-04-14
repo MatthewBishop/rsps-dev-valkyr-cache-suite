@@ -1,12 +1,12 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 public class FrameDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		// TODO Auto-generated method stub
 	}
 

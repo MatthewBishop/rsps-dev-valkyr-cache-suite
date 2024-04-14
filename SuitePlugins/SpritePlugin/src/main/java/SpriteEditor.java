@@ -27,7 +27,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import misc.CustomTab;
 import org.displee.CacheLibrary;
 import org.displee.cache.index.archive.Archive;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import store.plugin.extension.ConfigExtensionBase;
@@ -135,7 +135,7 @@ public class SpriteEditor extends FXController {
 					sprite.setId(id);
 					sprite.addImage(placeholder);
 					Task<Boolean> task = TaskUtil.create(() -> {
-						byte[] data = sprite.encode(new OutputStream()).flip();
+						byte[] data = sprite.encode(new OutputBuffer()).flip();
 						CacheLibrary.get().getIndex(getInfo().getIndex()).addArchive(id).addFile(0, data);
 						CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
 						PluginManager.get().getLoaderForType(PluginType.SPRITE).reload();
@@ -199,7 +199,7 @@ public class SpriteEditor extends FXController {
 					SpriteContainer container = (SpriteContainer) PluginManager.get().getLoaderForType(PluginType.SPRITE).getDefinitions().get(selected.id); //this is just a copy not a reference
 					container.requestLoad().addImage(ImageIO.read(file));
 					frames.getItems().setAll(container.toSpriteFrames());
-					CacheLibrary.get().getIndex(getInfo().getIndex()).addArchive(container.id).addFile(0, container.encode(new OutputStream()).flip());
+					CacheLibrary.get().getIndex(getInfo().getIndex()).addArchive(container.id).addFile(0, container.encode(new OutputBuffer()).flip());
 				}
 			} catch (IOException e) {
 				Dialogues.alert(AlertType.ERROR, "Error", "Palette size is to large!", null, false);
@@ -227,7 +227,7 @@ public class SpriteEditor extends FXController {
 						container.setBiggestWidth(image.getWidth());
 					}
 					frames.getItems().setAll(container.toSpriteFrames());
-					CacheLibrary.get().getIndex(8).addArchive(selected.id).addFile(0, container.encode(new OutputStream()).flip());
+					CacheLibrary.get().getIndex(8).addArchive(selected.id).addFile(0, container.encode(new OutputBuffer()).flip());
 				}
 				select_archive();
 			} catch (IOException e) {
@@ -240,7 +240,7 @@ public class SpriteEditor extends FXController {
 		delete.setOnAction((action) -> {
 			SpriteContainer container = (SpriteContainer) PluginManager.get().getLoaderForType(PluginType.SPRITE).getDefinitions().get(selected.id);
 			container.removeImage(frame);
-			CacheLibrary.get().getIndex(8).addArchive(container.id).addFile(0, container.encode(new OutputStream()).flip());
+			CacheLibrary.get().getIndex(8).addArchive(container.id).addFile(0, container.encode(new OutputBuffer()).flip());
 			frames.getItems().setAll(container.toSpriteFrames());
 		});
 		frameContext.getItems().add(delete);

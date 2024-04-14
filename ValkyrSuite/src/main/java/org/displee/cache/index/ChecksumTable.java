@@ -4,8 +4,8 @@ import java.io.RandomAccessFile;
 
 import org.displee.CacheLibrary;
 import org.displee.cache.Container;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 /**
  * A class representing the checksum table.
@@ -30,13 +30,13 @@ public class ChecksumTable extends Index implements Container {
 	}
 
 	@Override
-	public boolean read(InputStream inputStream) {
+	public boolean read(InputBuffer inputBuffer) {
 		for (int i = 0; i < super.origin.getIndices().length; i++) {
-			int crc = inputStream.readInt();
+			int crc = inputBuffer.readInt();
 			if (crc > 0) {
 				super.origin.getIndex(i).setCRC(crc);
 			}
-			int revision = inputStream.readInt();
+			int revision = inputBuffer.readInt();
 			if (revision > 0) {
 				super.origin.getIndex(i).setRevision(revision);
 			}
@@ -45,12 +45,12 @@ public class ChecksumTable extends Index implements Container {
 	}
 
 	@Override
-	public byte[] write(OutputStream outputStream) {
+	public byte[] write(OutputBuffer outputBuffer) {
 		for (final Index index : super.origin.getIndices()) {
-			outputStream.writeInt(index == null ? 0 : index.getCRC());
-			outputStream.writeInt(index == null ? 0 : index.getRevision());
+			outputBuffer.writeInt(index == null ? 0 : index.getCRC());
+			outputBuffer.writeInt(index == null ? 0 : index.getRevision());
 		}
-		return data = outputStream.flip();
+		return data = outputBuffer.flip();
 	}
 
 	/**

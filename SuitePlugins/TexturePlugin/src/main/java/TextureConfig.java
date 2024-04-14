@@ -2,8 +2,8 @@ import com.google.common.collect.Lists;
 import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.Setter;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import store.plugin.extension.ConfigExtensionBase;
@@ -32,7 +32,7 @@ public class TextureConfig extends ConfigExtensionBase {
     private int[] pixels;
 
     @Override
-    public void decode(int opcode, InputStream buffer) {
+    public void decode(int opcode, InputBuffer buffer) {
         this.averageRGB = buffer.readUnsignedShort();
         this.field1587 = buffer.readUnsignedByte() == 1;
         int size = buffer.readUnsignedByte();
@@ -63,7 +63,7 @@ public class TextureConfig extends ConfigExtensionBase {
     }
 
     @Override
-    public OutputStream encode(OutputStream buffer) {
+    public OutputBuffer encode(OutputBuffer buffer) {
         buffer.writeShort(this.averageRGB);
         buffer.writeByte(this.field1587 ? 1 : 0);
         int size = sprites == null ? 0 : sprites.length;

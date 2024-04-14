@@ -5,7 +5,7 @@ import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import store.codec.ParticleDefinition;
 import store.codec.util.Utils;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Jun 28, 2018
@@ -49,7 +49,7 @@ public class ParticleLoader implements DefinitionLoader {
 				try {
 					byte[] data = index.getArchive(0).getFile(id).getData();
 					if (data != null)
-						definition.decode(new InputStream(data));
+						definition.decode(new InputBuffer(data));
 				} catch (Exception e) {
 					if (suite.Constants.settings.debug)
 						System.err.println("No data exists for particle " + id + ".");

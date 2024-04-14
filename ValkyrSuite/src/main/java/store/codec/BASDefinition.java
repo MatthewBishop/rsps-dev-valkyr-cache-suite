@@ -1,8 +1,8 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 public class BASDefinition implements AbstractDefinition, Cloneable {
 
@@ -94,7 +94,7 @@ public class BASDefinition implements AbstractDefinition, Cloneable {
 	}
 
 	@Override
-	public void decode(InputStream buffer) {
+	public void decode(InputBuffer buffer) {
 		try {
 			while (true) {
 				int opcode = buffer.readUnsignedByte();
@@ -220,7 +220,7 @@ public class BASDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 
 		stream.writeByte(1);
 		stream.writeBigSmart(idle);

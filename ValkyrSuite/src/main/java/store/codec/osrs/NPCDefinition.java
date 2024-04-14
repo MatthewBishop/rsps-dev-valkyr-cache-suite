@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.displee.CacheLibrary;
 import store.codec.AbstractDefinition;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * @author ReverendDread Sep 18, 2018
@@ -57,14 +57,14 @@ public class NPCDefinition implements AbstractDefinition {
 		aBoolean6165 = true;
 		name = "null";
 		options = new String[5];
-		decode(new InputStream(data));
+		decode(new InputBuffer(data));
 	}
 
 	/* (non-Javadoc)
 	 * @see com.alex.definition.AbstractDefinition#decode(com.alex.io.InputStream)
 	 */
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		while (true) {
 
 			int opcode = stream.readUnsignedByte();

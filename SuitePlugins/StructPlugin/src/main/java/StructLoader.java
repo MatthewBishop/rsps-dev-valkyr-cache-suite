@@ -1,7 +1,7 @@
 import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.file.File;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 import store.plugin.extension.LoaderExtensionBase;
 import suite.controller.Selection;
 
@@ -17,7 +17,7 @@ public class StructLoader extends LoaderExtensionBase {
                     continue;
                 StructConfig definition = new StructConfig();
                 definition.id = id;
-                InputStream buffer = new InputStream(file.getData());
+                InputBuffer buffer = new InputBuffer(file.getData());
                 readConfig(buffer, definition);
                 definitions.put(id, definition);
                 Selection.progressListener.pluginNotify("(" + id + "/" + fileIds.length + ")");

@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.displee.io.impl.InputBuffer;
 import org.apache.tools.bzip2.CBZip2OutputStream;
 
 /**
@@ -54,9 +55,9 @@ public class BZIP2Compressor {
 	}
 
 	public static byte[] decompress317(int decompressedLength, int compressedLength,
-			org.displee.io.impl.InputStream inputStream) {
+			InputBuffer inputBuffer) {
 		byte[] decompressed = new byte[decompressedLength];
-		byte[] compressed = inputStream.readBytes(compressedLength);
+		byte[] compressed = inputBuffer.readBytes(compressedLength);
 		decompress(decompressed, decompressed.length, compressed, compressed.length, 0);
 		return decompressed;
 	}

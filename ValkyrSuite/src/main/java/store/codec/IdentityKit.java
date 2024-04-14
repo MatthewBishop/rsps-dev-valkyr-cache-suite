@@ -4,8 +4,8 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 /**
  * @author ReverendDread Sep 21, 2018
@@ -32,7 +32,7 @@ public class IdentityKit implements AbstractDefinition {
 	 * @see com.alex.definition.AbstractDefinition#decode(com.alex.io.InputStream)
 	 */
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		while (true) {
 			int opcode = stream.readUnsignedByte();
 			if (opcode == 0)
@@ -82,7 +82,7 @@ public class IdentityKit implements AbstractDefinition {
 	 */
 	@Override
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 
 		if (bodyPartId != -1) {
 			stream.writeByte(1);

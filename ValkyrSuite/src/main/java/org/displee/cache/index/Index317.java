@@ -10,8 +10,8 @@ import org.displee.CacheLibraryMode;
 import org.displee.cache.index.archive.Archive;
 import org.displee.cache.index.archive.Archive317;
 import org.displee.cache.index.archive.ArchiveSector;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import org.displee.progress.ProgressListener;
 import org.displee.utilities.Compression.CompressionType;
 import org.displee.utilities.Constants;
@@ -64,7 +64,7 @@ public class Index317 extends Index {
 			if (listener != null) {
 				listener.notify((i / updateCount) * 80.0, "Repacking archive " + archive.getId() + "...");
 			}
-			final byte[] compressed = archive.write(new OutputStream(1024));
+			final byte[] compressed = archive.write(new OutputBuffer(1024));
 			archive.setCRC(HashGenerator.getCRCHash(compressed));
 			archive.setWhirlpool(Whirlpool.getHash(compressed));
 			final ArchiveSector backup = readArchiveSector(archive.getId());
@@ -145,12 +145,12 @@ public class Index317 extends Index {
 	}
 
 	@Override
-	public boolean read(InputStream inputStream) {
+	public boolean read(InputBuffer inputBuffer) {
 		return true;
 	}
 
 	@Override
-	public byte[] write(OutputStream outputStream) {
+	public byte[] write(OutputBuffer outputBuffer) {
 		return null;
 	}
 
@@ -172,7 +172,7 @@ public class Index317 extends Index {
 					return archive;
 				}
 				((Archive317) archive).setCompressionType(this.id == 0 ? CompressionType.BZIP2 : CompressionType.GZIP);
-				archive.read(new InputStream(archiveSector.getData()));
+				archive.read(new InputBuffer(archiveSector.getData()));
 				return archive;
 			}
 		}
@@ -219,7 +219,7 @@ public class Index317 extends Index {
 			return null;
 		}
 		byte[] data = origin.getIndex(0).getArchive(5).getFile(fileId).getData();
-		InputStream buffer = new InputStream(data);
+		InputBuffer buffer = new InputBuffer(data);
 		int[] properties = new int[data.length / (type == 0 ? 1 : type == 1 ? 2 : 4)];
 		switch (type) {
 		case 0:
@@ -245,7 +245,7 @@ public class Index317 extends Index {
 		if (id == 0 || id == 4 || id > VERSION_NAMES.length) {
 			return false;
 		}
-		OutputStream buffer = new OutputStream(properties.length);
+		OutputBuffer buffer = new OutputBuffer(properties.length);
 		if (type == 0) {
 			for (int i : properties) {
 				buffer.writeByte(i);

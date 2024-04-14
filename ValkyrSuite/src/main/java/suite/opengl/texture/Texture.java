@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 
@@ -33,7 +33,7 @@ public class Texture {
 
     public void decode(CacheLibrary library) {
         data = CacheLibrary.get().getIndex(9).getFileData(0, this.id);
-        InputStream buffer = new InputStream(data);
+        InputBuffer buffer = new InputBuffer(data);
         this.averageRGB = buffer.readUnsignedShort();
         this.field1587 = buffer.readUnsignedByte() == 1;
         int size = buffer.readUnsignedByte();

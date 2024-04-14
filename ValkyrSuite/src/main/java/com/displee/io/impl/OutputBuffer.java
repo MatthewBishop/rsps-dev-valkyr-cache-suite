@@ -1,6 +1,6 @@
-package org.displee.io.impl;
+package com.displee.io.impl;
 
-import org.displee.io.Stream;
+import com.displee.io.Buffer;
 import org.displee.utilities.Miscellaneous;
 
 /**
@@ -8,7 +8,7 @@ import org.displee.utilities.Miscellaneous;
  * 
  * @author Apache Ah64
  */
-public class OutputStream extends Stream {
+public class OutputBuffer extends Buffer {
 
 	/**
 	 * The bit mask.
@@ -23,7 +23,7 @@ public class OutputStream extends Stream {
 	/**
 	 * Construct a new {@code OutputStream} {@code Object}.
 	 */
-	public OutputStream() {
+	public OutputBuffer() {
 		super();
 	}
 
@@ -32,7 +32,7 @@ public class OutputStream extends Stream {
 	 * 
 	 * @param capacity The capacity.
 	 */
-	public OutputStream(int capacity) {
+	public OutputBuffer(int capacity) {
 		super(capacity);
 	}
 
@@ -41,7 +41,7 @@ public class OutputStream extends Stream {
 	 * 
 	 * @param bytes The bytes.
 	 */
-	public OutputStream(byte[] bytes) {
+	public OutputBuffer(byte[] bytes) {
 		super(bytes);
 	}
 

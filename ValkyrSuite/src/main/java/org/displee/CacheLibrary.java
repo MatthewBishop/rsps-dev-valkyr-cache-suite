@@ -11,7 +11,7 @@ import org.displee.cache.index.Index;
 import org.displee.cache.index.Index317;
 import store.cache.index.OSRSIndices;
 import org.displee.cache.index.archive.ArchiveSector;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.OutputBuffer;
 import org.displee.progress.ProgressListener;
 import org.displee.utilities.Compression;
 import org.displee.utilities.Compression.CompressionType;
@@ -194,7 +194,7 @@ public class CacheLibrary {
 				e.printStackTrace();
 			}
 		}
-		checksumTable.write(new OutputStream(indices.length * Constants.ARCHIVE_HEADER_SIZE));
+		checksumTable.write(new OutputBuffer(indices.length * Constants.ARCHIVE_HEADER_SIZE));
 	}
 
 	/**
@@ -315,13 +315,13 @@ public class CacheLibrary {
 			if (is317()) {
 				throw new UnsupportedOperationException("317 not supported to add new indices yet.");
 			}
-			final OutputStream outputStream = new OutputStream(4);
-			outputStream.writeByte(5);
-			outputStream.writeByte((named ? 0x1 : 0x0) | (whirlpool ? 0x2 : 0x0));
-			outputStream.writeShort(0);
+			final OutputBuffer outputBuffer = new OutputBuffer(4);
+			outputBuffer.writeByte(5);
+			outputBuffer.writeByte((named ? 0x1 : 0x0) | (whirlpool ? 0x2 : 0x0));
+			outputBuffer.writeShort(0);
 			final int id = indices.length;
 			if (!checksumTable.writeArchiveSector(id,
-					Compression.compress(outputStream.flip(), CompressionType.GZIP, null, -1))) {
+					Compression.compress(outputBuffer.flip(), CompressionType.GZIP, null, -1))) {
 				throw new RuntimeException("Failed to write the archive sector for a new index[id=" + id + "]");
 			}
 			indices = Arrays.copyOf(indices, indices.length + 1);

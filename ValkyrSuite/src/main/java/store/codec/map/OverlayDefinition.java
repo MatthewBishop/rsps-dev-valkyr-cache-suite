@@ -3,8 +3,8 @@ package store.codec.map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 public class OverlayDefinition {
 
@@ -53,13 +53,13 @@ public class OverlayDefinition {
 		definition = new OverlayDefinition();
 		definition.id = id;
 		if (data != null)
-			definition.decode(new InputStream(data));
+			definition.decode(new InputBuffer(data));
 		definition.method4603();
 		cached_definition.put(id, definition);
 		return definition;
 	}
 
-	private void decode(InputStream stream) {
+	private void decode(InputBuffer stream) {
 		for (;;) {
 			int opcode = stream.readUnsignedByte();
 			if (opcode == 0)
@@ -68,7 +68,7 @@ public class OverlayDefinition {
 		}
 	}
 
-	private void decode(InputStream stream, int opcode) {
+	private void decode(InputBuffer stream, int opcode) {
 		if (opcode == 1)
 			rgbColor = stream.read24BitInt();
 		else if (opcode == 2)
@@ -114,7 +114,7 @@ public class OverlayDefinition {
 	}
 
 	private byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 
 		if (rgbColor != -1) {
 			stream.writeByte(1);

@@ -1,8 +1,8 @@
 package org.displee.cache.index.archive;
 
 import org.displee.cache.Container;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import org.displee.utilities.Compression;
 
 /**
@@ -91,29 +91,29 @@ public class ArchiveSector implements Container {
 	}
 
 	@Override
-	public boolean read(InputStream inputStream) {
+	public boolean read(InputBuffer inputBuffer) {
 		if (type == 0) {
-			id = inputStream.readUnsignedShort();
+			id = inputBuffer.readUnsignedShort();
 		} else if (type == 1) {
-			id = inputStream.readInt();
+			id = inputBuffer.readInt();
 		}
-		chunk = inputStream.readUnsignedShort();
-		nextPosition = inputStream.read24BitInt();
-		index = inputStream.readUnsignedByte();
+		chunk = inputBuffer.readUnsignedShort();
+		nextPosition = inputBuffer.read24BitInt();
+		index = inputBuffer.readUnsignedByte();
 		return true;
 	}
 
 	@Override
-	public byte[] write(OutputStream outputStream) {
+	public byte[] write(OutputBuffer outputBuffer) {
 		if (type == 0) {
-			outputStream.writeShort(id);
+			outputBuffer.writeShort(id);
 		} else if (type == 1) {
-			outputStream.writeInt(id);
+			outputBuffer.writeInt(id);
 		}
-		outputStream.writeShort(chunk);
-		outputStream.write24BitInt(position);
-		outputStream.writeByte(index);
-		return outputStream.flip();
+		outputBuffer.writeShort(chunk);
+		outputBuffer.write24BitInt(position);
+		outputBuffer.writeByte(index);
+		return outputBuffer.flip();
 	}
 
 	/**

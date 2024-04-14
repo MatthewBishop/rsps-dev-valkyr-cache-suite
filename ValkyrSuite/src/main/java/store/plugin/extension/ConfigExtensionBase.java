@@ -10,8 +10,8 @@ import org.displee.cache.index.archive.file.File;
 import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.Archive;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -28,13 +28,13 @@ public abstract class ConfigExtensionBase implements Cloneable {
 	public int previousOpcodeIndex;
 	public int[] previousOpcodes;
 
-	public void decode(int opcode, InputStream buffer) {}
+	public void decode(int opcode, InputBuffer buffer) {}
 
-	public void decode(InputStream buffer) {}
+	public void decode(InputBuffer buffer) {}
 
-	public abstract OutputStream encode(OutputStream buffer);
+	public abstract OutputBuffer encode(OutputBuffer buffer);
 
-	public OutputStream[] encodeConfig317(String fileName) {
+	public OutputBuffer[] encodeConfig317(String fileName) {
 		return null;
 	}
 

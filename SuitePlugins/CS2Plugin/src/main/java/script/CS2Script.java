@@ -5,8 +5,8 @@ import javafx.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 import store.plugin.extension.ConfigExtensionBase;
 import store.utilities.ReflectionUtils;
 import suite.annotation.OrderType;
@@ -42,7 +42,7 @@ public class CS2Script extends ConfigExtensionBase {
     public Map<Integer, Integer>[] switches;
 
     @Override
-    public void decode(InputStream buffer) {
+    public void decode(InputBuffer buffer) {
 
         buffer.setPosition(buffer.buffer.length - 2);
         int switchLength = buffer.readUnsignedShort();
@@ -103,7 +103,7 @@ public class CS2Script extends ConfigExtensionBase {
     }
 
     @Override
-    public OutputStream encode(OutputStream buffer) {
+    public OutputBuffer encode(OutputBuffer buffer) {
 
         int[] instructions = getInstructions();
         int[] intOperands = getIntOrphands();

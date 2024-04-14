@@ -3,7 +3,7 @@ import org.displee.CacheLibrary;
 import org.displee.cache.index.Index;
 import org.displee.cache.index.archive.Archive;
 import org.displee.cache.index.archive.file.File;
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 import store.plugin.extension.LoaderExtensionBase;
 import suite.controller.Selection;
 import suite.dialogue.Dialogues;
@@ -25,8 +25,8 @@ public class ItemLoader extends LoaderExtensionBase {
 			CacheLibrary cache = CacheLibrary.get();
 
 			if (cache.is317()) {
-				InputStream stream = new InputStream(getConfigFile317("obj.dat"));
-				InputStream streamIdx = new InputStream(getConfigFile317("obj.idx"));
+				InputBuffer stream = new InputBuffer(getConfigFile317("obj.dat"));
+				InputBuffer streamIdx = new InputBuffer(getConfigFile317("obj.idx"));
 
 				int totalItems = streamIdx.readUnsignedShort();
 
@@ -63,7 +63,7 @@ public class ItemLoader extends LoaderExtensionBase {
 					continue;
 				ItemConfig definition = new ItemConfig();
 				definition.id = id;
-				InputStream buffer = new InputStream(file.getData());
+				InputBuffer buffer = new InputBuffer(file.getData());
 				readConfig(buffer, definition);
 				definitions.put(id, toNote(definition));
 				Selection.progressListener.pluginNotify("(" + id + "/" + fileIds.length + ")");

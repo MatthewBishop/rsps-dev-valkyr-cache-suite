@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 @Getter @Setter @Slf4j
 public class ObjectDefinition implements AbstractDefinition, Cloneable {
@@ -22,7 +22,7 @@ public class ObjectDefinition implements AbstractDefinition, Cloneable {
 	}
 
 	@Override
-	public void decode(InputStream buffer) {
+	public void decode(InputBuffer buffer) {
 		while (true) {
 			int opcode = buffer.readUnsignedByte(); 
 			if (opcode == 0) {
@@ -244,7 +244,7 @@ public class ObjectDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputStream buffer = new OutputStream();
+		OutputBuffer buffer = new OutputBuffer();
 		
 		if (objectModels != null && objectTypes != null) {
 			if (objectTypes != null) {

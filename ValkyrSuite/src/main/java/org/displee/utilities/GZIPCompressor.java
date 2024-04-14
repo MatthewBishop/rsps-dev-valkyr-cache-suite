@@ -8,7 +8,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.Inflater;
 
-import org.displee.io.impl.InputStream;
+import com.displee.io.impl.InputBuffer;
 
 /**
  * A class that represents the gzip (de)compressor.
@@ -25,21 +25,21 @@ public class GZIPCompressor {
 	/**
 	 * Inflate a deflated GZIP file.
 	 * 
-	 * @param inputStream {@link InputStream}
+	 * @param inputBuffer {@link InputBuffer}
 	 * @param data        The delfated GZIP file.
 	 */
-	public static boolean inflate(InputStream inputStream, byte[] data) {
+	public static boolean inflate(InputBuffer inputBuffer, byte[] data) {
 		try {
-			if ((inputStream.getBytes()[inputStream.getPosition()] ^ 0xffffffff) != -32
-					|| inputStream.getBytes()[inputStream.getPosition() + 1] != -117) {
+			if ((inputBuffer.getBytes()[inputBuffer.getPosition()] ^ 0xffffffff) != -32
+					|| inputBuffer.getBytes()[inputBuffer.getPosition() + 1] != -117) {
 				return false;
 			}
 			if (inflater == null) {
 				inflater = new Inflater(true);
 			}
 			try {
-				inflater.setInput(inputStream.getBytes(), 10 + inputStream.getPosition(),
-						(-10 - inputStream.getPosition() - (8 - inputStream.getBytes().length)));
+				inflater.setInput(inputBuffer.getBytes(), 10 + inputBuffer.getPosition(),
+						(-10 - inputBuffer.getPosition() - (8 - inputBuffer.getBytes().length)));
 				inflater.inflate(data);
 			} catch (Exception exception) {
 				inflater.reset();

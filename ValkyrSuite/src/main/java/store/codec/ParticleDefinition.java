@@ -1,8 +1,8 @@
 package store.codec;
 
 import org.displee.CacheLibrary;
-import org.displee.io.impl.InputStream;
-import org.displee.io.impl.OutputStream;
+import com.displee.io.impl.InputBuffer;
+import com.displee.io.impl.OutputBuffer;
 
 public class ParticleDefinition implements AbstractDefinition, Cloneable {
 
@@ -87,7 +87,7 @@ public class ParticleDefinition implements AbstractDefinition, Cloneable {
 	}
 
 	@Override
-	public void decode(InputStream stream) {
+	public void decode(InputBuffer stream) {
 		try {
 			while (true) {
 				int opcode = stream.readUnsignedByte();
@@ -190,7 +190,7 @@ public class ParticleDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputStream stream = new OutputStream();
+		OutputBuffer stream = new OutputBuffer();
 
 		int length;
 

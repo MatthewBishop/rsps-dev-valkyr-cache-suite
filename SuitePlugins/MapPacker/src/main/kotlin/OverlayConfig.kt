@@ -1,5 +1,5 @@
-import org.displee.io.impl.InputStream
-import org.displee.io.impl.OutputStream
+import com.displee.io.impl.InputBuffer
+import com.displee.io.impl.OutputBuffer
 import store.plugin.extension.ConfigExtensionBase
 import java.lang.reflect.Field
 
@@ -20,7 +20,7 @@ class OverlayConfig : ConfigExtensionBase() {
     var aBoolean4063 = false
     var someRGBValue = -1
 
-    override fun decode(opcode: Int, buffer: InputStream) {
+    override fun decode(opcode: Int, buffer: InputBuffer) {
         when(opcode) {
             1 -> color = buffer.read24BitInt()
             2 -> textureId = buffer.readUnsignedShort()
@@ -45,7 +45,7 @@ class OverlayConfig : ConfigExtensionBase() {
         }
     }
 
-    override fun encode(buffer: OutputStream?): OutputStream {
+    override fun encode(buffer: OutputBuffer?): OutputBuffer {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
