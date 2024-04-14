@@ -63,7 +63,7 @@ subprojects {
 		implementation 'org.reflections:reflections:0.9.11'
 
 		// https://mvnrepository.com/artifact/com.displee/disio
-	//	implementation 'com.displee:disio:2.3'
+		implementation 'com.displee:disio:2.3'
 
 	}
 
