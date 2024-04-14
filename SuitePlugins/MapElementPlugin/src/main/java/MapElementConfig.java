@@ -129,7 +129,7 @@ public class MapElementConfig extends ConfigExtensionBase {
         buffer.writeString(displayName);
 
         buffer.writeByte(4);
-        buffer.writeMedium(colour);
+        buffer.write24BitInt(colour);
 
         buffer.writeByte(6);
         buffer.writeByte(textSize);
