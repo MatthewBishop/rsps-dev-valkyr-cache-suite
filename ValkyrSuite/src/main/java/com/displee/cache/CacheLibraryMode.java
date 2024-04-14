@@ -1,4 +1,4 @@
-package org.displee;
+package com.displee.cache;
 
 /**
  * An enumeration of cache modes which can be useful depending on the type of

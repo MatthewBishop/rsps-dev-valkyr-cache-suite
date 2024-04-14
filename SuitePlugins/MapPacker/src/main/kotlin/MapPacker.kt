@@ -298,8 +298,7 @@ class MapPacker : FXController() {
                     ex.printStackTrace()
                 }
             }
-            if (ValkyrCacheLibrary.get()
-                    .getIndex(OSRSIndices.MAPS).update(Selection.progressListener, xteaKeys)) {
+            if (ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).update(Selection.progressListener, xteaKeys)) {
                 val alert = Alert(Alert.AlertType.INFORMATION, "Maps packed successfully!", ButtonType.OK)
                 alert.show()
             }
@@ -339,21 +338,21 @@ class MapPacker : FXController() {
         return try {
             val mapArchiveName = "m" + regionX + "_" + regionY
             val landArchiveName = "l" + regionX + "_" + regionY
-            var mapArchive = ValkyrCacheLibrary.get().getIndex(OSRSIndices.MAPS).getArchive(mapArchiveName)
+            var mapArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).getArchive(mapArchiveName)
             var exists = Objects.nonNull(mapArchive)
             if (exists) {
                 mapArchive.reset()
             } else {
-                mapArchive = ValkyrCacheLibrary.get().getIndex(OSRSIndices.MAPS).addArchive(mapArchiveName)
+                mapArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).addArchive(mapArchiveName)
             }
             mapArchive.add(0, tileData)
             mapArchive.flag()
-            var landArchive = ValkyrCacheLibrary.get().getIndex(OSRSIndices.MAPS).getArchive(landArchiveName)
+            var landArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).getArchive(landArchiveName)
             exists = Objects.nonNull(landArchive)
             if (exists) {
                 landArchive.reset()
             } else {
-                landArchive = ValkyrCacheLibrary.get().getIndex(OSRSIndices.MAPS).addArchive(landArchiveName)
+                landArchive = ValkyrCacheLibrary.getIndex(OSRSIndices.MAPS).addArchive(landArchiveName)
             }
             landArchive.add(0, objData)
             landArchive.flag()

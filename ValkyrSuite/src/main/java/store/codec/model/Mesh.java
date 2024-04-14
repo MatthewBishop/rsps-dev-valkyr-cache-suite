@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import misc.EffectiveVertex;
 import misc.FaceBillboard;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.Buffer;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
@@ -294,7 +294,7 @@ public class Mesh extends ConfigExtensionBase {
 	 * @param library The cache library.
 	 */
 	public void decode(CacheLibrary library) {
-		byte[] data = library.getIndex(library.is317() ? 1 : 7).getArchive(id).file(0).getData();
+		byte[] data = library.index(library.is317() ? 1 : 7).getArchive(id).file(0).getData();
 		if (data == null) {
 			throw new RuntimeException("No model data found for model " + id);
 		}

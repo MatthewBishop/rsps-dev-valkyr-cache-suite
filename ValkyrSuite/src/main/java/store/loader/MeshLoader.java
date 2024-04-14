@@ -10,8 +10,8 @@ import com.google.common.collect.Maps;
 import lombok.Getter;
 import store.ValkyrCacheLibrary;
 import store.cache.index.OSRSIndices;
-import org.displee.cache.index.archive.Archive;
-import org.displee.cache.index.archive.file.File;
+import com.displee.cache.index.archive.Archive;
+import com.displee.cache.index.archive.file.File;
 import store.codec.model.Mesh;
 
 /**

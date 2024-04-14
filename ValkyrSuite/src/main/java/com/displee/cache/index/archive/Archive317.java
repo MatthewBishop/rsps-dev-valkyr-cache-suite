@@ -1,6 +1,6 @@
-package org.displee.cache.index.archive;
+package com.displee.cache.index.archive;
 
-import org.displee.cache.index.archive.file.File;
+import com.displee.cache.index.archive.file.File;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 import org.displee.utilities.BZIP2Compressor;

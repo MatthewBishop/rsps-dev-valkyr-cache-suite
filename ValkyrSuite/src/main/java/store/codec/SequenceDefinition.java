@@ -3,7 +3,7 @@ package store.codec;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.codec.util.Utils;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
@@ -147,8 +147,8 @@ public class SequenceDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(20).addArchive(Utils.getConfigArchive(id, 7)).add(Utils.getConfigFile(id, 7), encode());
-		return cache.getIndex(20).update();
+		cache.index(20).addArchive(Utils.getConfigArchive(id, 7)).add(Utils.getConfigFile(id, 7), encode());
+		return cache.index(20).update();
 	}
 
 }

@@ -3,7 +3,7 @@ package suite.opengl.texture;
 import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import store.ValkyrCacheLibrary;
 import store.plugin.PluginManager;
@@ -33,7 +33,7 @@ public class Texture {
     private int[] pixels;
 
     public void decode(CacheLibrary library) {
-        data = ValkyrCacheLibrary.get().getIndex(9).getArchive(0).file(this.id).getData();
+        data = ValkyrCacheLibrary.get().index(9).getArchive(0).file(this.id).getData();
         InputBuffer buffer = new InputBuffer(data);
         this.averageRGB = buffer.readUnsignedShort();
         this.field1587 = buffer.readUnsignedByte() == 1;

@@ -2,7 +2,7 @@ package store.codec.util;
 
 import java.math.BigInteger;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.OutputBuffer;
 
 public final class Utils {
@@ -36,56 +36,56 @@ public final class Utils {
 	}
 
 	public static final int getInterfaceDefinitionsSize(CacheLibrary store) {
-		return store.getIndex(3).getLastArchive().getId() + 1;
+		return store.index(3).getLastArchive().getId() + 1;
 	}
 
 	public static final int getInterfaceDefinitionsComponentsSize(CacheLibrary store, int interfaceId) {
-		return store.getIndex(3).getArchive(interfaceId).last().getId() + 1;
+		return store.index(3).getArchive(interfaceId).last().getId() + 1;
 	}
 
 	public static final int getRenderAnimationDefintionsSize(CacheLibrary store) {
-		return store.getIndex(2).getArchive(32).last().getId() + 1;
+		return store.index(2).getArchive(32).last().getId() + 1;
 	}
 
 	public static final int getAnimationDefinitionsSize(CacheLibrary store) {
-		int lastArchiveId = store.getIndex(20).getLastArchive().getId();
-		return lastArchiveId * 128 + store.getIndex(20).getArchive(lastArchiveId).last().getId();
+		int lastArchiveId = store.index(20).getLastArchive().getId();
+		return lastArchiveId * 128 + store.index(20).getArchive(lastArchiveId).last().getId();
 	}
 
 	public static final int getItemDefinitionsSize(CacheLibrary store) {
-		int lastArchiveId = store.getIndex(19).getLastArchive().getId();
-		return lastArchiveId * 256 + store.getIndex(19).getArchive(lastArchiveId).last().getId();
+		int lastArchiveId = store.index(19).getLastArchive().getId();
+		return lastArchiveId * 256 + store.index(19).getArchive(lastArchiveId).last().getId();
 	}
 
 	public static int getNPCDefinitionsSize(CacheLibrary store) {
-		int lastArchiveId = store.getIndex(18).getLastArchive().getId();
-		return lastArchiveId * 256 + store.getIndex(18).getArchive(lastArchiveId).last().getId();
+		int lastArchiveId = store.index(18).getLastArchive().getId();
+		return lastArchiveId * 256 + store.index(18).getArchive(lastArchiveId).last().getId();
 	}
 
 	public static final int getObjectDefinitionsSize(CacheLibrary store) {
-		int lastArchiveId = store.getIndex(16).getLastArchive().getId();
-		return lastArchiveId * 256 + store.getIndex(16).getArchive(lastArchiveId).last().getId();
+		int lastArchiveId = store.index(16).getLastArchive().getId();
+		return lastArchiveId * 256 + store.index(16).getArchive(lastArchiveId).last().getId();
 	}
 
 	public static final int getGraphicDefinitionsSize(CacheLibrary store) {
-		int lastArchiveId = store.getIndex(21).getLastArchive().getId();
-		return lastArchiveId * 256 + store.getIndex(21).getArchive(lastArchiveId).last().getId();
+		int lastArchiveId = store.index(21).getLastArchive().getId();
+		return lastArchiveId * 256 + store.index(21).getArchive(lastArchiveId).last().getId();
 	}
 
 	public static int getTextureDiffuseSize(CacheLibrary store) {
-		return store.getIndex(9).getLastArchive().getId();
+		return store.index(9).getLastArchive().getId();
 	}
 
 	public static int getSpriteDefinitionSize(CacheLibrary store) {
-		return store.getIndex(8).getLastArchive().getId();
+		return store.index(8).getLastArchive().getId();
 	}
 
 	public static int getParticleConfigSize(CacheLibrary store) {
-		return store.getIndex(27).getArchive(0).last().getId() + 1;
+		return store.index(27).getArchive(0).last().getId() + 1;
 	}
 
 	public static int getMagnetConfigSize(CacheLibrary store) {
-		return store.getIndex(27).getArchive(1).last().getId() + 1;
+		return store.index(27).getArchive(1).last().getId() + 1;
 	}
 
 	public static int getConfigArchive(int id, int bits) {

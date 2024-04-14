@@ -1,4 +1,4 @@
-package org.displee;
+package com.displee.cache;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
 
-import org.displee.cache.index.ChecksumTable;
-import org.displee.cache.index.Index;
-import org.displee.cache.index.Index317;
+import com.displee.cache.index.ChecksumTable;
+import com.displee.cache.index.Index;
+import com.displee.cache.index.Index317;
 import store.ValkyrCacheLibrary;
-import org.displee.cache.index.archive.ArchiveSector;
+import com.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.OutputBuffer;
-import com.displee.cache.ProgressListener;
 import org.displee.utilities.Compression;
 import com.displee.compress.CompressionType;
 import org.displee.utilities.Constants;
@@ -71,7 +70,7 @@ public class CacheLibrary {
 	 * @param mode The cache library mode.
 	 * @throws IOException If it failed to read the cache files.
 	 */
-	public CacheLibrary(String path, CacheLibraryMode mode) throws IOException {
+	public CacheLibrary(String path, CacheLibraryMode mode) throws IOException {//GOOD
 		this(path, mode, null);
 	}
 
@@ -252,8 +251,8 @@ public class CacheLibrary {
 	 * @param writeReferenceTabel	If the reference tabel should be written.
 	 * @return
 	 */
-	public Index addIndex(Index index, boolean writeReferenceTabel) throws Exception {
-		return addIndex(index.getCompressionType(), index.getVersion(), index.getRevision(),
+	public Index createIndex(Index index, boolean writeReferenceTabel) throws Exception {
+		return createIndex(index.getCompressionType(), index.getVersion(), index.getRevision(),
 				index.isNamed(), index.usingWhirlpool(), index.isFlag4(), index.isFlag8(), writeReferenceTabel);
 	}
 
@@ -271,7 +270,7 @@ public class CacheLibrary {
 	 *
 	 * @return	The created index.
 	 */
-	public Index addIndex(CompressionType compressionType, int version, int revision, boolean named, boolean whirlpool, boolean flag4, boolean flag8, boolean writeReferenceTabel) throws Exception {
+	public Index createIndex(CompressionType compressionType, int version, int revision, boolean named, boolean whirlpool, boolean flag4, boolean flag8, boolean writeReferenceTabel) throws Exception {
 		int id = indices.length;
 		RandomAccessFile raf = new RandomAccessFile(new File(path, "main_file_cache.idx" + id), "rw");
 		indices = Arrays.copyOf(indices, indices.length + 1);
@@ -305,7 +304,7 @@ public class CacheLibrary {
 	 * @param named     If the index contains archive and/or file names.
 	 * @param whirlpool If the index is using whirlpool.
 	 */
-	public Index addIndex(boolean named, boolean whirlpool) {
+	public Index createIndex(boolean named, boolean whirlpool) {
 		try {
 			if (is317()) {
 				throw new UnsupportedOperationException("317 not supported to add new indices yet.");
@@ -383,7 +382,7 @@ public class CacheLibrary {
 				}
 
 				System.out.println("Creating new index file...");
-				Index newIndex = newLibrary.addIndex(index, writeReferenceTabel);
+				Index newIndex = newLibrary.createIndex(index, writeReferenceTabel);
 
 				for (int i : index.getArchiveIds()) {
 					byte[] data = index.readArchiveSector(i).getData();
@@ -434,7 +433,7 @@ public class CacheLibrary {
 	 * @param id The id of the index to get.
 	 * @return The index instance.
 	 */
-	public Index getIndex(int id) {
+	public Index index(int id) {
 		if (id >= indices.length) {
 			return null;
 		}
@@ -476,7 +475,7 @@ public class CacheLibrary {
 	 * 
 	 * @return {@code indices}
 	 */
-	public Index[] getIndices() {
+	public Index[] indices() {
 		return indices;
 	}
 
@@ -522,7 +521,7 @@ public class CacheLibrary {
 	 * @return If the revision of index 2 is greater or equal to 300.
 	 */
 	public boolean isOSRS() {
-		return getIndex(2).getRevision() >= 300 && indices.length <= 23;
+		return index(2).getRevision() >= 300 && indices.length <= 23;
 	}
 
 	/**

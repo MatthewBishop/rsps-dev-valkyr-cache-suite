@@ -1,6 +1,6 @@
 package store.codec;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 
@@ -86,8 +86,8 @@ public class MagnetDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(27).addArchive(1).add(id, encode());
-		return cache.getIndex(27).update();
+		cache.index(27).addArchive(1).add(id, encode());
+		return cache.index(27).update();
 	}
 
 }

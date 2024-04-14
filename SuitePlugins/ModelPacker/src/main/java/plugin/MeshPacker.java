@@ -89,7 +89,7 @@ public class MeshPacker extends FXController {
 		if (value.isPresent()) {
 			Main.getSelection().createTask("Injecting blanks...", true, TaskUtil.create(() -> {
 				int amount = Integer.parseInt(value.get());
-				int start = ValkyrCacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
+				int start = ValkyrCacheLibrary.get().index(7).getLastArchive().getId() + 1;
 				for (int index = start; index < (start + amount); index++) {
 					ValkyrCacheLibrary.getIndex(OSRSIndices.MODELS).addArchive(index).add(new byte[1]);
 				}
@@ -113,12 +113,12 @@ public class MeshPacker extends FXController {
 				File[] files = directory.listFiles();
 				String packed_models = "";
 				int[] model_ids = new int[files.length];
-				int archive = ValkyrCacheLibrary.get().getIndex(7).getLastArchive().getId() + 1;
+				int archive = ValkyrCacheLibrary.get().index(7).getLastArchive().getId() + 1;
 				for (int index = 0; index < files.length; index++) {
 					if (!files[index].getName().endsWith(".dat"))
 						continue;
 					byte[] data = Files.readAllBytes(files[index].toPath());
-					ValkyrCacheLibrary.get().getIndex(7).addArchive(archive).add(0, data);
+					ValkyrCacheLibrary.get().index(7).addArchive(archive).add(0, data);
 					String original_id = files[index].getName().substring(0,
 							files[index].getName().length() - ".dat".length());
 					model_ids[index] = archive;
@@ -127,7 +127,7 @@ public class MeshPacker extends FXController {
 					archive++;
 				}
 				console.appendText(packed_models);	
-				ValkyrCacheLibrary.get().getIndex(7).update(Selection.progressListener);
+				ValkyrCacheLibrary.get().index(7).update(Selection.progressListener);
 				return true;
 			}));
 

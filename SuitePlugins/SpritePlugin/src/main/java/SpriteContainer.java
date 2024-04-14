@@ -15,9 +15,9 @@ import javafx.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 import store.ValkyrCacheLibrary;
-import org.displee.cache.index.Index;
-import org.displee.cache.index.archive.Archive;
-import org.displee.cache.index.archive.file.File;
+import com.displee.cache.index.Index;
+import com.displee.cache.index.archive.Archive;
+import com.displee.cache.index.archive.file.File;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 import suite.annotation.OrderType;
@@ -179,7 +179,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 	}
 	
 	public boolean hasImages(int indexId, int archiveId, int fileId) {
-		Archive archive = ValkyrCacheLibrary.get().getIndex(indexId).getArchive(archiveId);
+		Archive archive = ValkyrCacheLibrary.get().index(indexId).getArchive(archiveId);
 		if (Objects.isNull(archive))
 			return false;
 		File file = archive.file(fileId);
@@ -190,7 +190,7 @@ public class SpriteContainer extends ConfigExtensionBase {
 		if (isLoaded()) {
 			return this;
 		}
-		Index index = ValkyrCacheLibrary.get().getIndex(8);
+		Index index = ValkyrCacheLibrary.get().index(8);
 		Archive archive = index.getArchive(id);
 		if (Objects.nonNull(archive) && archive.containsData()) {
 			File file = archive.file(0);

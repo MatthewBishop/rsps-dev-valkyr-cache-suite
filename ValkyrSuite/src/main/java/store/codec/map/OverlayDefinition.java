@@ -2,7 +2,7 @@ package store.codec.map;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 
@@ -49,7 +49,7 @@ public class OverlayDefinition {
 		OverlayDefinition definition = cached_definition.get(id);
 		if (definition != null)
 			return definition;
-		byte[] data = cache.getIndex(2).getArchive(4).file(id).getData();
+		byte[] data = cache.index(2).getArchive(4).file(id).getData();
 		definition = new OverlayDefinition();
 		definition.id = id;
 		if (data != null)
@@ -110,7 +110,7 @@ public class OverlayDefinition {
 	}
 
 	public void write(CacheLibrary cache) {
-		cache.getIndex(2).addArchive(4).add(this.id, this.encode());
+		cache.index(2).addArchive(4).add(this.id, this.encode());
 	}
 
 	private byte[] encode() {

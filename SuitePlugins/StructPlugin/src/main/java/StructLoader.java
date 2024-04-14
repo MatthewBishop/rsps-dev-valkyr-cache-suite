@@ -1,6 +1,6 @@
 import store.ValkyrCacheLibrary;
-import org.displee.cache.index.Index;
-import org.displee.cache.index.archive.file.File;
+import com.displee.cache.index.Index;
+import com.displee.cache.index.archive.file.File;
 import com.displee.io.impl.InputBuffer;
 import store.plugin.extension.LoaderExtensionBase;
 import suite.controller.Selection;
@@ -9,7 +9,7 @@ public class StructLoader extends LoaderExtensionBase {
     @Override
     public boolean load() {
         try {
-            Index index = ValkyrCacheLibrary.get().getIndex(getIndex());
+            Index index = ValkyrCacheLibrary.get().index(getIndex());
             int[] fileIds = index.getArchive(getArchive()).fileIds();
             for (int id : fileIds) {
                 File file = index.getArchive(getArchive()).file(id);

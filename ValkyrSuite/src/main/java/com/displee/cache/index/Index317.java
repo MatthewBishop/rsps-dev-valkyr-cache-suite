@@ -1,15 +1,15 @@
-package org.displee.cache.index;
+package com.displee.cache.index;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.displee.CacheLibrary;
-import org.displee.CacheLibraryMode;
-import org.displee.cache.index.archive.Archive;
-import org.displee.cache.index.archive.Archive317;
-import org.displee.cache.index.archive.ArchiveSector;
+import com.displee.cache.CacheLibrary;
+import com.displee.cache.CacheLibraryMode;
+import com.displee.cache.index.archive.Archive;
+import com.displee.cache.index.archive.Archive317;
+import com.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 import com.displee.cache.ProgressListener;
@@ -164,7 +164,7 @@ public class Index317 extends Index {
 				if (direct || archive.getRead() || archive.getNew()) {
 					return archive;
 				}
-				final ArchiveSector archiveSector = origin.getIndex(this.id).readArchiveSector(id);
+				final ArchiveSector archiveSector = origin.index(this.id).readArchiveSector(id);
 				if (archiveSector == null) {
 					archive.setRead(true);
 					archive.setNew(true);
@@ -218,7 +218,7 @@ public class Index317 extends Index {
 		if (id == 0 || id == 4 || id > VERSION_NAMES.length) {
 			return null;
 		}
-		byte[] data = origin.getIndex(0).getArchive(5).file(fileId).getData();
+		byte[] data = origin.index(0).getArchive(5).file(fileId).getData();
 		InputBuffer buffer = new InputBuffer(data);
 		int[] properties = new int[data.length / (type == 0 ? 1 : type == 1 ? 2 : 4)];
 		switch (type) {
@@ -259,8 +259,8 @@ public class Index317 extends Index {
 				buffer.writeInt(i);
 			}
 		}
-		origin.getIndex(0).getArchive(5).add(fileId, buffer.array());
-		return origin.getIndex(0).update();
+		origin.index(0).getArchive(5).add(fileId, buffer.array());
+		return origin.index(0).update();
 	}
 
 }

@@ -4,8 +4,8 @@
 package store.loader;
 
 import lombok.Getter;
-import org.displee.CacheLibrary;
-import org.displee.cache.index.Index;
+import com.displee.cache.CacheLibrary;
+import com.displee.cache.index.Index;
 import store.codec.HitmarkDefinition;
 import com.displee.io.impl.InputBuffer;
 
@@ -35,7 +35,7 @@ public class HitmarkLoader implements DefinitionLoader {
 	@Override
 	public boolean initialize() {
 		try {
-			Index index = cache.getIndex(2);
+			Index index = cache.index(2);
 			int size = index.getArchive(46).last().getId();
 			definitions = new HitmarkDefinition[size];
 			for (int id = 0; id < size; id++) {

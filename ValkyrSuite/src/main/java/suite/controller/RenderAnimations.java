@@ -13,7 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import misc.CustomTab;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.codec.BASDefinition;
 import store.loader.BASLoader;
 import store.loader.LoaderManager;

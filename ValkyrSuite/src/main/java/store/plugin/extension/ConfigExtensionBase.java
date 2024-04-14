@@ -7,10 +7,10 @@ import javafx.scene.image.Image;
 import javafx.util.Pair;
 import lombok.Setter;
 import store.ValkyrCacheLibrary;
-import org.displee.cache.index.archive.file.File;
-import org.displee.CacheLibrary;
-import org.displee.cache.index.Index;
-import org.displee.cache.index.archive.Archive;
+import com.displee.cache.index.archive.file.File;
+import com.displee.cache.CacheLibrary;
+import com.displee.cache.index.Index;
+import com.displee.cache.index.archive.Archive;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 
@@ -59,7 +59,7 @@ public abstract class ConfigExtensionBase implements Cloneable {
 
 	protected byte[] getConfigFile317(String name) {
 		CacheLibrary cache = ValkyrCacheLibrary.get();
-		Index index = cache.getIndex(0);
+		Index index = cache.index(0);
 		Archive archive = index.getArchive(2);
 		File file = archive.file(name);
 		return file.getData();

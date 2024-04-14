@@ -1,7 +1,7 @@
 package org.displee.utilities;
 
 import com.displee.compress.CompressionType;
-import org.displee.cache.index.archive.ArchiveSector;
+import com.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 

@@ -1,6 +1,6 @@
 package store.codec;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 
 /**

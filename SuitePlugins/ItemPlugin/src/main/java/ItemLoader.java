@@ -1,9 +1,9 @@
 import javafx.scene.control.Alert;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.ValkyrCacheLibrary;
-import org.displee.cache.index.Index;
-import org.displee.cache.index.archive.Archive;
-import org.displee.cache.index.archive.file.File;
+import com.displee.cache.index.Index;
+import com.displee.cache.index.archive.Archive;
+import com.displee.cache.index.archive.file.File;
 import com.displee.io.impl.InputBuffer;
 import store.plugin.extension.LoaderExtensionBase;
 import suite.controller.Selection;
@@ -53,7 +53,7 @@ public class ItemLoader extends LoaderExtensionBase {
 				return true;
 			}
 
-			Index index = cache.getIndex(getIndex());
+			Index index = cache.index(getIndex());
 			Archive archive = index.getArchive(getArchive());
 
 			int[] fileIds = index.getArchive(getArchive()).fileIds();

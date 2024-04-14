@@ -12,10 +12,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import misc.CustomTab;
 import misc.RsMesh;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.ValkyrCacheLibrary;
-import org.displee.cache.index.Index;
-import org.displee.cache.index.archive.Archive;
+import com.displee.cache.index.Index;
+import com.displee.cache.index.archive.Archive;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 import store.plugin.PluginManager;
@@ -155,8 +155,8 @@ public class ConfigEditor extends FXController {
                                 break;
                             newItem.decode(opcode, buffer);
                         }
-                        ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(newItem.id, data);
-                        ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
+                        ValkyrCacheLibrary.get().index(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(newItem.id, data);
+                        ValkyrCacheLibrary.get().index(getInfo().getIndex()).update(Selection.progressListener);
                         PluginManager.get().getLoaderForType(getInfo().getType()).reload();
                         Platform.runLater(() -> initialize(tab, false, newItem.id));
                     }
@@ -196,11 +196,11 @@ public class ConfigEditor extends FXController {
                         ConfigExtensionBase replacing = definitions.get(id);
                         if (getInfo().is317()) {
                             selected.copy(replacing);
-                            ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
+                            ValkyrCacheLibrary.get().index(getInfo().getIndex()).update(Selection.progressListener);
                         } else {
                             OutputBuffer buffer = replacing.encode(new OutputBuffer(16));
-                            ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(selected.id, buffer.array());
-                            ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
+                            ValkyrCacheLibrary.get().index(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(selected.id, buffer.array());
+                            ValkyrCacheLibrary.get().index(getInfo().getIndex()).update(Selection.progressListener);
                             PluginManager.get().getLoaderForType(getInfo().getType()).reload();
                         }
                         Platform.runLater(() -> initialize(tab, false, id));
@@ -226,8 +226,8 @@ public class ConfigEditor extends FXController {
                             break;
                         newObject.decode(opcode, buffer);
                     }
-                    ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(id, data);
-                    ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
+                    ValkyrCacheLibrary.get().index(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(id, data);
+                    ValkyrCacheLibrary.get().index(getInfo().getIndex()).update(Selection.progressListener);
                     PluginManager.get().getLoaderForType(getInfo().getType()).reload();
                     Platform.runLater(() -> initialize(tab, false, newObject.id));
                     return true;
@@ -251,10 +251,10 @@ public class ConfigEditor extends FXController {
         final OutputBuffer[] streams = editing.encodeConfig317(getInfo().getFileName());
 
         if (streams != null) {
-            ValkyrCacheLibrary.get().getIndex(0).getArchive(2).add(getInfo().getFileName() + ".dat", streams[0].raw());
+            ValkyrCacheLibrary.get().index(0).getArchive(2).add(getInfo().getFileName() + ".dat", streams[0].raw());
 
             if (streams[1] != null) {
-                ValkyrCacheLibrary.get().getIndex(0).getArchive(2).add(getInfo().getFileName() + ".idx", streams[1].raw());
+                ValkyrCacheLibrary.get().index(0).getArchive(2).add(getInfo().getFileName() + ".idx", streams[1].raw());
             }
         }
     }
@@ -283,9 +283,9 @@ public class ConfigEditor extends FXController {
                                 pack317Config();
                             } else {
                                 OutputBuffer encoded = editing.encode(new OutputBuffer(16));
-                                ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(editing.id, encoded.array());
+                                ValkyrCacheLibrary.get().index(getInfo().getIndex()).getArchive(getInfo().getArchive()).add(editing.id, encoded.array());
                             }
-                            ValkyrCacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
+                            ValkyrCacheLibrary.get().index(getInfo().getIndex()).update(Selection.progressListener);
                             PluginManager.get().getLoaderForType(getInfo().getType()).reload();
                             Platform.runLater(() -> initialize(tab, true, editing.id));
                         } catch (Exception e) {
@@ -348,9 +348,9 @@ public class ConfigEditor extends FXController {
 
     public byte[] getConfigFile317(String name) {
         CacheLibrary cache = ValkyrCacheLibrary.get();
-        Index index = cache.getIndex(0);
+        Index index = cache.index(0);
         Archive archive = index.getArchive(2);
-        org.displee.cache.index.archive.file.File file = archive.file(name);
+        com.displee.cache.index.archive.file.File file = archive.file(name);
         return file.getData();
     }
 

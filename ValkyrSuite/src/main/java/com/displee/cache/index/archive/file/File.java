@@ -1,4 +1,4 @@
-package org.displee.cache.index.archive.file;
+package com.displee.cache.index.archive.file;
 
 /**
  * A class that represents the a single file inside an {@link Archive}.

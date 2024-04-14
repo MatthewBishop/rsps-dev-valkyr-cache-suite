@@ -1,9 +1,9 @@
-package org.displee.cache.index;
+package com.displee.cache.index;
 
 import java.io.RandomAccessFile;
 
-import org.displee.CacheLibrary;
-import org.displee.cache.Container;
+import com.displee.cache.Container;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 
@@ -31,14 +31,14 @@ public class ChecksumTable extends Index implements Container {
 
 	@Override
 	public boolean read(InputBuffer inputBuffer) {
-		for (int i = 0; i < super.origin.getIndices().length; i++) {
+		for (int i = 0; i < super.origin.indices().length; i++) {
 			int crc = inputBuffer.readInt();
 			if (crc > 0) {
-				super.origin.getIndex(i).setCRC(crc);
+				super.origin.index(i).setCRC(crc);
 			}
 			int revision = inputBuffer.readInt();
 			if (revision > 0) {
-				super.origin.getIndex(i).setRevision(revision);
+				super.origin.index(i).setRevision(revision);
 			}
 		}
 		return true;
@@ -46,7 +46,7 @@ public class ChecksumTable extends Index implements Container {
 
 	@Override
 	public byte[] write(OutputBuffer outputBuffer) {
-		for (final Index index : super.origin.getIndices()) {
+		for (final Index index : super.origin.indices()) {
 			outputBuffer.writeInt(index == null ? 0 : index.getCRC());
 			outputBuffer.writeInt(index == null ? 0 : index.getRevision());
 		}

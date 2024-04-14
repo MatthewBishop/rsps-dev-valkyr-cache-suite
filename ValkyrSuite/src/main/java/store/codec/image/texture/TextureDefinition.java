@@ -5,7 +5,7 @@ package store.codec.image.texture;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.codec.AbstractDefinition;
 import com.displee.io.impl.InputBuffer;
 
@@ -48,8 +48,8 @@ public class TextureDefinition implements AbstractDefinition, Cloneable {
 	 */
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(9).addArchive(id).add(id, encode());
-		return cache.getIndex(9).update();
+		cache.index(9).addArchive(id).add(id, encode());
+		return cache.index(9).update();
 	}
 
 	@Override

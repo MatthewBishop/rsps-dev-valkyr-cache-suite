@@ -1,6 +1,6 @@
 package store.codec;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 
@@ -453,8 +453,8 @@ public class BASDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(2).getArchive(32).add(id, encode());
-		return cache.getIndex(2).update();
+		cache.index(2).getArchive(32).add(id, encode());
+		return cache.index(2).update();
 	}
 
 	@Override

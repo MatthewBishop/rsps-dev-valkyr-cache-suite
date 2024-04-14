@@ -5,7 +5,7 @@ package store.codec.osrs;
 
 import java.util.LinkedList;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 
 /**
@@ -46,12 +46,12 @@ public class FrameSet {
 
 		// Get the frames data for the set.
 		if (frameData == null) {
-			if (cache.getIndex(0).getArchive(archive) == null)
+			if (cache.index(0).getArchive(archive) == null)
 				return false;
-			int[] frames = cache.getIndex(0).getArchive(archive).fileIds();
+			int[] frames = cache.index(0).getArchive(archive).fileIds();
 			frameData = new byte[frames.length][];
 			for (int index = 0; index < frames.length; index++) {
-				frameData[index] = cache.getIndex(0).getArchive(archive).file(frames[index]).getData();
+				frameData[index] = cache.index(0).getArchive(archive).file(frames[index]).getData();
 			}
 		}
 
@@ -61,7 +61,7 @@ public class FrameSet {
 			byte[] data = frameData[index];
 			InputBuffer stream = new InputBuffer(data);
 			int id = stream.readUnsignedShort();
-			exists &= cache.getIndex(1).getArchive(id).file(0) != null;
+			exists &= cache.index(1).getArchive(id).file(0) != null;
 		}
 
 		// if the base doesn't exist, return false.
@@ -72,9 +72,9 @@ public class FrameSet {
 		LinkedList<BaseDefinition> list = new LinkedList<BaseDefinition>();
 
 		int[] frameFiles;
-		int length = cache.getIndex(0).getArchive(archive).files().length;
+		int length = cache.index(0).getArchive(archive).files().length;
 		frameType = new FrameDefinition[length];
-		frameFiles = cache.getIndex(0).getArchive(archive).fileIds();
+		frameFiles = cache.index(0).getArchive(archive).fileIds();
 		for (int index = 0; index < frameFiles.length; index++) {
 			byte[] data = frameData[index];
 			InputBuffer stream = new InputBuffer(data);
@@ -87,7 +87,7 @@ public class FrameSet {
 				}
 			}
 			if (type == null)
-				type = new BaseDefinition(id, cache.getIndex(1).getArchive(id).file(0).getData());
+				type = new BaseDefinition(id, cache.index(1).getArchive(id).file(0).getData());
 			frameType[frameFiles[index]] = new FrameDefinition(data, type);
 		}
 		frameData = null;

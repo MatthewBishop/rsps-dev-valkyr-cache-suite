@@ -2,7 +2,7 @@ package store.codec.image;
 
 import java.util.ArrayList;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 
@@ -36,7 +36,7 @@ public class MaterialLoader {
 	 * Decode existing materials
 	 */
 	public void init() {
-		InputBuffer buffer = new InputBuffer(cache.getIndex(26).getArchive(0).file(0).getData());
+		InputBuffer buffer = new InputBuffer(cache.index(26).getArchive(0).file(0).getData());
 		int count = buffer.readUnsignedShort();
 		for (int index = 0; index < count; index++) {
 			if (buffer.readUnsignedByte() == 1)
@@ -212,7 +212,7 @@ public class MaterialLoader {
 	}
 
 	public final void save() {
-		cache.getIndex(26).addArchive(0).add(0, encode());
+		cache.index(26).addArchive(0).add(0, encode());
 	}
 
 	public ArrayList<MaterialRaw> getMaterials() {

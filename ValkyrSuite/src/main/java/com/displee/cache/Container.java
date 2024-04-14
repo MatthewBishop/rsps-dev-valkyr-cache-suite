@@ -1,4 +1,4 @@
-package org.displee.cache;
+package com.displee.cache;
 
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;

@@ -1,6 +1,6 @@
 package store.codec;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 
@@ -192,8 +192,8 @@ public class SpotDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(21).addArchive(id >>> 8).add(id & 0xff, encode());
-		return cache.getIndex(21).update();
+		cache.index(21).addArchive(id >>> 8).add(id & 0xff, encode());
+		return cache.index(21).update();
 	}
 
 	@Override

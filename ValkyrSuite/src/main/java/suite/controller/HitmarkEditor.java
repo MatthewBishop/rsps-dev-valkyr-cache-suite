@@ -22,7 +22,7 @@
 //import javafx.scene.control.TextField;
 //import javafx.scene.paint.Color;
 //import misc.CustomTab;
-//import org.displee.CacheLibrary;
+//import org.displee.cache.CacheLibrary;
 //import store.codec.HitmarkDefinition;
 //import store.codec.image.SpriteFrame;
 //import store.loader.HitmarkLoader;

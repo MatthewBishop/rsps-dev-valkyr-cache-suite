@@ -4,8 +4,8 @@
 //package misc;
 //
 //import lombok.extern.slf4j.Slf4j;
-//import org.displee.CacheLibrary;
-//import org.displee.CacheLibraryMode;
+//import org.displee.cache.CacheLibrary;
+//import org.displee.cache.CacheLibraryMode;
 //import org.displee.cache.index.Index;
 //import store.cache.index.archive.Archive;
 //import org.displee.utilities.Miscellaneous;

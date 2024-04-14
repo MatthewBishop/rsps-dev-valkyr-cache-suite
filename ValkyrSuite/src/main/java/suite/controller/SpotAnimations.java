@@ -14,7 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import misc.CustomTab;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.codec.SpotDefinition;
 import store.codec.util.Utils;
 import store.loader.LoaderManager;
@@ -157,7 +157,7 @@ public class SpotAnimations {
 					blank_def.id = SpotLoader.getDefinitions().length;
 				else {
 					int id = Integer.parseInt(input);
-					if (cache.getIndex(21).getArchive(Utils.getConfigArchive(id, 8))
+					if (cache.index(21).getArchive(Utils.getConfigArchive(id, 8))
 							.file(Utils.getConfigFile(id, 8)) != null) { // File exists
 						boolean confirm = JOptionPane.showConfirmDialog(null,
 								"That graphics already exists, would you like to overwrite it?") == 0;

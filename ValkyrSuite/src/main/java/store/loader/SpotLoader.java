@@ -1,8 +1,8 @@
 package store.loader;
 
 import lombok.Getter;
-import org.displee.CacheLibrary;
-import org.displee.cache.index.Index;
+import com.displee.cache.CacheLibrary;
+import com.displee.cache.index.Index;
 import store.codec.SpotDefinition;
 import store.codec.util.Utils;
 import com.displee.io.impl.InputBuffer;
@@ -41,7 +41,7 @@ public class SpotLoader implements DefinitionLoader {
 	@Override
 	public boolean initialize() {
 		try {
-			Index index = cache.getIndex(21);
+			Index index = cache.index(21);
 			int size = Utils.getGraphicDefinitionsSize(cache);
 			definitions = new SpotDefinition[size];
 			for (int id = 0; id < size; id++) {

@@ -3,7 +3,7 @@ package store.codec;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.codec.util.Utils;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
@@ -1107,8 +1107,8 @@ public class ItemDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public boolean save(CacheLibrary cache) {
-		cache.getIndex(19).addArchive(Utils.getConfigArchive(id, 8)).add(Utils.getConfigFile(id, 8), encode());
-		return cache.getIndex(19).update();
+		cache.index(19).addArchive(Utils.getConfigArchive(id, 8)).add(Utils.getConfigFile(id, 8), encode());
+		return cache.index(19).update();
 	}
 
 	@Override

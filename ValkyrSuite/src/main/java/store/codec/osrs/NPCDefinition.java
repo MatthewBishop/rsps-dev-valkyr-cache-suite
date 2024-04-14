@@ -5,7 +5,7 @@ package store.codec.osrs;
 
 import java.util.Map;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.codec.AbstractDefinition;
 import com.displee.io.impl.InputBuffer;
 

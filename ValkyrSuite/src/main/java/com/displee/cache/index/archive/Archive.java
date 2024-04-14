@@ -1,11 +1,11 @@
-package org.displee.cache.index.archive;
+package com.displee.cache.index.archive;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.displee.cache.Container;
-import org.displee.cache.index.archive.file.File;
+import com.displee.cache.Container;
+import com.displee.cache.index.archive.file.File;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 import org.displee.utilities.Constants;

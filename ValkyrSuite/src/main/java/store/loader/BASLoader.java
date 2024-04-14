@@ -1,8 +1,8 @@
 package store.loader;
 
 import lombok.Getter;
-import org.displee.CacheLibrary;
-import org.displee.cache.index.Index;
+import com.displee.cache.CacheLibrary;
+import com.displee.cache.index.Index;
 import store.codec.BASDefinition;
 import store.codec.util.Utils;
 import com.displee.io.impl.InputBuffer;
@@ -41,7 +41,7 @@ public class BASLoader implements DefinitionLoader {
 	@Override
 	public boolean initialize() {
 		try {
-			Index index = cache.getIndex(2);
+			Index index = cache.index(2);
 			int size = Utils.getRenderAnimationDefintionsSize(cache);
 			definitions = new BASDefinition[size];
 			for (int id = 0; id < size; id++) {

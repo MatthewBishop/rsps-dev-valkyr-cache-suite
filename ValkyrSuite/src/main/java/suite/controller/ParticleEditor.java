@@ -15,7 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import misc.CustomTab;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.codec.ParticleDefinition;
 import store.loader.LoaderManager;
 import store.loader.ParticleLoader;

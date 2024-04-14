@@ -4,8 +4,8 @@
 package store.loader;
 
 import lombok.Getter;
-import org.displee.CacheLibrary;
-import org.displee.cache.index.Index;
+import com.displee.cache.CacheLibrary;
+import com.displee.cache.index.Index;
 import store.codec.image.texture.TextureDefinition;
 import store.codec.util.Utils;
 import com.displee.io.impl.InputBuffer;
@@ -40,7 +40,7 @@ public class TextureDiffuseLoader implements DefinitionLoader {
 	@Override
 	public boolean initialize() {
 		try {
-			Index index = cache.getIndex(9);
+			Index index = cache.index(9);
 			int size = Utils.getTextureDiffuseSize(cache);
 			definitions = new TextureDefinition[size];
 			for (int id = 0; id < size; id++) {

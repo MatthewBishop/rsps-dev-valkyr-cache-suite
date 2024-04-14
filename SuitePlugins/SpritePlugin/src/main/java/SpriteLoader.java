@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import store.ValkyrCacheLibrary;
-import org.displee.cache.index.archive.Archive;
+import com.displee.cache.index.archive.Archive;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
 import store.plugin.extension.LoaderExtensionBase;
@@ -22,9 +22,9 @@ public class SpriteLoader extends LoaderExtensionBase {
 	@Override
 	public boolean load() {
 		try {
-			int[] archiveIds = ValkyrCacheLibrary.get().getIndex(getIndex()).getArchiveIds();
+			int[] archiveIds = ValkyrCacheLibrary.get().index(getIndex()).getArchiveIds();
 			for (int archiveId : archiveIds) {
-				Archive archive = ValkyrCacheLibrary.get().getIndex(getIndex()).getArchive(archiveId);
+				Archive archive = ValkyrCacheLibrary.get().index(getIndex()).getArchive(archiveId);
 				if (Objects.nonNull(archive) && archive.containsData()) {
 					definitions.put(archiveId, new SpriteContainer(archiveId));
 					Selection.progressListener.pluginNotify("(" + archiveId + "/" + archiveIds.length + ")");

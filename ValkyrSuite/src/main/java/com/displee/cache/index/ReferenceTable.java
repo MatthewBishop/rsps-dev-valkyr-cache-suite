@@ -1,4 +1,4 @@
-package org.displee.cache.index;
+package com.displee.cache.index;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.displee.CacheLibrary;
-import org.displee.CacheLibraryMode;
-import org.displee.cache.Container;
-import org.displee.cache.index.archive.Archive;
-import org.displee.cache.index.archive.ArchiveSector;
-import org.displee.cache.index.archive.file.File;
+import com.displee.cache.Container;
+import com.displee.cache.index.archive.file.File;
+import com.displee.cache.CacheLibrary;
+import com.displee.cache.CacheLibraryMode;
+import com.displee.cache.index.archive.Archive;
+import com.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 import org.displee.utilities.Compression;
@@ -722,7 +722,7 @@ public class ReferenceTable implements Container {
 				if (direct || archive.getRead() || archive.getNew()) {
 					return archive;
 				}
-				final ArchiveSector archiveSector = origin.getIndex(this.id).readArchiveSector(id);
+				final ArchiveSector archiveSector = origin.index(this.id).readArchiveSector(id);
 				if (archiveSector == null) {
 					archive.setRead(true);
 					archive.setNew(true);

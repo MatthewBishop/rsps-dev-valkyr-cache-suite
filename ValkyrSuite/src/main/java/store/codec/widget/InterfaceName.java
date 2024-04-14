@@ -2,7 +2,7 @@ package store.codec.widget;
 
 import java.io.IOException;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import store.codec.util.Utils;
 
 public class InterfaceName {
@@ -15,7 +15,7 @@ public class InterfaceName {
 
 	public static void main(String[] args) throws IOException {
 		CacheLibrary rscache = new CacheLibrary("cache/");
-		int hash = rscache.getIndex(3).copy().getArchives()[884].getHashName();
+		int hash = rscache.index(3).copy().getArchives()[884].getHashName();
 		char[] arr$ = VALID_CHARS;
 		int len$ = arr$.length;
 

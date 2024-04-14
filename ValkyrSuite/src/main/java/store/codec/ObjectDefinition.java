@@ -7,7 +7,7 @@ import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
 import com.displee.io.impl.OutputBuffer;
 
@@ -442,9 +442,9 @@ public class ObjectDefinition implements AbstractDefinition, Cloneable {
 	@Override
 	public boolean save(CacheLibrary cache) {
 		System.out.println("Above");
-		cache.getIndex(2).addArchive(6).add(id, encode());
+		cache.index(2).addArchive(6).add(id, encode());
 		System.out.println("Below");
-		return cache.getIndex(2).update();
+		return cache.index(2).update();
 	}
 
 	@Override

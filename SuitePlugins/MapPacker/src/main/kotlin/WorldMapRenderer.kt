@@ -1,7 +1,7 @@
 import com.displee.io.impl.InputBuffer
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.canvas.Canvas
-import org.displee.CacheLibrary
+import com.displee.cache.CacheLibrary
 import store.ValkyrCacheLibrary
 import util.HightCalcuation
 import util.JagexColorPalette

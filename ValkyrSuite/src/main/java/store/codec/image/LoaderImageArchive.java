@@ -3,7 +3,7 @@ package store.codec.image;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import org.displee.CacheLibrary;
+import com.displee.cache.CacheLibrary;
 
 public class LoaderImageArchive {
 
@@ -22,7 +22,7 @@ public class LoaderImageArchive {
 	}
 
 	private void decodeArchive(CacheLibrary cache, int idx, int archiveId, int fileId) {
-		byte[] data = cache.getIndex(idx).getArchive(archiveId).file(fileId).getData();
+		byte[] data = cache.index(idx).getArchive(archiveId).file(fileId).getData();
 		if (data != null) {
 			this.data = data;
 		}
