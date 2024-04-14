@@ -244,7 +244,7 @@ public class ObjectDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputBuffer buffer = new OutputBuffer();
+		OutputBuffer buffer = new OutputBuffer(16);
 		
 		if (objectModels != null && objectTypes != null) {
 			if (objectTypes != null) {

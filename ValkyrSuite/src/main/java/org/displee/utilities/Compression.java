@@ -22,7 +22,7 @@ public class Compression {
 	 * @return The compressed data.
 	 */
 	public static byte[] compress(byte[] uncompressed, CompressionType compressionType, int[] xteas, int revision) {
-		final OutputBuffer outputBuffer = new OutputBuffer();
+		final OutputBuffer outputBuffer = new OutputBuffer(16);
 		final byte[] compressed;
 		switch (compressionType) {
 		case BZIP2:

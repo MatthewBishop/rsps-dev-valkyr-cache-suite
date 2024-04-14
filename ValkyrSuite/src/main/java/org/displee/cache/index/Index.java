@@ -174,7 +174,7 @@ public class Index extends ReferenceTable {
 		}
 		if (updateChecksumTable || super.needUpdate) {
 			super.revision++;
-			final byte[] indexData = Compression.compress(super.write(new OutputBuffer()), type, null, -1);
+			final byte[] indexData = Compression.compress(super.write(new OutputBuffer(16)), type, null, -1);
 			byte[] clonedData = indexData.clone();
 			crc = HashGenerator.getCRCHash(clonedData);
 			whirlpool = Whirlpool.getHash(clonedData, 0, clonedData.length);
@@ -300,7 +300,7 @@ public class Index extends ReferenceTable {
 						position = 1;
 					}
 				}
-				final OutputBuffer outputBuffer = new OutputBuffer();
+				final OutputBuffer outputBuffer = new OutputBuffer(16);
 				outputBuffer.write24BitInt(data.length);
 				outputBuffer.write24BitInt(position);
 				randomAccessFile.seek((long) id * Constants.INDEX_SIZE);

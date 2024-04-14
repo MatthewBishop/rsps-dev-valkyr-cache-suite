@@ -190,7 +190,7 @@ public class ParticleDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputBuffer stream = new OutputBuffer();
+		OutputBuffer stream = new OutputBuffer(16);
 
 		int length;
 

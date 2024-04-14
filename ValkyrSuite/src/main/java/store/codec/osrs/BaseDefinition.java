@@ -33,7 +33,7 @@ public class BaseDefinition {
 	}
 
 	public byte[] encode() {
-		OutputBuffer stream = new OutputBuffer();
+		OutputBuffer stream = new OutputBuffer(16);
 		int count = transformations.length;
 		stream.writeByte(transformations.length);
 		for (int opcode = 0; opcode < count; opcode++) {

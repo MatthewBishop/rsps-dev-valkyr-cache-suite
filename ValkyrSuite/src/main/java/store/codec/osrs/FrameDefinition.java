@@ -107,7 +107,7 @@ public class FrameDefinition {
 	}
 
 	public byte[] encode() {
-		OutputBuffer stream = new OutputBuffer();
+		OutputBuffer stream = new OutputBuffer(16);
 
 		// Write anon data
 		stream.writeByte(0);

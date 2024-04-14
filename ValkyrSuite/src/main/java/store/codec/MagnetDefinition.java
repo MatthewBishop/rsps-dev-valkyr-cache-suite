@@ -54,7 +54,7 @@ public class MagnetDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputBuffer stream = new OutputBuffer();
+		OutputBuffer stream = new OutputBuffer(16);
 
 		stream.writeByte(1);
 		stream.writeShort(anInt1922);

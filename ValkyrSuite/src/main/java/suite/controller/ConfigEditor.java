@@ -174,7 +174,7 @@ public class ConfigEditor extends FXController {
             ConfigExtensionBase selectedItem = listView.getSelectionModel().getSelectedItem();
             File file = RetentionFileChooser.showSaveDialog("Save as...", Main.getPrimaryStage(), selectedItem.id + "", FilterMode.DAT);
             try {
-                OutputBuffer data = selectedItem.encode(new OutputBuffer());
+                OutputBuffer data = selectedItem.encode(new OutputBuffer(16));
                 DataOutputStream dos = new DataOutputStream(new FileOutputStream(file));
                 dos.write(data.flip());
                 dos.close();
@@ -197,7 +197,7 @@ public class ConfigEditor extends FXController {
                             selected.copy(replacing);
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                         } else {
-                            OutputBuffer buffer = replacing.encode(new OutputBuffer());
+                            OutputBuffer buffer = replacing.encode(new OutputBuffer(16));
                             CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).addFile(selected.id, buffer.flip());
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);
                             PluginManager.get().getLoaderForType(getInfo().getType()).reload();
@@ -281,7 +281,7 @@ public class ConfigEditor extends FXController {
                             if (getInfo().is317()) {
                                 pack317Config();
                             } else {
-                                OutputBuffer encoded = editing.encode(new OutputBuffer());
+                                OutputBuffer encoded = editing.encode(new OutputBuffer(16));
                                 CacheLibrary.get().getIndex(getInfo().getIndex()).getArchive(getInfo().getArchive()).addFile(editing.id, encoded.flip());
                             }
                             CacheLibrary.get().getIndex(getInfo().getIndex()).update(Selection.progressListener);

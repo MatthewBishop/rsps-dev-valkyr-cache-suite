@@ -332,8 +332,8 @@ public class ItemConfig extends ConfigExtensionBase {
 	public OutputBuffer[] encodeConfig317(String fileName) {
 		Map<Integer, ConfigExtensionBase> defs = PluginManager.get().getLoaderForType(PluginType.ITEM).getDefinitions();
 
-		OutputBuffer dat = new OutputBuffer();
-		OutputBuffer idx = new OutputBuffer();
+		OutputBuffer dat = new OutputBuffer(16);
+		OutputBuffer idx = new OutputBuffer(16);
 
 		idx.writeShort(defs.size());
 		dat.writeShort(defs.size());

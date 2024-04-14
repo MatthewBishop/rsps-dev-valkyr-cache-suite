@@ -114,7 +114,7 @@ public class OverlayDefinition {
 	}
 
 	private byte[] encode() {
-		OutputBuffer stream = new OutputBuffer();
+		OutputBuffer stream = new OutputBuffer(16);
 
 		if (rgbColor != -1) {
 			stream.writeByte(1);

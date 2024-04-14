@@ -104,7 +104,7 @@ public class SpotDefinition implements AbstractDefinition, Cloneable {
 
 	@Override
 	public byte[] encode() {
-		OutputBuffer stream = new OutputBuffer();
+		OutputBuffer stream = new OutputBuffer(16);
 
 		if (this.modelId != -1) {
 			stream.writeByte(1);

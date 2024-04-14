@@ -126,7 +126,7 @@ public class MaterialLoader {
 	 * @return buffer data
 	 */
 	public final byte[] encode() {
-		OutputBuffer buffer = new OutputBuffer();
+		OutputBuffer buffer = new OutputBuffer(16);
 		buffer.writeShort(materials.size());
 		int count = materials.size();
 		for (int index = 0; index < count; index++) {

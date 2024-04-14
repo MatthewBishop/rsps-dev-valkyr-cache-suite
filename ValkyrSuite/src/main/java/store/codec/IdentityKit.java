@@ -82,7 +82,7 @@ public class IdentityKit implements AbstractDefinition {
 	 */
 	@Override
 	public byte[] encode() {
-		OutputBuffer stream = new OutputBuffer();
+		OutputBuffer stream = new OutputBuffer(16);
 
 		if (bodyPartId != -1) {
 			stream.writeByte(1);

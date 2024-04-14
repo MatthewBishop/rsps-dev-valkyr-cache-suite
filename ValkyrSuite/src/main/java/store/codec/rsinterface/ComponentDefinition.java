@@ -258,7 +258,7 @@ public class ComponentDefinition {
 	 */
 	public byte[] encode() {
 		/*outputstream*/
-		OutputBuffer out = new OutputBuffer();
+		OutputBuffer out = new OutputBuffer(16);
 		out.writeByte(newInt);
 		out.writeByte(this.type);
 		if ((type & 0x80 ^ 0xffffffff) != -1) {// if(type != 0){
