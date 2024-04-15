@@ -28,7 +28,6 @@ import misc.CustomTab;
 import store.ValkyrCacheLibrary;
 import persistable.Persistable;
 import com.displee.cache.CacheLibrary;
-import com.displee.cache.CacheLibraryMode;
 import suite.annotation.PluginDescriptor;
 import store.plugin.PluginManager;
 import store.plugin.PluginType;
@@ -118,7 +117,7 @@ public class Selection {
 
 			@Override
 			protected Void call() throws Exception {
-				CacheLibrary.create(Constants.settings.cacheDir, CacheLibraryMode.UN_CACHED, null);
+				CacheLibrary.create(Constants.settings.cacheDir, true, null);
 				PluginManager.create();
 				toolChoice.getItems().setAll(PluginManager.get().getPluginTypes().stream().map(PluginMenuItem::create).collect(Collectors.toList()));
 				toolChoice.setCellFactory(param -> new ListCell<PluginMenuItem>() {

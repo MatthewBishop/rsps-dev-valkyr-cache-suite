@@ -1,7 +1,6 @@
 package utility;
 
 import com.displee.cache.CacheLibrary;
-import com.displee.cache.CacheLibraryMode;
 import com.displee.cache.index.Index;
 import store.ValkyrCacheLibrary;
 import store.cache.index.OSRSIndices;
@@ -68,7 +67,7 @@ public class OSRSPacker {
 //		pack_osrs_dat(cache, osrs_cache);
 //		CacheLibrary old = CacheLibrary.create("H:\\Github\\718---Server\\data\\cache\\", CacheLibraryMode.UN_CACHED, null);
 //		old.rebuild(new File("H:\\Github\\718---Server\\data\\cleaned-cache\\"));
-		CacheLibrary cache = CacheLibrary.create(KRONOS_CACHE, CacheLibraryMode.UN_CACHED, progress);
+		CacheLibrary cache = CacheLibrary.create(KRONOS_CACHE, true, progress);
 		Stream.of(cache.index(8).getArchives()).forEach(Archive::flag);
 		cache.index(8).update(progress);
 	}
@@ -215,7 +214,7 @@ public class OSRSPacker {
 			Archive osrs_archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKINS).archive(archive);
 			if (Objects.isNull(osrs_archive) || !osrs_archive.containsData())
 				continue;
-			cache.index(1).add(osrs_archive, true, true, archive + BASE_OFFSET);
+			ValkyrCacheLibrary.add2(cache.index(1), osrs_archive, true, true, archive + BASE_OFFSET);
 		}
 		cache.index(1).update(progress);
 	}
@@ -226,7 +225,7 @@ public class OSRSPacker {
 			Archive osrs_archive = ValkyrCacheLibrary.getIndex(osrs_cache, OSRSIndices.SKELETONS).archive(archive);
 			if (Objects.isNull(osrs_archive) || !osrs_archive.containsData())
 				continue;
-			cache.index(0).add(osrs_archive, true, true, archive + FRAMES_OFFSET);
+			ValkyrCacheLibrary.add2(cache.index(0), osrs_archive, true, true, archive + FRAMES_OFFSET);
 		}
 		cache.index(0).update(progress);
 	}
@@ -282,7 +281,7 @@ public class OSRSPacker {
 			archiveId = cache.index(5).archiveId(name);
 			lastArchive = cache.index(5).last().getId() + 1;
 			if (Objects.nonNull(data))
-			cache.index(5).add(archiveId == -1 ? lastArchive : archiveId, nameHash, true).add(0, data);
+			ValkyrCacheLibrary.add2(cache.index(5), archiveId == -1 ? lastArchive : archiveId, nameHash, true).add(0, data);
 		}
 
 		//Location data
@@ -294,7 +293,7 @@ public class OSRSPacker {
 			archiveId = cache.index(5).archiveId(name);
 			lastArchive = cache.index(5).last().getId() + 1;
 			if (Objects.nonNull(data))
-			cache.index(5).add(archiveId == -1 ? lastArchive : archiveId, nameHash, true).add(0, data);
+			ValkyrCacheLibrary.add2(cache.index(5), archiveId == -1 ? lastArchive : archiveId, nameHash, true).add(0, data);
 		}
 
 		System.out.println("Packed region " + region);
@@ -445,7 +444,7 @@ public class OSRSPacker {
 		Index target_index = target_cache.index(target_id);
 		System.out.println("Attempting to transport group of id " + group_id + "..");
 		if (source_cache.index(source_id).archive(group_id) == null) {
-		    target_index.add(source_cache.index(source_id + 1000).archive(group_id), false, true);
+		    ValkyrCacheLibrary.add2(target_index, source_cache.index(source_id + 1000).archive(group_id), false, true);
 		}
 		if (rewrite) {
 			target_index.update(progress);
@@ -470,7 +469,7 @@ public class OSRSPacker {
 		double last = 0.0D;
 		for (int group_id = 0; group_id < num_groups; group_id++) {
 			if (source_index.archive(group_id) != null) {
-				target_index.add(source_index.archive(group_id), true, true);
+				ValkyrCacheLibrary.add2(target_index, source_index.archive(group_id), true, true);
 				double percentage = (double) group_id / (double) num_groups * 100D;
 				if (group_id == num_groups - 1 || percentage - last >= 1.0D) {
 					System.out.println("\t ^ Percentage Completed: " + format.format(percentage) + "%");

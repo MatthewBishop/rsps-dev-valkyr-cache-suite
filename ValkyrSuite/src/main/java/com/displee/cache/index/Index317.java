@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 import com.displee.cache.CacheLibrary;
-import com.displee.cache.CacheLibraryMode;
 import com.displee.cache.index.archive.Archive;
 import com.displee.cache.index.archive.Archive317;
 import com.displee.cache.index.archive.ArchiveSector;
@@ -81,7 +80,7 @@ public class Index317 extends Index {
 				}
 				return false;
 			}
-			if (origin.getMode() == CacheLibraryMode.UN_CACHED) {
+			if (origin.getClearDataAfterUpdate()) {
 				archive.restore();
 			}
 		}

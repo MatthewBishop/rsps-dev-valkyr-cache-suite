@@ -662,4 +662,7 @@ public class Archive implements Container {
 		return "Archive " + id;
 	}
 
+    public void clear() {
+        reset();
+    }
 }

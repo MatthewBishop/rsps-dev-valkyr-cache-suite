@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import com.displee.cache.CacheLibrary;
 import com.displee.cache.index.Index;
+import store.ValkyrCacheLibrary;
 import store.codec.IdentityKit;
 import com.displee.io.impl.InputBuffer;
 
@@ -82,7 +83,7 @@ public class IdkConverter {
 		double last = 0.0D;
 		for (int group_id = 0; group_id < num_groups; group_id++) {
 			if (source_index.archive(group_id) != null) {
-				target_index.add(source_index.archive(group_id), true, false);
+				ValkyrCacheLibrary.add2(target_index, source_index.archive(group_id), true, false);
 				double percentage = (double) group_id / (double) num_groups * 100D;
 				if (group_id == num_groups - 1 || percentage - last >= 1.0D) {
 					System.out.println("\t ^ Percentage Completed: " + format.format(percentage) + "%");
@@ -106,7 +107,7 @@ public class IdkConverter {
 		Index target_index = target_cache.index(target_id);
 		System.out.println("Attempting to transport group of id " + group_id + "..");
 		if (source_cache.index(source_id).archive(group_id) != null) {
-			target_index.add(source_cache.index(source_id).archive(group_id), true, false);
+			ValkyrCacheLibrary.add2(target_index, source_cache.index(source_id).archive(group_id), true, false);
 		}
 		if (rewrite) {
 			System.out.println("\t ^ Rewriting table..");

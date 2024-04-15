@@ -5,7 +5,6 @@ import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
 import com.displee.cache.CacheLibrary;
-import com.displee.cache.CacheLibraryMode;
 import com.displee.cache.index.archive.Archive;
 import com.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.InputBuffer;
@@ -163,7 +162,7 @@ public class Index extends ReferenceTable {
 					}
 					return false;
 				}
-				if (origin.getMode() == CacheLibraryMode.UN_CACHED) {
+				if (origin.getClearDataAfterUpdate()) {
 					archive.restore();
 				}
 			}

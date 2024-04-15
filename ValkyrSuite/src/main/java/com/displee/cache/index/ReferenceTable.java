@@ -9,7 +9,6 @@ import java.util.List;
 import com.displee.cache.Container;
 import com.displee.cache.index.archive.file.File;
 import com.displee.cache.CacheLibrary;
-import com.displee.cache.CacheLibraryMode;
 import com.displee.cache.index.archive.Archive;
 import com.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.InputBuffer;
@@ -398,7 +397,7 @@ public class ReferenceTable implements Container {
 		for (int i = 0; i < archives.length; i++) {
 			final Archive original = archive(archiveIds[i]);
 			archives[i] = original.copy();
-			if (origin.getMode() == CacheLibraryMode.UN_CACHED) {
+			if (origin.getClearDataAfterUpdate()) {
 				original.restore();
 			}
 		}

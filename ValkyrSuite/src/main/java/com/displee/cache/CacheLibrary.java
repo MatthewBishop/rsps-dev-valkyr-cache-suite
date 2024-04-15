@@ -44,11 +44,6 @@ public class CacheLibrary {
 	private final String path;
 
 	/**
-	 * The mode.
-	 */
-	private final CacheLibraryMode mode;
-
-	/**
 	 * If this library has been closed.
 	 */
 	private boolean closed;
@@ -60,29 +55,29 @@ public class CacheLibrary {
 	 * @throws IOException If it failed to read the cache files.
 	 */
 	public CacheLibrary(String path) throws IOException {
-		this(path, CacheLibraryMode.CACHED);
+		this(path, false);
 	}
 
 	/**
 	 * Constructs a new {@code CacheLibrary} {@code Object}.
 	 * 
 	 * @param path The path to the cache files.
-	 * @param mode The cache library mode.
+	 * @param clearDataAfterUpdate The cache library mode.
 	 * @throws IOException If it failed to read the cache files.
 	 */
-	public CacheLibrary(String path, CacheLibraryMode mode) throws IOException {//GOOD
-		this(path, mode, null);
+	public CacheLibrary(String path, boolean clearDataAfterUpdate) throws IOException {//GOOD
+		this(path, clearDataAfterUpdate, null);
 	}
 
 	/**
 	 * Constructs a new {@code CacheLibrary} {@code Object}.
 	 * 
 	 * @param path     The path to the cache files.
-	 * @param mode     The cache library mode.
+	 * @param clearDataAfterUpdate     The cache library mode.
 	 * @param listener The progress listener.
 	 * @throws IOException If it failed to read the cache files.
 	 */
-	public CacheLibrary(String path, CacheLibraryMode mode, ProgressListener listener) throws IOException {
+	public CacheLibrary(String path, boolean clearDataAfterUpdate, ProgressListener listener) throws IOException {
 		if (path == null) {
 			throw new FileNotFoundException("The path to the cache is null.");
 		}
@@ -91,7 +86,7 @@ public class CacheLibrary {
 		}
 		ValkyrCacheLibrary.singleton = this;
 		this.path = path;
-		this.mode = mode;
+		this.clearDataAfterUpdate = clearDataAfterUpdate;
 		final File file = new File(path + "main_file_cache.dat");
 		if (file.exists() && file.length() != 0) {
 			load317(listener);
@@ -107,7 +102,7 @@ public class CacheLibrary {
 	 * @return The cache library.
 	 */
 	public static CacheLibrary create(String path) {
-		return create(path, CacheLibraryMode.CACHED, null);
+		return create(path, false, null);
 	}
 
 	/**
@@ -117,20 +112,20 @@ public class CacheLibrary {
 	 * @return The cache library.
 	 */
 	public static CacheLibrary createUncached(String path) {
-		return create(path, CacheLibraryMode.UN_CACHED, null);
+		return create(path, true, null);
 	}
 
 	/**
 	 * Create a new cache library.
 	 * 
 	 * @param path     The path to the cache.
-	 * @param mode     The cache library I/O mode.
+	 * @param clearDataAfterUpdate     The cache library I/O mode.
 	 * @param listener The progress listener.
 	 * @return The cache library.
 	 */
-	public static CacheLibrary create(String path, CacheLibraryMode mode, ProgressListener listener) {
+	public static CacheLibrary create(String path, boolean clearDataAfterUpdate, ProgressListener listener) {
 		try {
-			return new CacheLibrary(path, mode, listener);
+			return new CacheLibrary(path, clearDataAfterUpdate, listener);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -498,15 +493,6 @@ public class CacheLibrary {
 	}
 
 	/**
-	 * Get the cache library mode.
-	 * 
-	 * @return {@code mode}
-	 */
-	public CacheLibraryMode getMode() {
-		return mode;
-	}
-
-	/**
 	 * Check if this is a 317 cache.
 	 * 
 	 * @return If this cache library is a 317 cache.
@@ -543,5 +529,11 @@ public class CacheLibrary {
 	public boolean isClosed() {
 		return closed;
 	}
+
+	public boolean getClearDataAfterUpdate() {
+		return clearDataAfterUpdate;
+	}
+
+	private final boolean clearDataAfterUpdate;
 
 }

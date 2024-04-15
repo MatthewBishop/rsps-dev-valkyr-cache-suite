@@ -7,7 +7,6 @@ import com.google.common.collect.Maps;
 
 import lombok.Getter;
 import com.displee.cache.CacheLibrary;
-import com.displee.cache.CacheLibraryMode;
 import store.ValkyrCacheLibrary;
 
 @Deprecated
@@ -36,7 +35,7 @@ public class LoaderManager {
 	 */
 	public LoaderManager(String cache) {
 		try {
-			ValkyrCacheLibrary.singleton = new CacheLibrary(cache, CacheLibraryMode.UN_CACHED);
+			ValkyrCacheLibrary.singleton = new CacheLibrary(cache, true);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
