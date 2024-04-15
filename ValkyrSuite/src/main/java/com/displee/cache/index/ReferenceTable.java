@@ -383,7 +383,7 @@ public class ReferenceTable implements Container {
 	 * 
 	 * @return {@code archives}
 	 */
-	public Archive[] getArchives() {
+	public Archive[] archives() {
 		return archives;
 	}
 
@@ -468,7 +468,7 @@ public class ReferenceTable implements Container {
 		final File[] files = archive.copy().files();
 		final Archive newArchive = add(id, archive.getHashName(), resetFiles);
 		if (addFiles) {
-			newArchive.addFiles(files);
+			newArchive.add(files);
 			newArchive.setRead(true);
 		}
 		return newArchive;
@@ -527,6 +527,7 @@ public class ReferenceTable implements Container {
 	public Archive add(int id, boolean resetFiles) {
 		return add(id, -1, resetFiles);
 	}
+
 
 	/**
 	 * Add a new archive to this index.

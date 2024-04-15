@@ -190,7 +190,7 @@ public class Archive implements Container {
 	 * 
 	 * @param files The array of the files to add.
 	 */
-	public void addFiles(File[] files) {
+	public void add(File[] files) {
 		for (File file : files) {
 			add(file);
 		}

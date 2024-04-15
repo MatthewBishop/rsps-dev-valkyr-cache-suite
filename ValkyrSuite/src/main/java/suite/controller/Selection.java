@@ -117,7 +117,7 @@ public class Selection {
 
 			@Override
 			protected Void call() throws Exception {
-				CacheLibrary.create(Constants.settings.cacheDir, true, null);
+				ValkyrCacheLibrary.singleton = CacheLibrary.create(Constants.settings.cacheDir, true, null);
 				PluginManager.create();
 				toolChoice.getItems().setAll(PluginManager.get().getPluginTypes().stream().map(PluginMenuItem::create).collect(Collectors.toList()));
 				toolChoice.setCellFactory(param -> new ListCell<PluginMenuItem>() {

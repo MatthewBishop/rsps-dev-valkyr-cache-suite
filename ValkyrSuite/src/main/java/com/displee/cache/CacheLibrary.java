@@ -12,7 +12,6 @@ import com.displee.cache.index.Index317;
 import store.ValkyrCacheLibrary;
 import com.displee.cache.index.archive.ArchiveSector;
 import com.displee.io.impl.OutputBuffer;
-import org.displee.utilities.Compression;
 import com.displee.compress.CompressionType;
 import org.displee.utilities.Constants;
 
@@ -23,9 +22,6 @@ import org.displee.utilities.Constants;
  */
 public class CacheLibrary {
 
-	/**
-	 * An array of indices of this cache.
-	 */
 	private Index[] indices;
 
 	/**
@@ -294,40 +290,6 @@ public class CacheLibrary {
 	}
 
 	/**
-	 * Add an index to this cache library.
-	 * 
-	 * @param named     If the index contains archive and/or file names.
-	 * @param whirlpool If the index is using whirlpool.
-	 */
-	public Index createIndex(boolean named, boolean whirlpool) {
-		try {
-			if (is317()) {
-				throw new UnsupportedOperationException("317 not supported to add new indices yet.");
-			}
-			final OutputBuffer outputBuffer = new OutputBuffer(4);
-			outputBuffer.writeByte(5);
-			outputBuffer.writeByte((named ? 0x1 : 0x0) | (whirlpool ? 0x2 : 0x0));
-			outputBuffer.writeShort(0);
-			final int id = indices.length;
-			if (!checksumTable.writeArchiveSector(id,
-					Compression.compress(outputBuffer.array(), CompressionType.GZIP, null, -1))) {
-				throw new RuntimeException("Failed to write the archive sector for a new index[id=" + id + "]");
-			}
-			indices = Arrays.copyOf(indices, indices.length + 1);
-			Index index = indices[id] = new Index(this, id,
-					new RandomAccessFile(new File(path + "main_file_cache.idx" + id), "rw"));
-			index.flag();
-			if (!index.update()) {
-				throw new IOException("Unable to write CRC for the new index.");
-			}
-			return index;
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			return null;
-		}
-	}
-
-	/**
 	 * Remove the last index that is stored in the cache.
 	 */
 	public void removeLastIndex() {
@@ -536,4 +498,7 @@ public class CacheLibrary {
 
 	private final boolean clearDataAfterUpdate;
 
+	public void setIndices(Index[] indices) {
+		this.indices = indices;
+	}
 }

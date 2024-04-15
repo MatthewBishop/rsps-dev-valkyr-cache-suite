@@ -3,6 +3,7 @@ package store.codec.widget;
 import java.io.IOException;
 
 import com.displee.cache.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import store.codec.util.Utils;
 
 public class InterfaceName {
@@ -14,8 +15,9 @@ public class InterfaceName {
 	}
 
 	public static void main(String[] args) throws IOException {
-		CacheLibrary rscache = new CacheLibrary("cache/");
-		int hash = rscache.index(3).copy().getArchives()[884].getHashName();
+		CacheLibrary rscache = new CacheLibrary("cache/", false, null);
+		ValkyrCacheLibrary.singleton = rscache;
+		int hash = rscache.index(3).archive(884).getHashName();
 		char[] arr$ = VALID_CHARS;
 		int len$ = arr$.length;
 

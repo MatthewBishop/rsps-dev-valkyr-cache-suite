@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.swing.JComponent;
 
 import com.displee.cache.CacheLibrary;
+import store.ValkyrCacheLibrary;
 import store.codec.util.Utils;
 import com.displee.io.impl.InputBuffer;
 
@@ -19,7 +20,8 @@ public class Interface {
 	public JComponent[] jcomponents;
 
 	public static void main(String[] args) throws IOException {
-		CacheLibrary rscache = new CacheLibrary("cache/");
+		CacheLibrary rscache = new CacheLibrary("cache/", false, null);
+		ValkyrCacheLibrary.singleton = rscache;
 
 		for (int i = 0; i < Utils.getInterfaceDefinitionsSize(rscache); ++i) {
 			try {

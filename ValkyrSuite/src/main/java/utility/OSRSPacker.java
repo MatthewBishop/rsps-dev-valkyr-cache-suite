@@ -68,7 +68,8 @@ public class OSRSPacker {
 //		CacheLibrary old = CacheLibrary.create("H:\\Github\\718---Server\\data\\cache\\", CacheLibraryMode.UN_CACHED, null);
 //		old.rebuild(new File("H:\\Github\\718---Server\\data\\cleaned-cache\\"));
 		CacheLibrary cache = CacheLibrary.create(KRONOS_CACHE, true, progress);
-		Stream.of(cache.index(8).getArchives()).forEach(Archive::flag);
+		ValkyrCacheLibrary.singleton = cache;
+		Stream.of(cache.index(8).archives()).forEach(Archive::flag);
 		cache.index(8).update(progress);
 	}
 
@@ -458,7 +459,7 @@ public class OSRSPacker {
 			if (target_cache.indices().length != target_id) {
 				throw new IllegalStateException("The cache has more than one gap between the source_index and the target_index!");
 			}
-			target_cache.createIndex(source_index.isNamed(), source_index.hasWhirlpool());
+			ValkyrCacheLibrary.createIndex(target_cache, source_index.isNamed(), source_index.hasWhirlpool());
 			System.out.println("\t ^ Index was created!");
 		}
 

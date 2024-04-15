@@ -24,8 +24,10 @@ public class IdkConverter {
 
 	public static void main(String[] args) throws IOException {
 
-		CacheLibrary cache = new CacheLibrary("");
-		CacheLibrary old_cache = new CacheLibrary("C:\\Users\\Andrew\\Desktop\\667 cache\\");
+		CacheLibrary cache = new CacheLibrary("", false, null);
+		ValkyrCacheLibrary.singleton = cache;
+		CacheLibrary old_cache = new CacheLibrary("C:\\Users\\Andrew\\Desktop\\667 cache\\", false, null);
+		ValkyrCacheLibrary.singleton = old_cache;
 
 		int size = old_cache.index(2).archive(3).last().getId();
 
@@ -72,7 +74,7 @@ public class IdkConverter {
 				throw new IllegalStateException(
 						"The cache has more than one gap between the source_index and the target_index!");
 			}
-			target_cache.createIndex(source_index.isNamed(), source_index.hasWhirlpool());
+			ValkyrCacheLibrary.createIndex(target_cache, source_index.isNamed(), source_index.hasWhirlpool());
 			System.out.println("\t ^ Index was created!");
 		}
 

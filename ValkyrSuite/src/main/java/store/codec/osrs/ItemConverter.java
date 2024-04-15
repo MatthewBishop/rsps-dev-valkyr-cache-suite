@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 
 import com.displee.cache.CacheLibrary;
 import com.displee.io.impl.InputBuffer;
+import store.ValkyrCacheLibrary;
 
 /**
  * @author ReverendDread Oct 6, 2018
@@ -18,9 +19,10 @@ public class ItemConverter {
 
 	public static void main(String[] args) throws IOException {
 
-		CacheLibrary cache = new CacheLibrary("F:\\Mega-Sausage-Server\\data\\cache\\");
-		CacheLibrary osrs = new CacheLibrary("C:\\Users\\Andrew\\Desktop\\177\\");
-
+		CacheLibrary cache = new CacheLibrary("F:\\Mega-Sausage-Server\\data\\cache\\", false, null);
+		ValkyrCacheLibrary.singleton = cache;
+		CacheLibrary osrs = new CacheLibrary("C:\\Users\\Andrew\\Desktop\\177\\", false, null);
+		ValkyrCacheLibrary.singleton = osrs;
 		final int size = osrs.index(2).archive(10).last().getId();
 
 		System.out.println("Packing " + size + " items...");

@@ -59,7 +59,9 @@ public class PureOSRSPacker {
 	public static void main(String[] args) throws IOException {
 		
 		CacheLibrary cache = new CacheLibrary(CACHE_DIR, true, progress);
+		ValkyrCacheLibrary.singleton = cache;
 		CacheLibrary osrs_cache = new CacheLibrary(OSRS_CACHE, true, progress);
+		ValkyrCacheLibrary.singleton = osrs_cache;
 		pack_osrs_dat(cache, osrs_cache, false);
 		
 	}

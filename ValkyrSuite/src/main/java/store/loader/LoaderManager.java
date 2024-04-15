@@ -34,12 +34,7 @@ public class LoaderManager {
 	 * @param cache
 	 */
 	public LoaderManager(String cache) {
-		try {
-			ValkyrCacheLibrary.singleton = new CacheLibrary(cache, true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ValkyrCacheLibrary.singleton = new CacheLibrary(cache, true, null);
 		loadDefinitions();
 	}
 
